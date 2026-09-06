@@ -1,0 +1,107 @@
+---
+import ProjectPage from '../../layouts/ProjectPage.astro';
+import { PROJECTS } from '../../consts';
+
+const project = PROJECTS.find((p) => p.slug === 'gpujs-real-renderer')!;
+---
+
+<ProjectPage {...project}>
+	<section class="project-deepdive">
+		<h2>High-Performance Graphics Architecture</h2>
+		<p>
+			Conventional browser-based graphing libraries rely on HTML5 2D Canvas or SVG, calculating every pixel and coordinate transformation on the CPU. When handling high-frequency time-series streams or complex coordinate domains with millions of evaluation points, CPU bottlenecks cause frame drops and browser freezes.
+		</p>
+
+		<p>
+			<code>gpujs-real-renderer</code> addresses this by compiling JavaScript render loops directly into WebGL fragment shaders via GPU.js. Computations run entirely on graphics hardware cores in parallel, rendering complex numerical fields and streaming charts at 60+ FPS.
+		</p>
+
+		<h3>Core Visualization Engines</h3>
+		<div class="tech-grid">
+			<div class="tech-card">
+				<h4>RealRenderer</h4>
+				<p>Base rendering coordinator that initializes interactive coordinate grids, camera matrices, zoom/pan transforms, and responsive viewport sizing.</p>
+			</div>
+			<div class="tech-card">
+				<h4>RealLineGraph</h4>
+				<p>Hardware-accelerated line plotting engine capable of visualizing high-throughput sensor telemetry and streaming numerical data without frame lag.</p>
+			</div>
+			<div class="tech-card">
+				<h4>RealComplexSpace</h4>
+				<p>Specialized mathematical engine for plotting and animating complex functions, Riemann surfaces, and phase portraits directly on the GPU.</p>
+			</div>
+			<div class="tech-card">
+				<h4>RealDrawBoard</h4>
+				<p>GPU-accelerated digital drawing surface with sub-pixel brush stroke rasterization, real-time smoothing, and layer-blending kernels.</p>
+			</div>
+		</div>
+
+		<h3>Dual Environment Runtime</h3>
+		<p>
+			Designed with dual-runtime capabilities: it functions natively inside web browsers using standard <code>&lt;canvas&gt;</code> DOM nodes, and runs headlessly in Node.js backend processes by injecting mock canvas contexts and headless GPU instances for server-side chart rendering.
+		</p>
+	</section>
+</ProjectPage>
+
+<style>
+	.project-deepdive {
+		margin-top: 3rem;
+		padding-top: 2.5rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.project-deepdive h2 {
+		font-size: 1.5rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		color: var(--fg);
+	}
+
+	.project-deepdive h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 2rem 0 1rem;
+		color: var(--fg);
+	}
+
+	.project-deepdive p {
+		font-size: 1.05rem;
+		line-height: 1.75;
+		color: var(--fg-muted);
+		margin-bottom: 1.25rem;
+	}
+
+	.tech-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+		margin: 1.5rem 0 2rem;
+	}
+
+	.tech-card {
+		background: var(--bg-surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem;
+	}
+
+	.tech-card h4 {
+		font-size: 1rem;
+		font-weight: 600;
+		color: var(--fg);
+		margin: 0 0 0.5rem 0;
+	}
+
+	.tech-card p {
+		font-size: 0.925rem;
+		line-height: 1.6;
+		margin: 0;
+		color: var(--fg-muted);
+	}
+
+	@media (max-width: 640px) {
+		.tech-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

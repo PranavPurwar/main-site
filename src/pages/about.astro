@@ -1,0 +1,100 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="About — Pranav Purwar"
+			description="Systems engineer focused on JVM internals, Android virtualization, and developer tooling."
+		/>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>About</h1>
+
+			<div class="bio-content">
+				<p>
+					I am a systems engineer focused on JVM internals, Android virtualization, and developer tooling. I build tools that enable writing, compiling, and running code directly on mobile devices without relying on external servers or cloud environments.
+				</p>
+
+				<p>
+					I founded Cosmic IDE, a general-purpose IDE for Android powered by an embedded Arch Linux ARM environment that runs completely without root access. As part of enabling on-device compilation, I ported standard compiler toolchains to Android's runtime, including kotlinc-android and javac-android.
+				</p>
+
+				<p>
+					I run aload0, where I build and publish privacy-focused Android applications including AppLock and Reef, designed to protect personal privacy with zero telemetry or ads. I also co-founded Bryte-Edu to develop educational developer tooling aimed at students working on accessible, low-spec hardware.
+				</p>
+
+				<p>
+					My technical interests include JVM bytecode internals, DEX format manipulation, Linux user-space virtualization on ARM, Jetpack Compose and Material 3 design systems, and WebGL-powered GPU rendering.
+				</p>
+			</div>
+
+			<section class="get-in-touch">
+				<h2>Get in touch</h2>
+				<p>
+					You can find my open-source projects and code on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub</a>.
+				</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 3rem 1rem;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: 0 0 1.75rem 0;
+		letter-spacing: -0.02em;
+		color: var(--fg);
+	}
+
+	.bio-content p {
+		font-size: 1.0625rem;
+		line-height: 1.75;
+		color: var(--fg);
+		margin-bottom: 1.5rem;
+	}
+
+	.get-in-touch {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border);
+	}
+
+	.get-in-touch h2 {
+		font-size: 1.375rem;
+		font-weight: 600;
+		margin: 0 0 0.75rem 0;
+		color: var(--fg);
+	}
+
+	.get-in-touch p {
+		font-size: 1rem;
+		color: var(--fg-muted);
+		margin: 0;
+	}
+
+	@media (max-width: 640px) {
+		main {
+			padding: 2rem 1rem;
+		}
+
+		h1 {
+			font-size: 2rem;
+			margin-bottom: 1.25rem;
+		}
+	}
+</style>
