@@ -9,7 +9,7 @@ const project = PROJECTS.find((p) => p.slug === 'kotlinc-android')!;
 	<section class="project-deepdive">
 		<h2>Compiler Architecture on Android</h2>
 		<p>
-			The official JetBrains Kotlin compiler (`kotlinc`) is heavily coupled with standard desktop Java virtual machine behaviors, relying extensively on dynamic classloading, NIO filesystem abstractions, and substantial memory allocations that are incompatible with Android's Dalvik/ART execution environment.
+			The official JetBrains Kotlin compiler (<code>kotlinc</code>) is heavily coupled with standard desktop Java virtual machine behaviors, relying extensively on dynamic classloading, NIO filesystem abstractions, and substantial memory allocations that are incompatible with Android's Dalvik/ART execution environment.
 		</p>
 
 		<p>
@@ -17,21 +17,21 @@ const project = PROJECTS.find((p) => p.slug === 'kotlinc-android')!;
 		</p>
 
 		<h3>Key Technical Adaptations</h3>
-		<div class="tech-grid">
-			<div class="tech-card">
+		<div class="deepdive-grid">
+			<div class="deepdive-card">
 				<h4>Modern Language Specs</h4>
 				<p>Maintains support through Kotlin 2.4 and 2.5 compiler iterations, including coroutines, smart casting, and modern standard library bindings.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>fastJarFileSystem Integration</h4>
 				<p>Incorporates an optimized in-memory JAR virtual filesystem to drastically accelerate classpath scanning on mobile flash storage.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>JitPack Artifacts</h4>
 				<p>Packaged and deployed via JitPack (<code>com.github.PranavPurwar:kotlinc-android:2.4.0</code>) for rapid integration into third-party Android apps and IDE plugins.</p>
 			</div>
-			<div class="tech-card">
-				<h4>Dual JVM & Android Interop</h4>
+			<div class="deepdive-card">
+				<h4>Dual JVM &amp; Android Interop</h4>
 				<p>Operates alongside <code>javac-android</code> to facilitate bidirectional Java-Kotlin joint compilation in mobile project trees.</p>
 			</div>
 		</div>
@@ -49,85 +49,3 @@ dependencies &#123;
 		</div>
 	</section>
 </ProjectPage>
-
-<style>
-	.project-deepdive {
-		margin-top: 3rem;
-		padding-top: 2.5rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.project-deepdive h2 {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 2rem 0 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive p {
-		font-size: 1.05rem;
-		line-height: 1.75;
-		color: var(--fg-muted);
-		margin-bottom: 1.25rem;
-	}
-
-	.tech-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		margin: 1.5rem 0 2rem;
-	}
-
-	.tech-card {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-	}
-
-	.tech-card h4 {
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--fg);
-		margin: 0 0 0.5rem 0;
-	}
-
-	.tech-card p {
-		font-size: 0.925rem;
-		line-height: 1.6;
-		margin: 0;
-		color: var(--fg-muted);
-	}
-
-	.code-block {
-		margin-top: 1.5rem;
-	}
-
-	.code-block pre {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-		overflow-x: auto;
-	}
-
-	.code-block code {
-		font-family: var(--font-mono);
-		font-size: 0.875rem;
-		line-height: 1.5;
-		color: var(--fg);
-	}
-
-	@media (max-width: 640px) {
-		.tech-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

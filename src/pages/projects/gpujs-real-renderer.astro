@@ -17,20 +17,20 @@ const project = PROJECTS.find((p) => p.slug === 'gpujs-real-renderer')!;
 		</p>
 
 		<h3>Core Visualization Engines</h3>
-		<div class="tech-grid">
-			<div class="tech-card">
+		<div class="deepdive-grid">
+			<div class="deepdive-card">
 				<h4>RealRenderer</h4>
 				<p>Base rendering coordinator that initializes interactive coordinate grids, camera matrices, zoom/pan transforms, and responsive viewport sizing.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>RealLineGraph</h4>
 				<p>Hardware-accelerated line plotting engine capable of visualizing high-throughput sensor telemetry and streaming numerical data without frame lag.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>RealComplexSpace</h4>
 				<p>Specialized mathematical engine for plotting and animating complex functions, Riemann surfaces, and phase portraits directly on the GPU.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>RealDrawBoard</h4>
 				<p>GPU-accelerated digital drawing surface with sub-pixel brush stroke rasterization, real-time smoothing, and layer-blending kernels.</p>
 			</div>
@@ -42,66 +42,3 @@ const project = PROJECTS.find((p) => p.slug === 'gpujs-real-renderer')!;
 		</p>
 	</section>
 </ProjectPage>
-
-<style>
-	.project-deepdive {
-		margin-top: 3rem;
-		padding-top: 2.5rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.project-deepdive h2 {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 2rem 0 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive p {
-		font-size: 1.05rem;
-		line-height: 1.75;
-		color: var(--fg-muted);
-		margin-bottom: 1.25rem;
-	}
-
-	.tech-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		margin: 1.5rem 0 2rem;
-	}
-
-	.tech-card {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-	}
-
-	.tech-card h4 {
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--fg);
-		margin: 0 0 0.5rem 0;
-	}
-
-	.tech-card p {
-		font-size: 0.925rem;
-		line-height: 1.6;
-		margin: 0;
-		color: var(--fg-muted);
-	}
-
-	@media (max-width: 640px) {
-		.tech-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

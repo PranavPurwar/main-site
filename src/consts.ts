@@ -1,4 +1,4 @@
-export const SITE_TITLE = "Pranav Purwar";
+export const SITE_TITLE = "invokevirtual";
 export const SITE_DESCRIPTION =
 	"Systems engineer building developer tools, JVM tooling, and privacy-first software for Android.";
 

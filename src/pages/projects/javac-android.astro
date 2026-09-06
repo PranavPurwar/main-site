@@ -9,7 +9,7 @@ const project = PROJECTS.find((p) => p.slug === 'javac-android')!;
 	<section class="project-deepdive">
 		<h2>JVM Toolchain Architecture</h2>
 		<p>
-			Compiling Java natively on Android poses non-trivial architectural challenges. The stock OpenJDK compiler relies on desktop-standard filesystem assumptions, `sun.misc.Unsafe` hooks, and internal module architectures that conflict with Android's Bionic C library and Dalvik/ART execution engine.
+			Compiling Java natively on Android poses non-trivial architectural challenges. The stock OpenJDK compiler relies on desktop-standard filesystem assumptions, <code>sun.misc.Unsafe</code> hooks, and internal module architectures that conflict with Android's Bionic C library and Dalvik/ART execution engine.
 		</p>
 
 		<p>
@@ -17,20 +17,20 @@ const project = PROJECTS.find((p) => p.slug === 'javac-android')!;
 		</p>
 
 		<h3>Implementation Highlights</h3>
-		<div class="tech-grid">
-			<div class="tech-card">
-				<h4>Java 26 & Modern Language Support</h4>
+		<div class="deepdive-grid">
+			<div class="deepdive-card">
+				<h4>Java 26 &amp; Modern Language Support</h4>
 				<p>Maintains compatibility with contemporary Java syntax, module specifications, and standard <code>ct.sym</code> symbol databases for target release cross-compilation.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>Android Runtime Optimization</h4>
 				<p>Patched filesystem wrappers bypass JVM-specific memory-mapped IO operations that trigger restrictions under Android's scoped storage and SELinux policies.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>JitPack Distribution</h4>
 				<p>Published as a reusable dependency (<code>com.github.PranavPurwar:javac-android:27.23</code>), allowing any Android application to embed a full Java compiler in seconds.</p>
 			</div>
-			<div class="tech-card">
+			<div class="deepdive-card">
 				<h4>Memory-Constrained Performance</h4>
 				<p>Engineered to operate inside the strict heap ceilings of Android processes without exhausting process memory or triggering low-memory killer (LMK) aborts.</p>
 			</div>
@@ -49,85 +49,3 @@ dependencies &#123;
 		</div>
 	</section>
 </ProjectPage>
-
-<style>
-	.project-deepdive {
-		margin-top: 3rem;
-		padding-top: 2.5rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.project-deepdive h2 {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 2rem 0 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive p {
-		font-size: 1.05rem;
-		line-height: 1.75;
-		color: var(--fg-muted);
-		margin-bottom: 1.25rem;
-	}
-
-	.tech-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		margin: 1.5rem 0 2rem;
-	}
-
-	.tech-card {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-	}
-
-	.tech-card h4 {
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--fg);
-		margin: 0 0 0.5rem 0;
-	}
-
-	.tech-card p {
-		font-size: 0.925rem;
-		line-height: 1.6;
-		margin: 0;
-		color: var(--fg-muted);
-	}
-
-	.code-block {
-		margin-top: 1.5rem;
-	}
-
-	.code-block pre {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-		overflow-x: auto;
-	}
-
-	.code-block code {
-		font-family: var(--font-mono);
-		font-size: 0.875rem;
-		line-height: 1.5;
-		color: var(--fg);
-	}
-
-	@media (max-width: 640px) {
-		.tech-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

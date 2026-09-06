@@ -43,28 +43,28 @@ const screenshots = [
 	<ProjectCarousel items={screenshots} id="reef-carousel" />
 
 	<section class="project-deepdive">
-		<h2>Design Philosophy & Wellbeing Engineering</h2>
+		<h2>Design Philosophy &amp; Wellbeing Engineering</h2>
 		<p>
 			Commercial digital wellbeing tools frequently introduce gamification gimmicks, subscriptions, or intrusive data collection. Reef was built to solve compulsive screen usage transparently: zero advertisements, zero tracking telemetry, zero subscriptions, and complete offline privacy.
 		</p>
 
 		<h3>Core Focus Mechanics</h3>
-		<div class="mechanics-grid">
-			<div class="mechanics-card">
-				<h4>Routines & Time Blocks</h4>
-				<p>Construct recurring time windows (such as "Deep Work" or "Bedtime") that automatically restrict high-friction applications while keeping communication tools available.</p>
+		<div class="deepdive-grid">
+			<div class="deepdive-card">
+				<h4>Routines &amp; Time Blocks</h4>
+				<p>Construct recurring time windows that restrict high-friction applications while keeping communication tools available.</p>
 			</div>
-			<div class="mechanics-card">
+			<div class="deepdive-card">
 				<h4>Mindful Launch</h4>
 				<p>Introduces a configurable friction pause (e.g. 5-second breathing countdown) before launching distracting apps, breaking reflexive muscle memory.</p>
 			</div>
-			<div class="mechanics-card">
-				<h4>Pomodoro & Count-Up Modes</h4>
+			<div class="deepdive-card">
+				<h4>Pomodoro &amp; Count-Up Modes</h4>
 				<p>Supports traditional interval work cycles as well as open-ended count-up timers with configurable work-to-break ratio calculations.</p>
 			</div>
-			<div class="mechanics-card">
+			<div class="deepdive-card">
 				<h4>Material You Expression</h4>
-				<p>Crafted following the latest Material 3 Expressive guidelines, incorporating organic shapes, smooth transitions, and dynamic contrast ratios.</p>
+				<p>Crafted following Material 3 Expressive guidelines, incorporating organic shapes, smooth transitions, and dynamic contrast ratios.</p>
 			</div>
 		</div>
 
@@ -77,88 +77,3 @@ const screenshots = [
 		</ul>
 	</section>
 </ProjectPage>
-
-<style>
-	.project-deepdive {
-		margin-top: 3rem;
-		padding-top: 2.5rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.project-deepdive h2 {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive h3 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 2rem 0 1rem;
-		color: var(--fg);
-	}
-
-	.project-deepdive p {
-		font-size: 1.05rem;
-		line-height: 1.75;
-		color: var(--fg-muted);
-		margin-bottom: 1.25rem;
-	}
-
-	.mechanics-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		margin: 1.5rem 0 2rem;
-	}
-
-	.mechanics-card {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 1.25rem;
-	}
-
-	.mechanics-card h4 {
-		font-size: 1rem;
-		font-weight: 600;
-		color: var(--fg);
-		margin: 0 0 0.5rem 0;
-	}
-
-	.mechanics-card p {
-		font-size: 0.925rem;
-		line-height: 1.6;
-		margin: 0;
-		color: var(--fg-muted);
-	}
-
-	.specs-list {
-		list-style: none;
-		padding: 0;
-		margin: 1.25rem 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.specs-list li {
-		font-size: 0.95rem;
-		color: var(--fg-muted);
-		padding: 0.75rem 1rem;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-	}
-
-	.specs-list strong {
-		color: var(--fg);
-	}
-
-	@media (max-width: 640px) {
-		.mechanics-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

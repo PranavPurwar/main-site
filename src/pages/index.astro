@@ -3,6 +3,8 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
 import {
 	SITE_TITLE,
 	SITE_DESCRIPTION,
@@ -12,6 +14,9 @@ import {
 } from '../consts';
 
 const featuredProjects = PROJECTS.filter((project) => project.featured);
+const recentPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
 ---
 
 <!doctype html>
@@ -23,29 +28,68 @@ const featuredProjects = PROJECTS.filter((project) => project.featured);
 		<Header />
 		<main>
 			<section class="hero">
-				<img
-					class="avatar"
-					src={AVATAR_URL}
-					alt="Pranav Purwar"
-					width="100"
-					height="100"
-				/>
+				<div class="avatar-wrap">
+					<!-- <img
+						class="avatar"
+						src={AVATAR_URL}
+						alt="Pranav Purwar"
+						width="104"
+						height="104"
+					/> -->
+					<img
+						class="avatar"
+						src="/logo.jpg"
+						alt="invokevirtual logo"
+						width="104"
+						height="104"
+					/>
+				</div>
 				<h1>Pranav Purwar</h1>
-				<p class="handle">@{GITHUB_DISPLAY}</p>
+				<p class="handle">@{GITHUB_DISPLAY} &bull; <span class="tag">invokevirtual</span></p>
 				<p class="bio">
 					Systems engineer building developer tools, JVM compilers, and privacy-first Android apps. Founder of Cosmic IDE, aload0, and Bryte-Edu.
 				</p>
+				<div class="hero-stats">
+					<span class="hero-stat"><strong>2,000+</strong> stars across projects</span>
+					<span class="dot">&bull;</span>
+					<span class="hero-stat"><strong>Open Source</strong> F-Droid &amp; GitHub</span>
+					<span class="dot">&bull;</span>
+					<span class="hero-stat"><strong>Android &amp; JVM</strong> Toolchains</span>
+				</div>
 			</section>
 
-			<section class="projects-section">
-				<h2>Projects</h2>
-				<div class="project-grid">
+			<section class="quick-nav-section">
+				<div class="section-header">
+					<h2>Projects</h2>
+					<a href="/projects" class="section-link">All projects &rarr;</a>
+				</div>
+				<div class="project-list">
 					{featuredProjects.map((project) => (
 						<ProjectCard {...project} />
 					))}
 				</div>
-				<div class="view-all-container">
-					<a href="/projects" class="view-all-link">View all projects &rarr;</a>
+			</section>
+
+			<section class="quick-nav-section">
+				<div class="section-header">
+					<h2>Writing</h2>
+					<a href="/blog" class="section-link">All writing &rarr;</a>
+				</div>
+				<div class="writing-list">
+					{recentPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="writing-row">
+							<div class="writing-row-main">
+								<span class="writing-title">{post.data.title}</span>
+								<span class="writing-desc">{post.data.description}</span>
+							</div>
+							<div class="writing-row-meta">
+								<time datetime={post.data.pubDate.toISOString()}>
+									<FormattedDate date={post.data.pubDate} />
+								</time>
+								<span class="arrow">&rarr;</span>
+							</div>
+						</a>
+					))}
 				</div>
 			</section>
 		</main>
@@ -54,113 +98,257 @@ const featuredProjects = PROJECTS.filter((project) => project.featured);
 </html>
 
 <style>
-	main {
-		max-width: var(--max-width);
-		margin: 0 auto;
-		padding: 3rem 1rem;
-	}
-
 	.hero {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		text-align: center;
-		padding: 2rem 0 3.5rem;
+		padding: 2rem 0 3rem;
 		border-bottom: 1px solid var(--border);
-		margin-bottom: 3rem;
+		margin-bottom: 2.75rem;
 	}
 
-	.avatar {
-		width: 100px;
-		height: 100px;
-		border-radius: 50%;
-		border: 2px solid var(--border);
-		object-fit: cover;
+	.avatar-wrap {
+		position: relative;
 		margin-bottom: 1.25rem;
 	}
 
-	h1 {
-		font-size: 2.25rem;
-		font-weight: 700;
-		color: var(--fg);
-		margin: 0 0 0.25rem 0;
-		letter-spacing: -0.02em;
+	.avatar {
+		width: 104px;
+		height: 104px;
+		border-radius: 50%;
+		border: 2px solid var(--border);
+		object-fit: cover;
+		display: block;
+	}
+
+	.avatar-badge {
+		position: absolute;
+		bottom: -2px;
+		right: -4px;
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		border: 2px solid var(--bg);
+		box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
+		object-fit: cover;
 	}
 
 	.handle {
 		font-family: var(--font-mono);
 		color: var(--fg-dim);
-		font-size: 0.95rem;
+		font-size: 0.9rem;
 		margin: 0 0 1rem 0;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.handle .tag {
+		color: var(--accent);
+		font-weight: 500;
 	}
 
 	.bio {
 		max-width: 580px;
 		color: var(--fg-muted);
-		font-size: 1.1rem;
-		line-height: 1.6;
-		margin: 0;
-	}
-
-	.projects-section h2 {
-		font-size: 1.5rem;
-		font-weight: 600;
-		color: var(--fg);
+		font-size: 1.05rem;
+		line-height: 1.65;
 		margin: 0 0 1.5rem 0;
 	}
 
-	.project-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.25rem;
+	.hero-stats {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		font-size: 0.85rem;
+		color: var(--fg-dim);
 	}
 
-	.view-all-container {
-		margin-top: 2rem;
-		text-align: center;
-	}
-
-	.view-all-link {
+	.hero-stat {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.35rem;
+	}
+
+	.hero-stat strong {
+		color: var(--fg);
+		font-weight: 600;
+	}
+
+	.dot {
+		color: var(--border-hover);
+	}
+
+	.quick-nav-section {
+		margin-bottom: 2.75rem;
+	}
+
+	.section-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.section-header h2 {
+		font-size: 1.15rem;
+		font-weight: 600;
+		color: var(--fg);
+		margin: 0;
+		letter-spacing: -0.015em;
+	}
+
+	.section-link {
+		font-size: 0.825rem;
 		color: var(--accent);
-		font-weight: 500;
-		font-size: 0.95rem;
 		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.15s ease, transform 0.15s ease;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.section-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(2px);
+	}
+
+	.project-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.writing-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.writing-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 0.5rem;
+		border-bottom: 1px solid var(--border);
+		text-decoration: none;
+		color: inherit;
+		border-radius: var(--radius);
+		transition: background-color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.writing-row:last-child {
+		border-bottom: none;
+	}
+
+	.writing-row:hover {
+		background-color: var(--bg-surface);
+	}
+
+	.writing-row-main {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		min-width: 0;
+	}
+
+	.writing-title {
+		font-size: 0.975rem;
+		font-weight: 600;
+		color: var(--fg);
+		letter-spacing: -0.01em;
 		transition: color 0.15s ease;
 	}
 
-	.view-all-link:hover {
+	.writing-row:hover .writing-title {
 		color: var(--accent-hover);
 	}
 
-	@media (max-width: 900px) {
-		.project-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
+	.writing-desc {
+		font-size: 0.85rem;
+		color: var(--fg-muted);
+		line-height: 1.45;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.writing-row-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-shrink: 0;
+	}
+
+	.writing-row-meta time {
+		font-family: var(--font-mono);
+		font-size: 0.775rem;
+		color: var(--fg-dim);
+	}
+
+	.arrow {
+		color: var(--fg-dim);
+		font-size: 0.875rem;
+		transition: transform 0.15s ease, color 0.15s ease;
+	}
+
+	.writing-row:hover .arrow {
+		color: var(--accent);
+		transform: translateX(3px);
 	}
 
 	@media (max-width: 600px) {
-		main {
-			padding: 2rem 1rem;
-		}
-
 		.hero {
-			padding: 1rem 0 2.5rem;
-			margin-bottom: 2rem;
+			padding: 1rem 0 1.75rem;
+			margin-bottom: 1.75rem;
 		}
 
-		h1 {
-			font-size: 1.85rem;
+		.avatar {
+			width: 88px;
+			height: 88px;
+		}
+
+		.avatar-badge {
+			width: 26px;
+			height: 26px;
+			bottom: -2px;
+			right: -2px;
 		}
 
 		.bio {
-			font-size: 1rem;
+			font-size: 0.95rem;
+			line-height: 1.55;
+			margin-bottom: 1.25rem;
 		}
 
-		.project-grid {
-			grid-template-columns: 1fr;
+		.hero-stats {
+			gap: 0.4rem 0.6rem;
+			font-size: 0.8rem;
+		}
+
+		.dot {
+			display: none;
+		}
+
+		.quick-nav-section {
+			margin-bottom: 2rem;
+		}
+
+		.writing-row {
+			padding: 0.75rem 0.25rem;
+		}
+
+		.writing-desc {
+			white-space: normal;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
 		}
 	}
 </style>

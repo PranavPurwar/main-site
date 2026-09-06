@@ -15,7 +15,16 @@ import Footer from '../components/Footer.astro';
 	<body>
 		<Header />
 		<main>
-			<h1>About</h1>
+			<div class="about-hero">
+				<div class="brand-visual">
+					<img src="/logo.jpg" alt="invokevirtual logo" class="about-logo" width="76" height="76" />
+				</div>
+				<div class="about-titles">
+					<h1>About</h1>
+					<p class="handle">Pranav Purwar &bull; <span class="tag">@invoke</span> &bull; <span class="brand-name">invokevirtual</span></p>
+					<p class="role-line">Systems Engineer &bull; Open Source Developer</p>
+				</div>
+			</div>
 
 			<div class="bio-content">
 				<p>
@@ -35,10 +44,25 @@ import Footer from '../components/Footer.astro';
 				</p>
 			</div>
 
+			<section class="domains-grid">
+				<div class="domain-card">
+					<h3>Android &amp; Virtualization</h3>
+					<p>PRoot userlands, Arch Linux ARM containers, and hardware-backed biometric security architectures.</p>
+				</div>
+				<div class="domain-card">
+					<h3>JVM &amp; Compilers</h3>
+					<p>Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
+				</div>
+				<div class="domain-card">
+					<h3>Privacy &amp; Tooling</h3>
+					<p>Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
+				</div>
+			</section>
+
 			<section class="get-in-touch">
 				<h2>Get in touch</h2>
 				<p>
-					You can find my open-source projects and code on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub</a>.
+					Explore code repositories and active issues directly on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
 				</p>
 			</section>
 		</main>
@@ -47,54 +71,139 @@ import Footer from '../components/Footer.astro';
 </html>
 
 <style>
-	main {
-		max-width: 720px;
-		margin: 0 auto;
-		padding: 3rem 1rem;
+	.about-hero {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		margin-bottom: 2.5rem;
+		padding-bottom: 2rem;
+		border-bottom: 1px solid var(--border);
 	}
 
-	h1 {
-		font-size: 2.5rem;
-		font-weight: 700;
-		margin: 0 0 1.75rem 0;
-		letter-spacing: -0.02em;
-		color: var(--fg);
+	.brand-visual {
+		flex-shrink: 0;
+	}
+
+	.about-logo {
+		width: 72px;
+		height: 72px;
+		border-radius: 12px;
+		object-fit: cover;
+		border: 1px solid var(--border);
+		box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
+		display: block;
+	}
+
+	.about-titles {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.handle {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		color: var(--fg-dim);
+		margin: 0;
+	}
+
+	.handle .tag {
+		color: var(--accent);
+		font-weight: 500;
+	}
+
+	.handle .brand-name {
+		color: var(--fg-muted);
+		font-weight: 500;
+	}
+
+	.role-line {
+		font-size: 0.875rem;
+		color: var(--fg-muted);
+		margin: 0.2rem 0 0 0;
 	}
 
 	.bio-content p {
-		font-size: 1.0625rem;
+		font-size: 1.05rem;
 		line-height: 1.75;
 		color: var(--fg);
-		margin-bottom: 1.5rem;
+		margin-bottom: 1.35rem;
+	}
+
+	.domains-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+		margin: 2.5rem 0;
+	}
+
+	.domain-card {
+		padding: 1.15rem 1.25rem;
+		border-radius: var(--radius);
+		background: var(--bg-surface);
+		border: 1px solid var(--border);
+		transition: border-color 0.18s ease, transform 0.18s ease;
+	}
+
+	.domain-card:hover {
+		border-color: var(--border-hover);
+		transform: translateY(-2px);
+	}
+
+	.domain-card h3 {
+		font-size: 0.925rem;
+		font-weight: 600;
+		color: var(--fg);
+		margin: 0 0 0.4rem 0;
+		letter-spacing: -0.01em;
+	}
+
+	.domain-card p {
+		font-size: 0.825rem;
+		line-height: 1.55;
+		margin: 0;
+		color: var(--fg-muted);
 	}
 
 	.get-in-touch {
-		margin-top: 3rem;
-		padding-top: 2rem;
+		margin-top: 2.5rem;
+		padding-top: 1.75rem;
 		border-top: 1px solid var(--border);
 	}
 
 	.get-in-touch h2 {
-		font-size: 1.375rem;
+		font-size: 1.25rem;
 		font-weight: 600;
-		margin: 0 0 0.75rem 0;
+		margin: 0 0 0.5rem 0;
 		color: var(--fg);
+		letter-spacing: -0.015em;
 	}
 
 	.get-in-touch p {
-		font-size: 1rem;
+		font-size: 0.95rem;
 		color: var(--fg-muted);
 		margin: 0;
 	}
 
-	@media (max-width: 640px) {
-		main {
-			padding: 2rem 1rem;
+	.get-in-touch a {
+		color: var(--accent);
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.get-in-touch a:hover {
+		color: var(--accent-hover);
+	}
+
+	@media (max-width: 720px) {
+		.about-hero {
+			flex-direction: column;
+			text-align: center;
+			gap: 1rem;
 		}
 
-		h1 {
-			font-size: 2rem;
-			margin-bottom: 1.25rem;
+		.domains-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>
