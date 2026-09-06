@@ -16,7 +16,6 @@ const {
 	forks,
 	github,
 	features,
-	screenshot,
 } = Astro.props;
 ---
 
@@ -26,86 +25,79 @@ const {
 		<BaseHead title={`${name} — Pranav Purwar`} description={tagline} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<a href="/projects" class="back-link">&larr; Back to Projects</a>
+		<div class="app-container">
+			<Header />
+			<main>
+				<a href="/projects" class="back-link">&larr; Back to Projects</a>
 
-			<header class="project-header">
-				<div class="header-badge">
-					<span class="status-dot"></span>
-					<span>Open Source</span>
-				</div>
-				<h1>{name}</h1>
-				<p class="tagline">{tagline}</p>
+				<header class="project-header">
+					<h1>{name}</h1>
+					<p class="tagline">{tagline}</p>
 
-				<div class="stats-bar">
-					<span class="stat-item" title={`${stars} GitHub stars`}>
-						<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-							<path
-								fill="currentColor"
-								d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"
-							></path>
-						</svg>
-						<span>{stars} stars</span>
-					</span>
+					<div class="stats-bar">
+						<a
+							href={github}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="btn btn--primary btn--sm"
+							aria-label={`View ${name} on GitHub`}
+						>
+							<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+								<path
+									fill="currentColor"
+									d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+								></path>
+							</svg>
+							<span>View on GitHub &rarr;</span>
+						</a>
 
-					<span class="stat-item" title={`${forks} forks`}>
-						<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-							<path
-								fill="currentColor"
-								d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"
-							></path>
-						</svg>
-						<span>{forks} forks</span>
-					</span>
+						<span class="stat-item" title={`${stars} GitHub stars`}>
+							<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+								<path
+									fill="currentColor"
+									d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"
+								></path>
+							</svg>
+							<span>{stars} stars</span>
+						</span>
 
-					<a
-						href={github}
-						target="_blank"
-						rel="noopener noreferrer"
-						class="github-btn"
-						aria-label={`View ${name} on GitHub`}
-					>
-						<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
-							<path
-								fill="currentColor"
-								d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-							></path>
-						</svg>
-						<span>View on GitHub &rarr;</span>
-					</a>
-				</div>
-
-				{tech && tech.length > 0 && (
-					<div class="tech-tags">
-						{tech.map((item) => (
-							<span class="tech-pill">{item}</span>
-						))}
+						<span class="stat-item" title={`${forks} forks`}>
+							<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+								<path
+									fill="currentColor"
+									d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"
+								></path>
+							</svg>
+							<span>{forks} forks</span>
+						</span>
 					</div>
-				)}
-			</header>
 
-			<section class="description-section">
-				<p>{description}</p>
-			</section>
+					{tech && tech.length > 0 && (
+						<div class="tech-tags">
+							{tech.map((item) => (
+								<span class="badge-tag">{item}</span>
+							))}
+						</div>
+					)}
+				</header>
 
-			{features && features.length > 0 && (
-				<section class="features-section">
-					<h2>Key Features</h2>
-					<ul class="features-grid">
-						{features.map((feature) => (
-							<li class="feature-item">
-								<span class="feature-bullet">&bull;</span>
-								<span class="feature-text">{feature}</span>
-							</li>
-						))}
-					</ul>
-				</section>
-			)}
+				<div class="prose project-content">
+					<p>{description}</p>
 
-			<slot />
-		</main>
-		<Footer />
+					{features && features.length > 0 && (
+						<>
+							<h2>Key Features</h2>
+							<ul>
+								{features.map((feature) => <li>{feature}</li>)}
+							</ul>
+						</>
+					)}
+
+					<slot />
+				</div>
+				<Footer />
+			</main>
+		</div>
 	</body>
 </html>
 
@@ -114,25 +106,6 @@ const {
 		margin-bottom: 2rem;
 		padding-bottom: 2rem;
 		border-bottom: 1px solid var(--border);
-	}
-
-	.header-badge {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-family: var(--font-mono);
-		font-size: 0.725rem;
-		color: var(--accent);
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		margin-bottom: 0.75rem;
-	}
-
-	.status-dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		background: var(--accent);
 	}
 
 	.tagline {
@@ -156,223 +129,96 @@ const {
 		align-items: center;
 		gap: 0.4rem;
 		color: var(--fg-muted);
-		font-size: 0.825rem;
+		font-size: 0.775rem;
 		font-family: var(--font-mono);
-		padding: 0.3rem 0.65rem;
-		border-radius: 6px;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
 	}
 
 	.stat-item svg {
 		color: var(--fg-dim);
 	}
 
-	.github-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		background: var(--accent);
-		border: 1px solid var(--accent);
-		color: #ffffff;
-		padding: 0.32rem 0.8rem;
-		border-radius: 6px;
-		font-size: 0.825rem;
-		font-weight: 500;
-		text-decoration: none;
-		transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
-	}
-
-	.github-btn:hover {
-		background: var(--accent-hover);
-		border-color: var(--accent-hover);
-		color: #ffffff;
-		transform: translateY(-1px);
-	}
-
-	.github-btn svg {
-		flex-shrink: 0;
-	}
-
 	.tech-tags {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.35rem;
+		gap: 0.4rem;
 		margin-top: 0.75rem;
 	}
 
-	.tech-pill {
-		font-size: 0.725rem;
-		font-family: var(--font-mono);
-		padding: 0.15rem 0.5rem;
-		border-radius: 4px;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		color: var(--fg-muted);
-		line-height: 1.4;
+	.project-content {
+		margin-top: 0;
 	}
 
-	.description-section {
-		margin-bottom: 2.5rem;
-	}
-
-	.description-section p {
-		font-size: 1.05rem;
+	.prose {
+		color: var(--fg);
 		line-height: 1.75;
-		color: var(--fg-muted);
-		margin: 0;
 	}
 
-	.features-section {
-		margin-bottom: 2.5rem;
-	}
-
-	.features-section h2 {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 0 0 1.25rem 0;
-		color: var(--fg);
-		letter-spacing: -0.015em;
-	}
-
-	.features-grid {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.75rem;
-	}
-
-	.feature-item {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.5rem;
-		padding: 0.75rem 0.85rem;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		color: var(--fg);
-		font-size: 0.9rem;
-		line-height: 1.5;
-	}
-
-	.feature-bullet {
-		color: var(--accent);
-		font-weight: 700;
-		font-size: 1rem;
-		line-height: 1.3;
-		flex-shrink: 0;
-	}
-
-	/* Shared deepdive styling for slotted project content */
-	:global(.project-deepdive) {
+	.prose :global(h2) {
 		margin-top: 2.5rem;
-		padding-top: 2rem;
-		border-top: 1px solid var(--border);
+		margin-bottom: 1rem;
+		font-family: var(--font-display);
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: var(--fg);
 	}
 
-	:global(.project-deepdive h2) {
-		font-size: 1.35rem;
-		font-weight: 600;
+	.prose :global(h3) {
+		margin-top: 2rem;
 		margin-bottom: 0.75rem;
-		color: var(--fg);
-		letter-spacing: -0.015em;
-	}
-
-	:global(.project-deepdive h3) {
+		font-family: var(--font-display);
 		font-size: 1.15rem;
-		font-weight: 600;
-		margin: 2rem 0 0.85rem;
+		font-weight: 700;
 		color: var(--fg);
-		letter-spacing: -0.01em;
 	}
 
-	:global(.project-deepdive p) {
-		font-size: 0.975rem;
+	.prose :global(p) {
+		margin-bottom: 1.4em;
+		color: var(--fg-muted);
+		font-size: 1rem;
 		line-height: 1.7;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		padding-left: 1.5rem;
+		margin-bottom: 1.5rem;
 		color: var(--fg-muted);
-		margin-bottom: 1.25rem;
+		font-size: 0.975rem;
 	}
 
-	:global(.deepdive-grid) {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.85rem;
-		margin: 1rem 0 2rem;
+	.prose :global(li) {
+		margin-bottom: 0.6rem;
+		line-height: 1.65;
 	}
 
-	:global(.deepdive-card) {
-		padding: 0.85rem 1rem;
-		border-radius: var(--radius);
-		border: 1px solid var(--border);
-		background: var(--bg-surface);
-	}
-
-	:global(.deepdive-card h4) {
-		font-size: 0.95rem;
-		font-weight: 600;
+	.prose :global(li strong) {
 		color: var(--fg);
-		margin: 0 0 0.35rem 0;
 	}
 
-	:global(.deepdive-card p) {
-		font-size: 0.875rem;
-		line-height: 1.55;
-		margin: 0;
-		color: var(--fg-muted);
+	.prose :global(pre) {
+		margin: 1.75rem 0;
 	}
 
-	:global(.specs-list) {
-		list-style: none;
-		padding: 0;
-		margin: 1rem 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+	.prose :global(blockquote) {
+		margin: 1.75rem 0;
 	}
 
-	:global(.specs-list li) {
-		font-size: 0.9rem;
-		color: var(--fg-muted);
-		padding: 0.55rem 0.75rem;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
+	.prose :global(a) {
+		color: var(--accent);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-color: rgba(99, 102, 241, 0.45);
+		transition: color 0.15s ease, text-decoration-color 0.15s ease;
 	}
 
-	:global(.specs-list strong) {
-		color: var(--fg);
-		font-weight: 600;
-	}
-
-	:global(.code-block) {
-		margin-top: 1rem;
-	}
-
-	:global(.code-block pre) {
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		padding: 0.85rem 1rem;
-		overflow-x: auto;
-	}
-
-	:global(.code-block code) {
-		font-family: var(--font-mono);
-		font-size: 0.825rem;
-		line-height: 1.5;
-		color: var(--fg);
+	.prose :global(a:hover) {
+		color: #ffffff;
+		text-decoration-color: #ffffff;
 	}
 
 	@media (max-width: 640px) {
 		.tagline {
 			font-size: 1rem;
-		}
-
-		.features-grid,
-		:global(.deepdive-grid) {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

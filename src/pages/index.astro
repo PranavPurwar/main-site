@@ -5,18 +5,32 @@ import Footer from '../components/Footer.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
-import {
-	SITE_TITLE,
-	SITE_DESCRIPTION,
-	PROJECTS,
-	AVATAR_URL,
-	GITHUB_DISPLAY,
-} from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, GITHUB_DISPLAY } from '../consts';
+import { getProjectsWithLiveStars, calculateTotalStars } from '../lib/github';
 
-const featuredProjects = PROJECTS.filter((project) => project.featured);
-const recentPosts = (await getCollection('blog'))
-	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	.slice(0, 3);
+const projects = await getProjectsWithLiveStars();
+const featuredProjects = projects.filter((project) => project.featured);
+const totalStars = calculateTotalStars(projects);
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const recentPosts = allPosts.slice(0, 4);
+
+const faqItems = [
+	{
+		question: "What is the primary focus of your open-source work?",
+		answer: "I build developer tools, compiler infrastructure (Java/Kotlin), and rootless Linux userlands that run directly on mobile devices without relying on external cloud servers."
+	},
+	{
+		question: "How are these compiler toolchains ported to Android?",
+		answer: "I adapt upstream OpenJDK javac and Kotlin compiler toolchains to execute within Android's ART execution environment and PRoot userlands."
+	},
+	{
+		question: "How can other developers get in touch or contribute?",
+		answer: "All my repositories are public on GitHub (@PranavPurwar). You can submit issues, open pull requests, or reach out directly at contact@invokevirtual.org."
+	}
+];
 ---
 
 <!doctype html>
@@ -25,198 +39,209 @@ const recentPosts = (await getCollection('blog'))
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<section class="hero">
-				<div class="avatar-wrap">
-					<!-- <img
-						class="avatar"
-						src={AVATAR_URL}
-						alt="Pranav Purwar"
-						width="104"
-						height="104"
-					/> -->
-					<img
-						class="avatar"
-						src="/logo.jpg"
-						alt="invokevirtual logo"
-						width="104"
-						height="104"
-					/>
-				</div>
-				<h1>Pranav Purwar</h1>
-				<p class="handle">@{GITHUB_DISPLAY} &bull; <span class="tag">invokevirtual</span></p>
-				<p class="bio">
-					Systems engineer building developer tools, JVM compilers, and privacy-first Android apps. Founder of Cosmic IDE, aload0, and Bryte-Edu.
-				</p>
-				<div class="hero-stats">
-					<span class="hero-stat"><strong>2,000+</strong> stars across projects</span>
-					<span class="dot">&bull;</span>
-					<span class="hero-stat"><strong>Open Source</strong> F-Droid &amp; GitHub</span>
-					<span class="dot">&bull;</span>
-					<span class="hero-stat"><strong>Android &amp; JVM</strong> Toolchains</span>
-				</div>
-			</section>
+		<div class="app-container has-widgets">
+			<Header />
 
-			<section class="quick-nav-section">
-				<div class="section-header">
-					<h2>Projects</h2>
-					<a href="/projects" class="section-link">All projects &rarr;</a>
-				</div>
-				<div class="project-list">
-					{featuredProjects.map((project) => (
-						<ProjectCard {...project} />
-					))}
-				</div>
-			</section>
+			<main>
+				<!-- Hero Section -->
+				<section class="hero-box">
+					<span class="mono-subtitle">@{GITHUB_DISPLAY} &bull; SYSTEMS &amp; ANDROID</span>
+					<h1 class="hero-title">
+						Developer tools, compilers, and Linux environments on mobile.
+					</h1>
+					<p class="hero-lead">
+						I build developer tools, IDEs, and utility for mobile devices. My work centers on Cosmic IDE and ported compiler toolchains to let developers write, compile, and run code locally on Android.
+					</p>
+					<div class="cta-row">
+						<a href="/projects" class="btn btn--primary">View Projects &rarr;</a>
+						<a href="https://github.com/PranavPurwar" target="_blank" rel="noopener" class="btn btn--ghost">GitHub ({totalStars.toLocaleString()}+ Stars)</a>
+					</div>
+				</section>
 
-			<section class="quick-nav-section">
-				<div class="section-header">
-					<h2>Writing</h2>
-					<a href="/blog" class="section-link">All writing &rarr;</a>
+				<!-- Projects Section -->
+				<section class="section-block">
+					<div class="section-header">
+						<div>
+							<span class="mono-subtitle">SOFTWARE</span>
+							<h2>Featured Projects</h2>
+						</div>
+						<a href="/projects" class="section-link">All projects &rarr;</a>
+					</div>
+					<div class="project-list">
+						{featuredProjects.map((project) => (
+							<ProjectCard {...project} />
+						))}
+					</div>
+				</section>
+
+				<!-- Writing Feed Section -->
+				<section class="section-block">
+					<div class="section-header">
+						<div>
+							<span class="mono-subtitle">PUBLICATIONS</span>
+							<h2>Recent Writing</h2>
+						</div>
+						<a href="/blog" class="section-link">All posts &rarr;</a>
+					</div>
+					<div class="writing-feed">
+						{recentPosts.map((post) => (
+							<article class="feed-item">
+								<div class="feed-meta">
+									<time datetime={post.data.pubDate.toISOString()}>
+										<FormattedDate date={post.data.pubDate} />
+									</time>
+									<span class="meta-sep">&bull;</span>
+								</div>
+								<h3 class="feed-title">
+									<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+								</h3>
+								<p class="feed-desc">{post.data.description}</p>
+							</article>
+						))}
+					</div>
+				</section>
+
+				<!-- FAQ Section -->
+				<section class="section-block">
+					<div class="section-header">
+						<div>
+							<span class="mono-subtitle">FAQ</span>
+							<h2>Frequently Asked</h2>
+						</div>
+					</div>
+					<div class="faq-list">
+						{faqItems.map((item) => (
+							<details class="faq-item">
+								<summary>{item.question}</summary>
+								<p>{item.answer}</p>
+							</details>
+						))}
+					</div>
+				</section>
+
+				<Footer />
+			</main>
+
+			<!-- Right Sidebar: Clean Developer Publication Widgets -->
+			<aside class="app-widgets">
+				<div class="widget-card">
+					<h3 class="widget-title">Latest Articles</h3>
+					<ul class="widget-posts">
+						{allPosts.slice(0, 3).map((post) => (
+							<li>
+								<a href={`/blog/${post.id}/`} class="widget-post-link">
+									<span class="widget-post-title">{post.data.title}</span>
+									<span class="widget-post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+								</a>
+							</li>
+						))}
+					</ul>
 				</div>
-				<div class="writing-list">
-					{recentPosts.map((post) => (
-						<a href={`/blog/${post.id}/`} class="writing-row">
-							<div class="writing-row-main">
-								<span class="writing-title">{post.data.title}</span>
-								<span class="writing-desc">{post.data.description}</span>
-							</div>
-							<div class="writing-row-meta">
-								<time datetime={post.data.pubDate.toISOString()}>
-									<FormattedDate date={post.data.pubDate} />
-								</time>
-								<span class="arrow">&rarr;</span>
-							</div>
-						</a>
-					))}
+
+				<div class="widget-card">
+					<h3 class="widget-title">Top Repositories</h3>
+					<ul class="widget-repos">
+						{projects.slice(0, 4).map((project) => (
+							<li>
+								<a
+									href={project.github}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="widget-repo-link"
+								>
+									<span class="widget-repo-name">{project.name}</span>
+									<span class="widget-repo-stars" title={`${project.stars.toLocaleString()} stars on GitHub`}>
+										<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+											<path
+												fill="currentColor"
+												d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"
+											></path>
+										</svg>
+										<span>{project.stars.toLocaleString()}</span>
+									</span>
+								</a>
+							</li>
+						))}
+					</ul>
 				</div>
-			</section>
-		</main>
-		<Footer />
+
+				<div class="widget-card">
+					<h3 class="widget-title">About</h3>
+					<p class="widget-bio">
+						I'm a systems engineer building developer tools, JVM compilers, and privacy-first software for Android.
+					</p>
+					<ul class="widget-quick-links">
+						<li><a href="https://github.com/PranavPurwar" target="_blank" rel="noopener">GitHub profile &rarr;</a></li>
+						<li><a href="/rss.xml">RSS feed &rarr;</a></li>
+						<li><a href="mailto:contact@invokevirtual.org">Email directly &rarr;</a></li>
+					</ul>
+				</div>
+			</aside>
+		</div>
 	</body>
 </html>
 
 <style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		padding: 2rem 0 3rem;
+	.hero-box {
+		padding: 1.5rem 0 2.5rem;
 		border-bottom: 1px solid var(--border);
-		margin-bottom: 2.75rem;
+		margin-bottom: 2.5rem;
 	}
 
-	.avatar-wrap {
-		position: relative;
-		margin-bottom: 1.25rem;
-	}
-
-	.avatar {
-		width: 104px;
-		height: 104px;
-		border-radius: 50%;
-		border: 2px solid var(--border);
-		object-fit: cover;
-		display: block;
-	}
-
-	.avatar-badge {
-		position: absolute;
-		bottom: -2px;
-		right: -4px;
-		width: 32px;
-		height: 32px;
-		border-radius: 8px;
-		border: 2px solid var(--bg);
-		box-shadow: 0 2px 8px rgb(0 0 0 / 40%);
-		object-fit: cover;
-	}
-
-	.handle {
-		font-family: var(--font-mono);
-		color: var(--fg-dim);
-		font-size: 0.9rem;
-		margin: 0 0 1rem 0;
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-	}
-
-	.handle .tag {
-		color: var(--accent);
-		font-weight: 500;
-	}
-
-	.bio {
-		max-width: 580px;
-		color: var(--fg-muted);
-		font-size: 1.05rem;
-		line-height: 1.65;
-		margin: 0 0 1.5rem 0;
-	}
-
-	.hero-stats {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		font-size: 0.85rem;
-		color: var(--fg-dim);
-	}
-
-	.hero-stat {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-	}
-
-	.hero-stat strong {
+	.hero-title {
+		font-size: 2.rem;
+		font-weight: 800;
+		line-height: 1.15;
+		margin-bottom: 1rem;
+		letter-spacing: -0.035em;
 		color: var(--fg);
-		font-weight: 600;
 	}
 
-	.dot {
-		color: var(--border-hover);
+	.hero-lead {
+		font-size: 1.05rem;
+		color: var(--fg-muted);
+		line-height: 1.65;
+		max-width: 640px;
+		margin-bottom: 1.75rem;
 	}
 
-	.quick-nav-section {
+	.cta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+	}
+
+	.section-block {
 		margin-bottom: 2.75rem;
 	}
 
 	.section-header {
 		display: flex;
-		align-items: baseline;
+		align-items: flex-end;
 		justify-content: space-between;
-		margin-bottom: 1rem;
-		padding-bottom: 0.5rem;
+		margin-bottom: 1.25rem;
+		padding-bottom: 0.65rem;
 		border-bottom: 1px solid var(--border);
 	}
 
 	.section-header h2 {
-		font-size: 1.15rem;
-		font-weight: 600;
-		color: var(--fg);
 		margin: 0;
-		letter-spacing: -0.015em;
 	}
 
 	.section-link {
-		font-size: 0.825rem;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
 		color: var(--accent);
-		text-decoration: none;
-		font-weight: 500;
 		transition: color 0.15s ease, transform 0.15s ease;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.25rem;
 	}
-
 	.section-link:hover {
-		color: var(--accent-hover);
-		transform: translateX(2px);
+		color: #ffffff;
+		transform: translateX(3px);
 	}
 
 	.project-list {
@@ -225,130 +250,196 @@ const recentPosts = (await getCollection('blog'))
 		gap: 0.85rem;
 	}
 
-	.writing-list {
+	.writing-feed {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.writing-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 0.9rem 0.5rem;
+	.feed-item {
+		padding: 1.25rem 0;
 		border-bottom: 1px solid var(--border);
-		text-decoration: none;
-		color: inherit;
-		border-radius: var(--radius);
-		transition: background-color 0.15s ease, border-color 0.15s ease;
 	}
-
-	.writing-row:last-child {
+	.feed-item:last-child {
 		border-bottom: none;
 	}
 
-	.writing-row:hover {
-		background-color: var(--bg-surface);
-	}
-
-	.writing-row-main {
+	.feed-meta {
 		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		min-width: 0;
+		align-items: center;
+		gap: 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.725rem;
+		color: var(--fg-dim);
+		margin-bottom: 0.35rem;
 	}
 
-	.writing-title {
-		font-size: 0.975rem;
+	.meta-sep {
+		color: var(--border);
+	}
+
+	.meta-cat {
+		color: var(--fg-muted);
+		text-transform: uppercase;
 		font-weight: 600;
+		letter-spacing: 0.03em;
+	}
+
+	.feed-title {
+		margin: 0 0 0.35rem 0;
+		font-family: var(--font-display);
+		font-size: 1.2rem;
+		font-weight: 700;
+		line-height: 1.3;
+		letter-spacing: -0.015em;
+	}
+
+	.feed-title a {
 		color: var(--fg);
-		letter-spacing: -0.01em;
+		text-decoration: none;
 		transition: color 0.15s ease;
 	}
 
-	.writing-row:hover .writing-title {
-		color: var(--accent-hover);
+	.feed-title a:hover {
+		color: #ffffff;
+		text-decoration: underline;
 	}
 
-	.writing-desc {
-		font-size: 0.85rem;
+	.feed-desc {
+		font-size: 0.9rem;
 		color: var(--fg-muted);
-		line-height: 1.45;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		margin: 0;
+		line-height: 1.55;
 	}
 
-	.writing-row-meta {
+	.faq-list p {
+		font-size: 0.925rem;
+		color: var(--fg-muted);
+		margin: 0.25rem 0 1rem;
+		line-height: 1.6;
+	}
+
+	/* Right-side widget panel (Blogging & Project Publication) */
+	.app-widgets {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		padding: 2rem 0;
+		position: sticky;
+		top: 0;
+	}
+
+	.widget-card {
+		padding: 1.15rem;
+		background: var(--bg-surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.widget-title {
+		font-family: var(--font-mono);
+		font-size: 0.725rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--fg-dim);
+		margin: 0 0 0.85rem 0;
+		padding-bottom: 0.45rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.widget-posts, .widget-repos, .widget-quick-links {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.widget-post-link {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		text-decoration: none;
+	}
+
+	.widget-post-title {
+		font-size: 0.875rem;
+		color: #cbd5e1;
+		line-height: 1.4;
+		font-weight: 500;
+		transition: color 0.15s ease;
+	}
+
+	.widget-post-link:hover .widget-post-title {
+		color: #ffffff;
+		text-decoration: underline;
+	}
+
+	.widget-post-date {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		color: var(--fg-dim);
+	}
+
+	.widget-repo-link {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
-		flex-shrink: 0;
+		justify-content: space-between;
+		text-decoration: none;
+		gap: 0.5rem;
 	}
 
-	.writing-row-meta time {
-		font-family: var(--font-mono);
-		font-size: 0.775rem;
-		color: var(--fg-dim);
-	}
-
-	.arrow {
-		color: var(--fg-dim);
+	.widget-repo-name {
 		font-size: 0.875rem;
-		transition: transform 0.15s ease, color 0.15s ease;
+		color: #cbd5e1;
+		font-weight: 500;
+		transition: color 0.15s ease;
 	}
 
-	.writing-row:hover .arrow {
-		color: var(--accent);
-		transform: translateX(3px);
+	.widget-repo-link:hover .widget-repo-name {
+		color: #ffffff;
 	}
 
-	@media (max-width: 600px) {
-		.hero {
-			padding: 1rem 0 1.75rem;
-			margin-bottom: 1.75rem;
-		}
+	.widget-repo-stars {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		font-family: var(--font-mono);
+		font-size: 0.725rem;
+		color: var(--fg-muted);
+	}
 
-		.avatar {
-			width: 88px;
-			height: 88px;
-		}
+	.widget-repo-stars svg {
+		color: #eab308;
+	}
 
-		.avatar-badge {
-			width: 26px;
-			height: 26px;
-			bottom: -2px;
-			right: -2px;
-		}
+	.widget-bio {
+		font-size: 0.85rem;
+		color: var(--fg-muted);
+		line-height: 1.55;
+		margin: 0 0 0.85rem 0;
+	}
 
-		.bio {
-			font-size: 0.95rem;
-			line-height: 1.55;
-			margin-bottom: 1.25rem;
-		}
+	.widget-quick-links li a {
+		font-size: 0.8rem;
+		color: var(--fg-muted);
+		font-family: var(--font-mono);
+		text-decoration: none;
+		transition: color 0.15s ease;
+	}
 
-		.hero-stats {
-			gap: 0.4rem 0.6rem;
-			font-size: 0.8rem;
-		}
+	.widget-quick-links li a:hover {
+		color: #ffffff;
+	}
 
-		.dot {
+	@media (max-width: 1023px) {
+		.app-widgets {
 			display: none;
 		}
 
-		.quick-nav-section {
-			margin-bottom: 2rem;
-		}
-
-		.writing-row {
-			padding: 0.75rem 0.25rem;
-		}
-
-		.writing-desc {
-			white-space: normal;
-			display: -webkit-box;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
+		.hero-title {
+			font-size: 1.95rem;
 		}
 	}
 </style>

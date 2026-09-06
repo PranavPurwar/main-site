@@ -3,7 +3,9 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { PROJECTS } from '../../consts';
+import { getProjectsWithLiveStars } from '../../lib/github';
+
+const projects = await getProjectsWithLiveStars();
 ---
 
 <!doctype html>
@@ -11,24 +13,27 @@ import { PROJECTS } from '../../consts';
 	<head>
 		<BaseHead
 			title="Projects — Pranav Purwar"
-			description="Open-source tools, apps, and libraries."
+			description="My open-source developer tools, JVM compiler ports, and mobile systems."
 		/>
 	</head>
 	<body>
-		<Header />
-		<main>
-			<div class="projects-header">
-				<h1>Projects</h1>
-				<p class="subtitle">Open-source tools, apps, and libraries.</p>
-			</div>
+		<div class="app-container">
+			<Header />
+			<main>
+				<div class="projects-header">
+					<span class="mono-subtitle">SOFTWARE &amp; TOOLS</span>
+					<h1>Projects &amp; Software</h1>
+					<p class="subtitle">My open-source developer tools, compiler ports, and mobile systems.</p>
+				</div>
 
-			<div class="project-list">
-				{PROJECTS.map((project) => (
-					<ProjectCard {...project} />
-				))}
-			</div>
-		</main>
-		<Footer />
+				<div class="project-list">
+					{projects.map((project) => (
+						<ProjectCard {...project} />
+					))}
+				</div>
+				<Footer />
+			</main>
+		</div>
 	</body>
 </html>
 

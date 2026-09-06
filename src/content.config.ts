@@ -16,4 +16,31 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { blog };
+const projects = defineCollection({
+	// Load Markdown and MDX files in the `src/content/projects/` directory.
+	loader: glob({ base: "./src/content/projects", pattern: "**/*.{md,mdx}" }),
+	schema: z.object({
+		name: z.string(),
+		tagline: z.string(),
+		description: z.string(),
+		tech: z.array(z.string()),
+		stars: z.number().default(0),
+		forks: z.number().default(0),
+		github: z.string(),
+		features: z.array(z.string()).default([]),
+		featured: z.boolean().default(false),
+		order: z.number().default(100),
+		screenshot: z.string().optional(),
+		screenshots: z
+			.array(
+				z.object({
+					src: z.string(),
+					caption: z.string(),
+					alt: z.string(),
+				}),
+			)
+			.optional(),
+	}),
+});
+
+export const collections = { blog, projects };

@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { AVATAR_URL } from '../consts';
 ---
 
 <!doctype html>
@@ -9,64 +10,63 @@ import Footer from '../components/Footer.astro';
 	<head>
 		<BaseHead
 			title="About — Pranav Purwar"
-			description="Systems engineer focused on JVM internals, Android virtualization, and developer tooling."
+			description="I'm a systems engineer focused on JVM internals, Android virtualization, and developer tooling."
 		/>
 	</head>
 	<body>
-		<Header />
-		<main>
-			<div class="about-hero">
-				<div class="brand-visual">
-					<img src="/logo.jpg" alt="invokevirtual logo" class="about-logo" width="76" height="76" />
+		<div class="app-container">
+			<Header />
+			<main>
+				<div class="about-hero">
+					<div class="brand-visual">
+						<img src={AVATAR_URL} alt="Pranav Purwar" class="about-logo" width="76" height="76" />
+					</div>
+					<div class="about-titles">
+						<span class="mono-subtitle">PROFILE & BIO</span>
+						<h1>Pranav Purwar</h1>
+						<p class="handle">@PranavPurwar &bull; <span class="brand-name">invokevirtual</span></p>
+						<p class="role-line">Systems Engineer &bull; Open Source Developer</p>
+					</div>
 				</div>
-				<div class="about-titles">
-					<h1>About</h1>
-					<p class="handle">Pranav Purwar &bull; <span class="tag">@invoke</span> &bull; <span class="brand-name">invokevirtual</span></p>
-					<p class="role-line">Systems Engineer &bull; Open Source Developer</p>
+
+				<div class="bio-content">
+					<p>
+						I am a systems engineer focused on JVM internals, Android virtualization, and developer tooling. I build tools that enable writing, compiling, and running code directly on mobile devices without relying on external servers or cloud environments.
+					</p>
+
+					<p>
+						I founded Cosmic IDE, a general-purpose IDE for Android powered by an embedded Arch Linux ARM environment that runs completely without root access. As part of enabling on-device compilation, I ported standard compiler toolchains to Android's runtime, including kotlinc-android and javac-android.
+					</p>
+
+					<p>
+						I run <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="aload0">aload0</a>, where I build and publish privacy-focused Android applications including AppLock and Reef, designed to protect personal privacy with zero telemetry or ads. I also co-founded <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="Bryte-Edu">Bryte-Edu</a> to develop educational developer tooling aimed at students working on accessible, low-spec hardware.
+					</p>
 				</div>
-			</div>
 
-			<div class="bio-content">
-				<p>
-					I am a systems engineer focused on JVM internals, Android virtualization, and developer tooling. I build tools that enable writing, compiling, and running code directly on mobile devices without relying on external servers or cloud environments.
-				</p>
+				<section class="domains-grid">
+					<div class="domain-card">
+						<h3>Android &amp; Virtualization</h3>
+						<p>Simulated userlands, Arch Linux containers, and hardware-backed biometric security architectures.</p>
+					</div>
+					<div class="domain-card">
+						<h3>JVM &amp; Compilers</h3>
+						<p>Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
+					</div>
+					<div class="domain-card">
+						<h3>Privacy &amp; Tooling</h3>
+						<p>Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
+					</div>
+				</section>
 
-				<p>
-					I founded Cosmic IDE, a general-purpose IDE for Android powered by an embedded Arch Linux ARM environment that runs completely without root access. As part of enabling on-device compilation, I ported standard compiler toolchains to Android's runtime, including kotlinc-android and javac-android.
-				</p>
-
-				<p>
-					I run aload0, where I build and publish privacy-focused Android applications including AppLock and Reef, designed to protect personal privacy with zero telemetry or ads. I also co-founded Bryte-Edu to develop educational developer tooling aimed at students working on accessible, low-spec hardware.
-				</p>
-
-				<p>
-					My technical interests include JVM bytecode internals, DEX format manipulation, Linux user-space virtualization on ARM, Jetpack Compose and Material 3 design systems, and WebGL-powered GPU rendering.
-				</p>
-			</div>
-
-			<section class="domains-grid">
-				<div class="domain-card">
-					<h3>Android &amp; Virtualization</h3>
-					<p>PRoot userlands, Arch Linux ARM containers, and hardware-backed biometric security architectures.</p>
-				</div>
-				<div class="domain-card">
-					<h3>JVM &amp; Compilers</h3>
-					<p>Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
-				</div>
-				<div class="domain-card">
-					<h3>Privacy &amp; Tooling</h3>
-					<p>Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
-				</div>
-			</section>
-
-			<section class="get-in-touch">
-				<h2>Get in touch</h2>
-				<p>
-					Explore code repositories and active issues directly on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
-				</p>
-			</section>
-		</main>
-		<Footer />
+				<section class="get-in-touch">
+					<h2>Get in touch</h2>
+					<p>
+						Email me directly at <a href="mailto:contact@invokevirtual.org">contact@invokevirtual.org</a> or explore my code and active issues on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
+					</p>
+				</section>
+				<Footer />
+			</main>
+		</div>
 	</body>
 </html>
 
@@ -87,17 +87,17 @@ import Footer from '../components/Footer.astro';
 	.about-logo {
 		width: 72px;
 		height: 72px;
-		border-radius: 12px;
+		border-radius: var(--radius-full);
 		object-fit: cover;
-		border: 1px solid var(--border);
-		box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
+		border: 2px solid var(--border);
+		box-shadow: var(--box-shadow);
 		display: block;
 	}
 
 	.about-titles {
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.2rem;
 	}
 
 	.handle {
@@ -107,13 +107,8 @@ import Footer from '../components/Footer.astro';
 		margin: 0;
 	}
 
-	.handle .tag {
-		color: var(--accent);
-		font-weight: 500;
-	}
-
 	.handle .brand-name {
-		color: var(--fg-muted);
+		color: var(--accent);
 		font-weight: 500;
 	}
 
@@ -124,9 +119,9 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.bio-content p {
-		font-size: 1.05rem;
-		line-height: 1.75;
-		color: var(--fg);
+		font-size: 1.025rem;
+		line-height: 1.7;
+		color: var(--fg-muted);
 		margin-bottom: 1.35rem;
 	}
 
@@ -142,24 +137,25 @@ import Footer from '../components/Footer.astro';
 		border-radius: var(--radius);
 		background: var(--bg-surface);
 		border: 1px solid var(--border);
-		transition: border-color 0.18s ease, transform 0.18s ease;
+		transition: border-color 0.2s ease, transform 0.2s ease;
 	}
 
 	.domain-card:hover {
-		border-color: var(--border-hover);
+		border-color: var(--fg);
 		transform: translateY(-2px);
 	}
 
 	.domain-card h3 {
-		font-size: 0.925rem;
-		font-weight: 600;
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+		font-weight: 700;
 		color: var(--fg);
 		margin: 0 0 0.4rem 0;
 		letter-spacing: -0.01em;
 	}
 
 	.domain-card p {
-		font-size: 0.825rem;
+		font-size: 0.85rem;
 		line-height: 1.55;
 		margin: 0;
 		color: var(--fg-muted);
@@ -172,27 +168,16 @@ import Footer from '../components/Footer.astro';
 	}
 
 	.get-in-touch h2 {
-		font-size: 1.25rem;
-		font-weight: 600;
+		font-size: 1.35rem;
+		font-weight: 700;
 		margin: 0 0 0.5rem 0;
 		color: var(--fg);
-		letter-spacing: -0.015em;
 	}
 
 	.get-in-touch p {
 		font-size: 0.95rem;
 		color: var(--fg-muted);
 		margin: 0;
-	}
-
-	.get-in-touch a {
-		color: var(--accent);
-		font-weight: 500;
-		text-decoration: none;
-	}
-
-	.get-in-touch a:hover {
-		color: var(--accent-hover);
 	}
 
 	@media (max-width: 720px) {

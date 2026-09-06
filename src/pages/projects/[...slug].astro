@@ -1,0 +1,24 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import ProjectPage from '../../layouts/ProjectPage.astro';
+import ProjectCarousel from '../../components/ProjectCarousel.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project) => ({
+		params: { slug: project.id },
+		props: project,
+	}));
+}
+type Props = CollectionEntry<'projects'>;
+
+const project = Astro.props;
+const { Content } = await render(project);
+---
+
+<ProjectPage {...project.data} slug={project.id}>
+	{project.data.screenshots && project.data.screenshots.length > 0 && (
+		<ProjectCarousel items={project.data.screenshots} id={`${project.id}-carousel`} />
+	)}
+	<Content />
+</ProjectPage>
