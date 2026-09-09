@@ -2,60 +2,16 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="home-footer">
-	<div class="footer-cluster">
-		<ul class="footer-nav">
-			<li><a href="/">Home</a></li>
-			<li><a href="/projects">Projects</a></li>
-			<li><a href="/blog">Blog</a></li>
-			<li><a href="/about">About</a></li>
-			<li><a href="https://github.com/PranavPurwar" target="_blank" rel="noopener">GitHub</a></li>
-			<li><a href="/rss.xml">RSS</a></li>
+<footer class="mt-12 pt-8 pb-8 border-t border-border font-mono text-xs tracking-wider text-fg-muted">
+	<div class="flex flex-col gap-3.5">
+		<ul class="flex flex-wrap gap-x-6 gap-y-2.5 list-none p-0 m-0">
+			<li><a href="/" class="text-fg-muted hover:text-fg transition-colors no-underline">Home</a></li>
+			<li><a href="/projects" class="text-fg-muted hover:text-fg transition-colors no-underline">Projects</a></li>
+			<li><a href="/blog" class="text-fg-muted hover:text-fg transition-colors no-underline">Blog</a></li>
+			<li><a href="/about" class="text-fg-muted hover:text-fg transition-colors no-underline">About</a></li>
+			<li><a href="https://github.com/PranavPurwar" target="_blank" rel="noopener" class="text-fg-muted hover:text-fg transition-colors no-underline">GitHub</a></li>
+			<li><a href="/rss.xml" class="text-fg-muted hover:text-fg transition-colors no-underline">RSS</a></li>
 		</ul>
-		<p class="footer-legal">&copy; {currentYear} Pranav Purwar. Built with Astro & Cloudflare.</p>
+		<p class="m-0 text-fg-dim leading-relaxed">&copy; {currentYear} Pranav Purwar. Built with Astro &amp; Cloudflare.</p>
 	</div>
 </footer>
-
-<style>
-	.home-footer {
-		margin-top: 3rem;
-		padding-top: 2rem;
-		padding-bottom: 2rem;
-		border-top: 1px solid var(--border);
-		font-family: var(--font-mono);
-		font-size: 0.775rem;
-		letter-spacing: 0.04em;
-		color: var(--fg-muted);
-	}
-
-	.footer-cluster {
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-	}
-
-	.footer-nav {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.8rem 1.4rem;
-		list-style: none;
-		padding: 0;
-		margin: 0;
-	}
-
-	.footer-nav a {
-		color: var(--fg-muted);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-
-	.footer-nav a:hover {
-		color: var(--fg);
-	}
-
-	.footer-legal {
-		margin: 0;
-		color: var(--fg-dim);
-		line-height: 1.5;
-	}
-</style>

@@ -13,54 +13,54 @@ import { AVATAR_URL } from '../consts';
 			description="I'm a systems engineer focused on JVM internals, Android virtualization, and developer tooling."
 		/>
 	</head>
-	<body>
-		<div class="app-container">
+	<body class="bg-bg text-fg antialiased">
+		<div class="w-full max-w-310 mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
 			<Header />
-			<main>
-				<div class="about-hero">
-					<div class="brand-visual">
-						<img src={AVATAR_URL} alt="Pranav Purwar" class="about-logo" width="76" height="76" />
+			<main class="w-full py-8 min-w-0">
+				<div class="flex items-center gap-6 mb-10 pb-8 border-b border-border">
+					<div class="shrink-0">
+						<img src={AVATAR_URL} alt="Pranav Purwar" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-border shadow-xl block" width="76" height="76" />
 					</div>
-					<div class="about-titles">
-						<span class="mono-subtitle">PROFILE & BIO</span>
-						<h1>Pranav Purwar</h1>
-						<p class="handle">@PranavPurwar &bull; <span class="brand-name">invokevirtual</span></p>
-						<p class="role-line">Systems Engineer &bull; Open Source Developer</p>
+					<div class="flex flex-col gap-1">
+						<span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-dim">PROFILE &amp; BIO</span>
+						<h1 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-fg-heading m-0">Pranav Purwar</h1>
+						<p class="font-mono text-xs sm:text-sm text-fg-dim m-0">@PranavPurwar &bull; <span class="text-accent font-medium">invokevirtual</span></p>
+						<p class="text-xs sm:text-sm text-fg-muted m-0 mt-0.5">Systems Engineer &bull; Open Source Developer</p>
 					</div>
 				</div>
 
-				<div class="bio-content">
-					<p>
+				<div class="flex flex-col gap-4 text-base text-fg leading-relaxed mb-10">
+					<p class="m-0">
 						I am a systems engineer focused on JVM internals, Android virtualization, and developer tooling. I build tools that enable writing, compiling, and running code directly on mobile devices without relying on external servers or cloud environments.
 					</p>
 
-					<p>
+					<p class="m-0">
 						I founded Cosmic IDE, a general-purpose IDE for Android powered by an embedded Arch Linux ARM environment that runs completely without root access. As part of enabling on-device compilation, I ported standard compiler toolchains to Android's runtime, including kotlinc-android and javac-android.
 					</p>
 
-					<p>
+					<p class="m-0">
 						I run <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="aload0">aload0</a>, where I build and publish privacy-focused Android applications including AppLock and Reef, designed to protect personal privacy with zero telemetry or ads. I also co-founded <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="Bryte-Edu">Bryte-Edu</a> to develop educational developer tooling aimed at students working on accessible, low-spec hardware.
 					</p>
 				</div>
 
-				<section class="domains-grid">
-					<div class="domain-card">
-						<h3>Android &amp; Virtualization</h3>
-						<p>Simulated userlands, Arch Linux containers, and hardware-backed biometric security architectures.</p>
+				<section class="grid grid-cols-1 md:grid-cols-3 gap-4 my-10">
+					<div class="p-5 rounded-lg bg-bg-surface border border-border">
+						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">Android &amp; Virtualization</h3>
+						<p class="text-sm text-fg-muted leading-relaxed m-0">Simulated userlands, Arch Linux containers, and hardware-backed biometric security architectures.</p>
 					</div>
-					<div class="domain-card">
-						<h3>JVM &amp; Compilers</h3>
-						<p>Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
+					<div class="p-5 rounded-lg bg-bg-surface border border-border">
+						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">JVM &amp; Compilers</h3>
+						<p class="text-sm text-fg-muted leading-relaxed m-0">Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
 					</div>
-					<div class="domain-card">
-						<h3>Privacy &amp; Tooling</h3>
-						<p>Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
+					<div class="p-5 rounded-lg bg-bg-surface border border-border">
+						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">Privacy &amp; Tooling</h3>
+						<p class="text-sm text-fg-muted leading-relaxed m-0">Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
 					</div>
 				</section>
 
-				<section class="get-in-touch">
-					<h2>Get in touch</h2>
-					<p>
+				<section class="p-6 rounded-lg bg-bg-surface border border-border mt-10">
+					<h2 class="font-display text-xl font-bold tracking-tight text-fg-heading m-0 mb-2">Get in touch</h2>
+					<p class="text-sm sm:text-base text-fg-muted leading-relaxed m-0">
 						Email me directly at <a href="mailto:contact@invokevirtual.org">contact@invokevirtual.org</a> or explore my code and active issues on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
 					</p>
 				</section>
@@ -69,126 +69,3 @@ import { AVATAR_URL } from '../consts';
 		</div>
 	</body>
 </html>
-
-<style>
-	.about-hero {
-		display: flex;
-		align-items: center;
-		gap: 1.5rem;
-		margin-bottom: 2.5rem;
-		padding-bottom: 2rem;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.brand-visual {
-		flex-shrink: 0;
-	}
-
-	.about-logo {
-		width: 72px;
-		height: 72px;
-		border-radius: var(--radius-full);
-		object-fit: cover;
-		border: 2px solid var(--border);
-		box-shadow: var(--box-shadow);
-		display: block;
-	}
-
-	.about-titles {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-	}
-
-	.handle {
-		font-family: var(--font-mono);
-		font-size: 0.85rem;
-		color: var(--fg-dim);
-		margin: 0;
-	}
-
-	.handle .brand-name {
-		color: var(--accent);
-		font-weight: 500;
-	}
-
-	.role-line {
-		font-size: 0.875rem;
-		color: var(--fg-muted);
-		margin: 0.2rem 0 0 0;
-	}
-
-	.bio-content p {
-		font-size: 1.025rem;
-		line-height: 1.7;
-		color: var(--fg-muted);
-		margin-bottom: 1.35rem;
-	}
-
-	.domains-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-		margin: 2.5rem 0;
-	}
-
-	.domain-card {
-		padding: 1.15rem 1.25rem;
-		border-radius: var(--radius);
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		transition: border-color 0.2s ease, transform 0.2s ease;
-	}
-
-	.domain-card:hover {
-		border-color: var(--fg);
-		transform: translateY(-2px);
-	}
-
-	.domain-card h3 {
-		font-family: var(--font-display);
-		font-size: 1.05rem;
-		font-weight: 700;
-		color: var(--fg);
-		margin: 0 0 0.4rem 0;
-		letter-spacing: -0.01em;
-	}
-
-	.domain-card p {
-		font-size: 0.85rem;
-		line-height: 1.55;
-		margin: 0;
-		color: var(--fg-muted);
-	}
-
-	.get-in-touch {
-		margin-top: 2.5rem;
-		padding-top: 1.75rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.get-in-touch h2 {
-		font-size: 1.35rem;
-		font-weight: 700;
-		margin: 0 0 0.5rem 0;
-		color: var(--fg);
-	}
-
-	.get-in-touch p {
-		font-size: 0.95rem;
-		color: var(--fg-muted);
-		margin: 0;
-	}
-
-	@media (max-width: 720px) {
-		.about-hero {
-			flex-direction: column;
-			text-align: center;
-			gap: 1rem;
-		}
-
-		.domains-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

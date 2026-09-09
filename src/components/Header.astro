@@ -3,37 +3,37 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE, AVATAR_URL } from '../consts';
 ---
 
-<aside id="app-sidebar" class="app-sidebar">
-	<header class="sidebar-header">
-		<a href="/" class="profile-brand">
-			<img src={AVATAR_URL} alt="Pranav Purwar" class="profile-avatar" width="64" height="64" />
-			<div class="brand-meta">
-				<span class="profile-title">{SITE_TITLE}</span>
-				<p class="profile-tagline">Systems, Compilers &amp; Android Developer</p>
+<aside id="app-sidebar" class="w-full lg:w-60 lg:sticky lg:top-8 shrink-0 flex flex-col py-4 lg:py-8 border-b lg:border-b-0 lg:border-r border-border">
+	<header class="flex items-center justify-between gap-4">
+		<a href="/" class="flex items-center gap-3.5 group no-underline text-inherit">
+			<img src={AVATAR_URL} alt="Pranav Purwar" class="w-14 h-14 lg:w-16 lg:h-16 rounded-full object-cover border-2 border-border group-hover:border-accent transition-colors shrink-0 shadow-md" width="64" height="64" />
+			<div class="flex flex-col min-w-0">
+				<span class="font-display text-base lg:text-lg font-extrabold text-fg tracking-tight group-hover:text-accent transition-colors leading-tight">{SITE_TITLE}</span>
+				<p class="text-xs text-fg-dim leading-snug m-0 mt-0.5">Systems, Compilers &amp; Android Developer</p>
 			</div>
 		</a>
 		<button
 			id="sidebar-toggle"
-			class="sidebar-toggle"
+			class="lg:hidden p-2 text-fg-muted hover:text-fg rounded-md border border-border bg-bg-surface cursor-pointer"
 			type="button"
 			aria-label="Toggle navigation menu"
 			aria-expanded="false"
 			aria-controls="sidebar-nav"
 		>
-			<svg class="icon-open" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<svg id="icon-open" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
 				<line x1="3" y1="6" x2="21" y2="6"></line>
 				<line x1="3" y1="12" x2="21" y2="12"></line>
 				<line x1="3" y1="18" x2="21" y2="18"></line>
 			</svg>
-			<svg class="icon-close" viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+			<svg id="icon-close" class="hidden" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
 				<line x1="18" y1="6" x2="6" y2="18"></line>
 				<line x1="6" y1="6" x2="18" y2="18"></line>
 			</svg>
 		</button>
 	</header>
 
-	<div id="sidebar-nav" class="sidebar-content">
-		<nav class="nav-menu">
+	<div id="sidebar-nav" class="hidden lg:flex flex-col gap-6 mt-6 lg:mt-8">
+		<nav class="flex flex-col gap-1">
 			<HeaderLink href="/">
 				<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
 				<span>HOME</span>
@@ -52,22 +52,22 @@ import { SITE_TITLE, AVATAR_URL } from '../consts';
 			</HeaderLink>
 		</nav>
 
-		<div class="sidebar-footer">
-			<div class="social-links">
-				<a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+		<div class="flex flex-col gap-3 pt-4 border-t border-border">
+			<div class="flex items-center gap-3.5 text-fg-dim">
+				<a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-accent transition-colors no-underline">
 					<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
 				</a>
-				<a href="https://www.linkedin.com/in/pranavpurwar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+				<a href="https://www.linkedin.com/in/pranavpurwar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-accent transition-colors no-underline">
+					<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
 				</a>
-				<a href="mailto:contact@invokevirtual.org" aria-label="Email">
+				<a href="mailto:contact@invokevirtual.org" aria-label="Email" class="hover:text-accent transition-colors no-underline">
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
 				</a>
-				<a href="/rss.xml" aria-label="RSS Feed">
+				<a href="/rss.xml" aria-label="RSS Feed" class="hover:text-accent transition-colors no-underline">
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
 				</a>
 			</div>
-			<div class="copy-note">&copy; {new Date().getFullYear()} Pranav Purwar</div>
+			<div class="font-mono text-[0.7rem] text-fg-dim">&copy; {new Date().getFullYear()} Pranav Purwar</div>
 		</div>
 	</div>
 </aside>
@@ -76,34 +76,46 @@ import { SITE_TITLE, AVATAR_URL } from '../consts';
 	function setupSidebarNav() {
 		const toggleBtn = document.getElementById('sidebar-toggle');
 		const sidebarNav = document.getElementById('sidebar-nav');
+		const iconOpen = document.getElementById('icon-open');
+		const iconClose = document.getElementById('icon-close');
 
 		if (!toggleBtn || toggleBtn.hasAttribute('data-initialized')) return;
 		toggleBtn.setAttribute('data-initialized', 'true');
 
 		function closeSidebar() {
 			toggleBtn?.setAttribute('aria-expanded', 'false');
-			sidebarNav?.classList.remove('open');
+			sidebarNav?.classList.add('hidden');
+			sidebarNav?.classList.remove('flex');
+			iconOpen?.classList.remove('hidden');
+			iconClose?.classList.add('hidden');
 		}
 
 		toggleBtn.addEventListener('click', (e) => {
 			e.stopPropagation();
 			const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-			toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-			sidebarNav?.classList.toggle('open');
-		});
+			const newExpanded = !isExpanded;
+			toggleBtn.setAttribute('aria-expanded', String(newExpanded));
 
-		sidebarNav?.querySelectorAll('a').forEach((link) => {
-			link.addEventListener('click', closeSidebar);
-		});
-
-		document.addEventListener('click', (e) => {
-			if (!toggleBtn.contains(e.target as Node) && !sidebarNav?.contains(e.target as Node)) {
+			if (newExpanded) {
+				sidebarNav?.classList.remove('hidden');
+				sidebarNav?.classList.add('flex');
+				iconOpen?.classList.add('hidden');
+				iconClose?.classList.remove('hidden');
+			} else {
 				closeSidebar();
 			}
 		});
 
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
+		sidebarNav?.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => {
+				if (window.innerWidth < 1024) {
+					closeSidebar();
+				}
+			});
+		});
+
+		document.addEventListener('click', (e) => {
+			if (window.innerWidth < 1024 && !toggleBtn.contains(e.target as Node) && !sidebarNav?.contains(e.target as Node)) {
 				closeSidebar();
 			}
 		});
@@ -112,231 +124,3 @@ import { SITE_TITLE, AVATAR_URL } from '../consts';
 	setupSidebarNav();
 	document.addEventListener('astro:page-load', setupSidebarNav);
 </script>
-
-<style>
-	.app-sidebar {
-		display: flex;
-		flex-direction: column;
-		padding: 2rem 0;
-		position: sticky;
-		top: 0;
-		max-height: 100vh;
-	}
-
-	.sidebar-header {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		margin-bottom: 2rem;
-	}
-
-	.profile-brand {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.85rem;
-		text-decoration: none;
-	}
-
-	.profile-avatar {
-		width: 64px;
-		height: 64px;
-		border-radius: var(--radius);
-		object-fit: cover;
-		border: 1px solid var(--border);
-		transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-	}
-
-	.profile-brand:hover .profile-avatar {
-		border-color: var(--accent-hover);
-		box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
-		transform: scale(1.02);
-	}
-
-	.brand-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-	}
-
-	.profile-title {
-		font-family: var(--font-display);
-		font-size: 1.35rem;
-		font-weight: 800;
-		color: #ffffff;
-		letter-spacing: -0.02em;
-	}
-
-	.profile-tagline {
-		font-size: 0.825rem;
-		color: var(--fg-muted);
-		margin: 0;
-		line-height: 1.4;
-	}
-
-	.sidebar-toggle {
-		display: none;
-		background: none;
-		border: none;
-		color: var(--fg-muted);
-		padding: 0.4rem;
-		border-radius: var(--radius-sm);
-		cursor: pointer;
-	}
-
-	.icon-close {
-		display: none;
-	}
-
-	.sidebar-toggle[aria-expanded="true"] .icon-open {
-		display: none;
-	}
-	.sidebar-toggle[aria-expanded="true"] .icon-close {
-		display: block;
-	}
-
-	.sidebar-content {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		flex-grow: 1;
-		gap: 2rem;
-	}
-
-	.nav-menu {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.nav-menu :global(a) {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		font-family: var(--font-mono);
-		font-size: 0.775rem;
-		font-weight: 700;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--fg-muted);
-		padding: 0.65rem 0.85rem;
-		border-radius: var(--radius-sm);
-		text-decoration: none;
-		border: 1px solid transparent;
-		transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-	}
-
-	.nav-menu :global(a:hover) {
-		color: #ffffff;
-		background: var(--bg-surface-hover);
-		border-color: rgba(99, 102, 241, 0.3);
-	}
-
-	.nav-menu :global(a.active) {
-		color: var(--accent-cyan);
-		background: rgba(99, 102, 241, 0.12);
-		border-color: rgba(99, 102, 241, 0.35);
-	}
-
-	.sidebar-footer {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding-top: 1.5rem;
-		border-top: 1px solid var(--border);
-	}
-
-	.social-links {
-		display: flex;
-		align-items: center;
-		gap: 0.65rem;
-	}
-
-	.social-links a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border-radius: var(--radius-sm);
-		color: var(--fg-muted);
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-	}
-
-	.social-links a:hover {
-		color: var(--accent-cyan);
-		border-color: var(--accent-cyan);
-		box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
-		transform: translateY(-2px);
-	}
-
-	.copy-note {
-		font-family: var(--font-mono);
-		font-size: 0.7rem;
-		color: var(--fg-dim);
-	}
-
-	/* Mobile drawer & topbar behavior */
-	@media (max-width: 1023px) {
-		.app-sidebar {
-			position: sticky;
-			top: 0;
-			z-index: 50;
-			max-height: none;
-			padding: 0.75rem 0;
-			background: color-mix(in srgb, var(--bg) 95%, transparent);
-			backdrop-filter: blur(16px);
-			-webkit-backdrop-filter: blur(16px);
-			border-bottom: 1px solid var(--border);
-		}
-
-		.sidebar-header {
-			flex-direction: row;
-			align-items: center;
-			justify-content: space-between;
-			margin-bottom: 0;
-		}
-
-		.profile-brand {
-			flex-direction: row;
-			align-items: center;
-			gap: 0.65rem;
-		}
-
-		.profile-avatar {
-			width: 36px;
-			height: 36px;
-		}
-
-		.profile-title {
-			font-size: 1.05rem;
-		}
-
-		.profile-tagline {
-			display: none;
-		}
-
-		.sidebar-toggle {
-			display: flex;
-		}
-
-		.sidebar-content {
-			display: none;
-			position: absolute;
-			top: 100%;
-			left: 0;
-			right: 0;
-			background: var(--bg-surface);
-			border-bottom: 1px solid var(--border);
-			padding: 1.25rem 1rem;
-			box-shadow: var(--box-shadow);
-			gap: 1.5rem;
-		}
-
-		.sidebar-content.open {
-			display: flex;
-		}
-	}
-</style>

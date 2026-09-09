@@ -16,28 +16,28 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<BaseHead title={title} description={description} />
 	</head>
 
-	<body>
-		<div class="app-container">
+	<body class="bg-bg text-fg antialiased">
+		<div class="w-full max-w-310 mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
 			<Header />
-			<main>
-				<a href="/blog" class="back-link">&larr; Back to Writing</a>
+			<main class="w-full py-8 min-w-0">
+				<a href="/blog" class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-accent hover:text-white transition-transform hover:-translate-x-1 mb-6 no-underline">&larr; Back to Writing</a>
 				<article>
 					{heroImage && (
-						<div class="hero-image">
-							<img width={1020} height={510} src={heroImage} alt="" />
+						<div class="w-full mb-8 rounded-lg overflow-hidden border border-border bg-bg-surface">
+							<img width={1020} height={510} src={heroImage} alt="" class="block w-full h-auto max-h-100 object-cover" />
 						</div>
 					)}
-					<header class="article-header">
-						<div class="article-meta">
+					<header class="mb-10 pb-8 border-b border-border">
+						<div class="flex items-center gap-4 mb-3 font-mono text-xs text-fg-dim">
 							<FormattedDate date={pubDate} />
 							{updatedDate && (
-								<span class="last-updated-on">
+								<span class="italic">
 									(Updated: <FormattedDate date={updatedDate} />)
 								</span>
 							)}
 						</div>
-						<h1>{title}</h1>
-						{description && <p class="description">{description}</p>}
+						<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-fg-heading m-0 mb-3">{title}</h1>
+						{description && <p class="text-base sm:text-lg text-fg-muted leading-relaxed m-0">{description}</p>}
 					</header>
 					<div class="prose">
 						<slot />
@@ -48,120 +48,3 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		</div>
 	</body>
 </html>
-
-<style>
-	.hero-image {
-		width: 100%;
-		margin-bottom: 2rem;
-		border-radius: var(--radius);
-		overflow: hidden;
-		border: 1px solid var(--border);
-		background: var(--bg-surface);
-	}
-
-	.hero-image img {
-		display: block;
-		width: 100%;
-		height: auto;
-		max-height: 420px;
-		object-fit: cover;
-		border-radius: 0;
-	}
-
-	.article-header {
-		margin-bottom: 2.5rem;
-		padding-bottom: 2rem;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.article-meta {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 0.75rem;
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		color: var(--fg-dim);
-	}
-
-	.last-updated-on {
-		font-style: italic;
-	}
-
-	.description {
-		font-size: 1.1rem;
-		color: var(--fg-muted);
-		line-height: 1.6;
-		margin: 0;
-	}
-
-	.prose {
-		color: var(--fg);
-		line-height: 1.75;
-	}
-
-	.prose :global(h2) {
-		margin-top: 2.5rem;
-		margin-bottom: 1rem;
-		font-family: var(--font-display);
-		font-size: 1.4rem;
-		font-weight: 700;
-		color: var(--fg);
-	}
-
-	.prose :global(h3) {
-		margin-top: 2rem;
-		margin-bottom: 0.75rem;
-		font-family: var(--font-display);
-		font-size: 1.15rem;
-		font-weight: 700;
-		color: var(--fg);
-	}
-
-	.prose :global(p) {
-		margin-bottom: 1.4em;
-		color: var(--fg-muted);
-		font-size: 1rem;
-		line-height: 1.7;
-	}
-
-	.prose :global(ul),
-	.prose :global(ol) {
-		padding-left: 1.5rem;
-		margin-bottom: 1.5rem;
-		color: var(--fg-muted);
-		font-size: 0.975rem;
-	}
-
-	.prose :global(li) {
-		margin-bottom: 0.5rem;
-		line-height: 1.65;
-	}
-
-	.prose :global(pre) {
-		margin: 1.75rem 0;
-	}
-
-	.prose :global(blockquote) {
-		margin: 1.75rem 0;
-	}
-
-	.prose :global(a) {
-		color: var(--accent);
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		text-decoration-color: rgba(99, 102, 241, 0.45);
-		transition: color 0.15s ease, text-decoration-color 0.15s ease;
-	}
-
-	.prose :global(a:hover) {
-		color: #ffffff;
-		text-decoration-color: #ffffff;
-	}
-
-	@media (max-width: 640px) {
-		.description {
-			font-size: 0.975rem;
-		}
-	}
-</style>

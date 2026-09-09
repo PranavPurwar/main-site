@@ -16,17 +16,17 @@ const projects = await getProjectsWithLiveStars();
 			description="My open-source developer tools, JVM compiler ports, and mobile systems."
 		/>
 	</head>
-	<body>
-		<div class="app-container">
+	<body class="bg-bg text-fg antialiased">
+		<div class="w-full max-w-[1240px] mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
 			<Header />
-			<main>
-				<div class="projects-header">
-					<span class="mono-subtitle">SOFTWARE &amp; TOOLS</span>
-					<h1>Projects &amp; Software</h1>
-					<p class="subtitle">My open-source developer tools, compiler ports, and mobile systems.</p>
+			<main class="w-full py-8 min-w-0">
+				<div class="mb-8 pb-6 border-b border-border">
+					<span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-dim block mb-1">SOFTWARE &amp; TOOLS</span>
+					<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-fg-heading m-0 mb-2">Projects &amp; Software</h1>
+					<p class="text-base sm:text-lg text-fg-muted leading-relaxed m-0">My open-source developer tools, compiler ports, and mobile systems.</p>
 				</div>
 
-				<div class="project-list">
+				<div class="flex flex-col gap-3.5">
 					{projects.map((project) => (
 						<ProjectCard {...project} />
 					))}
@@ -36,33 +36,3 @@ const projects = await getProjectsWithLiveStars();
 		</div>
 	</body>
 </html>
-
-<style>
-	.projects-header {
-		margin-bottom: 2rem;
-		padding-bottom: 1.5rem;
-		border-bottom: 1px solid var(--border);
-	}
-
-	.subtitle {
-		font-size: 1.05rem;
-		color: var(--fg-muted);
-		margin: 0;
-	}
-
-	.project-list {
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-	}
-
-	@media (max-width: 600px) {
-		.subtitle {
-			font-size: 0.95rem;
-		}
-
-		.project-list {
-			gap: 0.75rem;
-		}
-	}
-</style>

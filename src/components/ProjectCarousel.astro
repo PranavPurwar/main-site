@@ -14,46 +14,46 @@ const { items, id = "carousel" } = Astro.props;
 ---
 
 {items && items.length > 0 && (
-	<figure class="carousel-wrapper" id={id}>
-		<div class="carousel-track-container">
-			<button class="carousel-btn prev-btn" aria-label="Previous screenshot" type="button">
+	<figure class="carousel-wrapper my-8 flex flex-col gap-3" id={id}>
+		<div class="relative flex items-center justify-center gap-3">
+			<button class="carousel-btn prev-btn inline-flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-bg-surface hover:bg-bg-surface-hover border border-border hover:border-border-hover text-fg-muted hover:text-accent transition-colors cursor-pointer" aria-label="Previous screenshot" type="button">
 				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
 					<path fill="currentColor" d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06Z" />
 				</svg>
 			</button>
 
-			<ul class="carousel-track">
+			<ul class="carousel-track list-none m-0 p-0 flex-1 min-w-0 flex justify-center">
 				{items.map((item, index) => (
-					<li class={`carousel-slide ${index === 0 ? "active" : ""}`} data-index={index}>
-						<img src={item.src} alt={item.alt || item.caption || `Screenshot ${index + 1}`} loading="lazy" />
+					<li class={`carousel-slide ${index === 0 ? "block" : "hidden"} max-w-full`} data-index={index}>
+						<img src={item.src} alt={item.alt || item.caption || `Screenshot ${index + 1}`} loading="lazy" class="max-w-full max-h-130 w-auto h-auto object-contain rounded-lg shadow-xl" />
 					</li>
 				))}
 			</ul>
 
-			<button class="carousel-btn next-btn" aria-label="Next screenshot" type="button">
+			<button class="carousel-btn next-btn inline-flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-bg-surface hover:bg-bg-surface-hover border border-border hover:border-border-hover text-fg-muted hover:text-accent transition-colors cursor-pointer" aria-label="Next screenshot" type="button">
 				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
 					<path fill="currentColor" d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
 				</svg>
 			</button>
 		</div>
 
-		<figcaption class="carousel-caption-row">
-			<span class="slide-caption">{items[0]?.caption}</span>
-			<span class="carousel-counter">
+		<figcaption class="flex items-baseline justify-between gap-4 m-0">
+			<span class="slide-caption text-sm text-fg-muted leading-snug">{items[0]?.caption}</span>
+			<span class="font-mono text-xs text-fg-dim shrink-0">
 				<span class="current-index">1</span> / <span class="total-count">{items.length}</span>
 			</span>
 		</figcaption>
 
 		{items.length > 1 && (
-			<div class="carousel-thumbnails">
+			<div class="flex gap-2 overflow-x-auto py-1 -my-1">
 				{items.map((item, index) => (
 					<button
-						class={`thumb-btn ${index === 0 ? "active" : ""}`}
+						class={`thumb-btn ${index === 0 ? "opacity-100 border-accent scale-105" : "opacity-60 border-border"} shrink-0 w-16 h-12 rounded border bg-bg overflow-hidden cursor-pointer p-0 transition-all hover:opacity-90 hover:border-border-hover`}
 						data-thumb={index}
 						type="button"
 						aria-label={`Go to slide ${index + 1}`}
 					>
-						<img src={item.src} alt="" aria-hidden="true" />
+						<img src={item.src} alt="" aria-hidden="true" class="w-full h-full object-cover block" />
 					</button>
 				))}
 			</div>
@@ -90,13 +90,23 @@ const { items, id = "carousel" } = Astro.props;
 				currentIndex = newIndex;
 
 				slides.forEach((s, i) => {
-					s.classList.toggle('active', i === currentIndex);
+					if (i === currentIndex) {
+						s.classList.remove('hidden');
+						s.classList.add('block');
+					} else {
+						s.classList.add('hidden');
+						s.classList.remove('block');
+					}
 				});
 
 				thumbs.forEach((t, i) => {
-					t.classList.toggle('active', i === currentIndex);
 					if (i === currentIndex) {
+						t.classList.add('opacity-100', 'border-accent', 'scale-105');
+						t.classList.remove('opacity-60', 'border-border');
 						t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+					} else {
+						t.classList.remove('opacity-100', 'border-accent', 'scale-105');
+						t.classList.add('opacity-60', 'border-border');
 					}
 				});
 
@@ -130,164 +140,3 @@ const { items, id = "carousel" } = Astro.props;
 	setupCarousels();
 	document.addEventListener('astro:page-load', setupCarousels);
 </script>
-
-<style>
-	.carousel-wrapper {
-		margin: 2.5rem 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.carousel-track-container {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.75rem;
-	}
-
-	.carousel-track {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		flex: 1;
-		min-width: 0;
-		display: flex;
-		justify-content: center;
-	}
-
-	.carousel-slide {
-		display: none;
-	}
-
-	.carousel-slide.active {
-		display: block;
-		max-width: 100%;
-		animation: fadeIn 0.25s ease-in-out;
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0.4;
-			transform: scale(0.99);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	.carousel-slide img {
-		max-width: 100%;
-		max-height: 520px;
-		width: auto;
-		height: auto;
-		object-fit: contain;
-		border-radius: var(--radius);
-		box-shadow: 0 4px 20px rgb(0 0 0 / 25%);
-	}
-
-	.carousel-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2rem;
-		height: 2rem;
-		flex-shrink: 0;
-		border-radius: 50%;
-		background: var(--bg-surface);
-		border: 1px solid var(--border);
-		color: var(--fg-muted);
-		cursor: pointer;
-		transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-	}
-
-	.carousel-btn:hover {
-		color: var(--accent);
-		background: var(--bg-surface-hover);
-		border-color: var(--border-hover);
-	}
-
-	.carousel-caption-row {
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: 1rem;
-		margin: 0;
-	}
-
-	.slide-caption {
-		font-size: 0.875rem;
-		color: var(--fg-muted);
-		line-height: 1.4;
-	}
-
-	.carousel-counter {
-		font-family: var(--font-mono);
-		font-size: 0.8125rem;
-		color: var(--fg-dim);
-		white-space: nowrap;
-	}
-
-	.carousel-thumbnails {
-		display: flex;
-		gap: 0.5rem;
-		overflow-x: auto;
-		overflow-y: visible;
-		padding: 4px 2px;
-		margin: -4px -2px;
-		scrollbar-width: thin;
-	}
-
-	.thumb-btn {
-		flex: 0 0 64px;
-		height: 48px;
-		border-radius: 4px;
-		border: 1px solid var(--border);
-		background: var(--bg);
-		overflow: hidden;
-		cursor: pointer;
-		padding: 0;
-		opacity: 0.6;
-		transition: opacity 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-	}
-
-	.thumb-btn img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-
-	.thumb-btn:hover {
-		opacity: 0.9;
-		border-color: var(--border-hover);
-	}
-
-	.thumb-btn.active {
-		opacity: 1;
-		border-color: var(--accent);
-		transform: scale(1.05);
-	}
-
-	@media (max-width: 600px) {
-		.carousel-wrapper {
-			margin: 1.75rem 0;
-			gap: 0.5rem;
-		}
-
-		.carousel-slide img {
-			max-height: 320px;
-		}
-
-		.slide-caption {
-			font-size: 0.8rem;
-		}
-
-		.thumb-btn {
-			flex: 0 0 52px;
-			height: 38px;
-		}
-	}
-</style>

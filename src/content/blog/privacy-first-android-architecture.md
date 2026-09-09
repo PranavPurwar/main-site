@@ -32,8 +32,8 @@ Everything stays on your phone.
 
 For [AppLock](https://github.com/aload0/AppLock), we bypass proprietary fingerprint and PIN storage routines entirely. Instead, we interface directly with the official Android `BiometricPrompt` and Android KeyStore infrastructure:
 
-1. **Hardware Strongbox:** Key material is stored inside the device's secure hardware element.
-2. **Overlay Protection:** Launch interception uses Android's window manager overlay system with anti-tampering guards to prevent other applications from observing keystrokes or bypassing security layers.
+1. **Hardware Strongbox:** Keys are encrypted and stored inside the device's secure hardware element.
+2. **Overlay Protection:** Launch interception uses Android's window manager overlay with anti-tampering guards to prevent other applications from observing keystrokes or bypassing security layers.
 3. **Anti-Uninstall Guards:** Preventing malicious users from simply clearing package data or uninstalling the locker from system settings.
 
 Beyond the low-level authentication layer, AppLock includes:
@@ -42,7 +42,7 @@ Beyond the low-level authentication layer, AppLock includes:
 * **One-tap app locking:** Lock any app on your device with real-time background protection.
 * **Granular Anti-Uninstall Protection:** System-level safeguards including anti-uninstall protection for user apps.
 * **Unlock Timeout for Convenience:** Configurable grace periods so you don't have to authenticate repeatedly during active sessions.
-* **Root-Free Operation:** Complete device protection without needing root privileges.
+* **Root-Free Operation:** Protect apps without needing root priviledges.
 * **Material You Design:** Adaptive interface that dynamically themes to your system palette.
 * **Independent Security Audits:** Clean reports on [VirusTotal Analysis (v1.5.0)](https://www.virustotal.com/gui/url/ead3a434b961ce332b49398d73a10598b2cee6d665c54bb4a66c825794465d72) and [Exodus Privacy](https://reports.exodus-privacy.eu.org/en/reports/dev.pranav.applock/latest) confirming zero trackers and zero analytics.
 
