@@ -9,60 +9,101 @@ import { AVATAR_URL } from '../consts';
 <html lang="en">
 	<head>
 		<BaseHead
-			title="About — Pranav Purwar"
-			description="I'm a systems engineer focused on JVM internals, Android virtualization, and developer tooling."
+			title="About Pranav Purwar (invoke) — Systems & Android Engineer"
+			description="Systems engineer focused on JVM internals, Android runtime engineering, rootless Linux virtualization, and developer tooling."
 		/>
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "ProfilePage",
+			"mainEntity": {
+				"@type": "Person",
+				"name": "Pranav Purwar",
+				"alternateName": "invoke",
+				"url": "https://invokevirtual.org/about",
+				"jobTitle": "Systems & Android Software Engineer",
+				"sameAs": [
+					"https://github.com/PranavPurwar",
+					"https://www.linkedin.com/in/pranavpurwar"
+				]
+			}
+		})} />
 	</head>
-	<body class="bg-bg text-fg antialiased">
-		<div class="w-full max-w-310 mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
+	<body class="bg-surface text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+		<div class="w-full max-w-[1520px] mx-auto min-h-screen px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[256px_1fr] gap-6 lg:gap-8 xl:gap-10 items-start">
 			<Header />
-			<main class="w-full py-8 min-w-0">
-				<div class="flex items-center gap-6 mb-10 pb-8 border-b border-border">
-					<div class="shrink-0">
-						<img src={AVATAR_URL} alt="Pranav Purwar" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-border shadow-xl block" width="76" height="76" />
-					</div>
-					<div class="flex flex-col gap-1">
-						<span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-dim">PROFILE &amp; BIO</span>
-						<h1 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-fg-heading m-0">Pranav Purwar</h1>
-						<p class="font-mono text-xs sm:text-sm text-fg-dim m-0">@PranavPurwar &bull; <span class="text-accent font-medium">invokevirtual</span></p>
-						<p class="text-xs sm:text-sm text-fg-muted m-0 mt-0.5">Systems Engineer &bull; Open Source Developer</p>
-					</div>
-				</div>
-
-				<div class="flex flex-col gap-4 text-base text-fg leading-relaxed mb-10">
-					<p class="m-0">
-						I am a systems engineer focused on JVM internals, Android virtualization, and developer tooling. I build tools that enable writing, compiling, and running code directly on mobile devices without relying on external servers or cloud environments.
+			<main class="w-full py-6 lg:py-8 min-w-0">
+				<!-- Profile Header: Clean, open on canvas -->
+				<header class="pb-8 border-b border-outline-variant/60 mb-8 animate-m3-fade-up">
+					<p class="font-serif italic text-xl text-editorial-accent m-0 mb-3">
+						Profile // Systems &amp; Android
 					</p>
-
-					<p class="m-0">
-						I founded Cosmic IDE, a general-purpose IDE for Android powered by an embedded Arch Linux ARM environment that runs completely without root access. As part of enabling on-device compilation, I ported standard compiler toolchains to Android's runtime, including kotlinc-android and javac-android.
-					</p>
-
-					<p class="m-0">
-						I run <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="aload0">aload0</a>, where I build and publish privacy-focused Android applications including AppLock and Reef, designed to protect personal privacy with zero telemetry or ads. I also co-founded <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer" aria-label="Bryte-Edu">Bryte-Edu</a> to develop educational developer tooling aimed at students working on accessible, low-spec hardware.
-					</p>
-				</div>
-
-				<section class="grid grid-cols-1 md:grid-cols-3 gap-4 my-10">
-					<div class="p-5 rounded-lg bg-bg-surface border border-border">
-						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">Android &amp; Virtualization</h3>
-						<p class="text-sm text-fg-muted leading-relaxed m-0">Simulated userlands, Arch Linux containers, and hardware-backed biometric security architectures.</p>
+					<div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6">
+						<img src={AVATAR_URL} alt="Pranav Purwar" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border border-outline-variant/60 block shrink-0" width="96" height="96" />
+						<div class="flex flex-col gap-1 min-w-0">
+							<h1 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-on-surface m-0">Pranav Purwar</h1>
+							<p class="text-sm sm:text-base text-on-surface-variant m-0 mt-1">Systems engineer building runtimes, compilers, and developer tooling for Android.</p>
+						</div>
 					</div>
-					<div class="p-5 rounded-lg bg-bg-surface border border-border">
-						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">JVM &amp; Compilers</h3>
-						<p class="text-sm text-fg-muted leading-relaxed m-0">Patched OpenJDK javac and kotlinc compiler toolchains running on mobile ART runtimes.</p>
-					</div>
-					<div class="p-5 rounded-lg bg-bg-surface border border-border">
-						<h3 class="font-display text-base font-bold text-fg-heading m-0 mb-2">Privacy &amp; Tooling</h3>
-						<p class="text-sm text-fg-muted leading-relaxed m-0">Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
+				</header>
+
+				<!-- Bio Narrative -->
+				<section class="mb-10 max-w-3xl">
+					<h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-on-surface m-0 mb-4">Background &amp; Focus</h2>
+					<div class="flex flex-col gap-4 text-base sm:text-lg text-on-surface-variant leading-relaxed">
+						<p class="m-0">
+							I'm a systems engineer focused on JVM internals, Android runtimes, and developer tooling. I like building software that lets you write, compile, and run code directly on mobile devices without depending on remote servers.
+						</p>
+
+						<p class="m-0">
+							I founded Cosmic IDE, a native Android IDE powered by a compatibility layer over a Linux runtime that runs without root, with pacman and plugins handling toolchain setup. To support on-device JVM builds, I also ported <a href="/projects/kotlinc-android">kotlinc-android</a> and <a href="/projects/javac-android">javac-android</a> to Android's ART runtime.
+						</p>
+
+						<p class="m-0">
+							Under <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer">aload0</a>, I build privacy-focused Android apps like <a href="/projects/applock">AppLock</a> and <a href="/projects/reef">Reef</a> with zero network permissions. I also co-founded <a href="https://github.com/aload0" target="_blank" rel="noopener noreferrer">Bryte-Edu</a> to create accessible developer tools for students.
+						</p>
 					</div>
 				</section>
 
-				<section class="p-6 rounded-lg bg-bg-surface border border-border mt-10">
-					<h2 class="font-display text-xl font-bold tracking-tight text-fg-heading m-0 mb-2">Get in touch</h2>
-					<p class="text-sm sm:text-base text-fg-muted leading-relaxed m-0">
-						Email me directly at <a href="mailto:contact@invokevirtual.org">contact@invokevirtual.org</a> or explore my code and active issues on <a href="https://github.com/PranavPurwar" target="_blank" rel="noopener noreferrer">GitHub &rarr;</a>
+				<section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+					<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/60 hover:border-primary/50 hover:bg-surface-container transition-all duration-300">
+						<span class="font-serif italic text-xl text-editorial-accent leading-none block mb-2" aria-hidden="true">01</span>
+						<h3 class="font-display text-base font-bold text-on-surface m-0 mb-2">Android &amp; Runtimes</h3>
+						<p class="text-sm text-on-surface-variant leading-relaxed m-0">App-private glibc compatibility layer, Zig dynamic linker preloads, and hardware-backed biometric security.</p>
+					</div>
+					<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/60 hover:border-primary/50 hover:bg-surface-container transition-all duration-300">
+						<span class="font-serif italic text-xl text-editorial-accent leading-none block mb-2" aria-hidden="true">02</span>
+						<h3 class="font-display text-base font-bold text-on-surface m-0 mb-2">JVM &amp; Compilers</h3>
+						<p class="text-sm text-on-surface-variant leading-relaxed m-0">Patched OpenJDK javac and kotlinc compiler pipelines running natively on mobile ART runtimes.</p>
+					</div>
+					<div class="p-6 rounded-2xl bg-surface-container-low border border-outline-variant/60 hover:border-primary/50 hover:bg-surface-container transition-all duration-300">
+						<span class="font-serif italic text-xl text-editorial-accent leading-none block mb-2" aria-hidden="true">03</span>
+						<h3 class="font-display text-base font-bold text-on-surface m-0 mb-2">Privacy &amp; Tooling</h3>
+						<p class="text-sm text-on-surface-variant leading-relaxed m-0">Zero-telemetry open-source utilities distributed transparently through F-Droid and IzzyOnDroid.</p>
+					</div>
+				</section>
+
+				<section class="p-6 sm:p-8 rounded-2xl bg-surface-container-low border border-outline-variant/60">
+					<h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-on-surface m-0 mb-3">Get in Touch</h2>
+					<p class="text-sm sm:text-base text-on-surface-variant leading-relaxed m-0 mb-6 max-w-xl">
+						Have questions about rootless mobile Linux, JVM compiler ports, or interested in collaborating? Reach out directly.
 					</p>
+					<div class="flex flex-wrap items-center gap-3">
+						<a
+							href="mailto:contact@invokevirtual.org"
+							class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-medium text-sm bg-primary text-on-primary hover:opacity-95 active:scale-[0.98] transition-all duration-200 no-underline"
+						>
+							<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+							<span>contact@invokevirtual.org</span>
+						</a>
+						<a
+							href="https://github.com/PranavPurwar"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm bg-surface-container hover:bg-surface-container-high text-on-surface border border-outline-variant/60 active:scale-[0.98] transition-all duration-200 no-underline"
+						>
+							<span>GitHub &rarr;</span>
+						</a>
+					</div>
 				</section>
 				<Footer />
 			</main>

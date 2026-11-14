@@ -9,56 +9,125 @@ import FormattedDate from '../../components/FormattedDate.astro';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+// Collect all unique tags
+const allTags = Array.from(new Set(posts.flatMap((p) => p.data.tags || [])));
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead
-			title={`Writing & Notes — ${SITE_TITLE}`}
-			description="My technical articles, porting deep dives, and notes on JVM internals and Android virtualization."
+			title={`Writing — ${SITE_TITLE}`}
+			description="Technical articles, porting deep dives, and systems architecture notes on JVM internals and Android virtualization."
 		/>
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Blog",
+			"name": `Writing — ${SITE_TITLE}`,
+			"description": "Technical articles, porting deep dives, and systems architecture notes.",
+			"blogPost": posts.map((post) => ({
+				"@type": "BlogPosting",
+				"headline": post.data.title,
+				"description": post.data.description,
+				"datePublished": post.data.pubDate.toISOString(),
+				"url": `https://invokevirtual.org/blog/${post.id}/`
+			}))
+		})} />
 	</head>
-	<body class="bg-bg text-fg antialiased">
-		<div class="w-full max-w-[1240px] mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
+	<body class="bg-surface text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+		<div class="w-full max-w-[1520px] mx-auto min-h-screen px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_minmax(0,1fr)_240px] gap-6 lg:gap-8 xl:gap-10 items-start">
 			<Header />
-			<main class="w-full py-8 min-w-0">
-				<div class="mb-10 pb-7 border-b border-border">
-					<span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-dim block mb-1">ARTICLES &amp; DEEP DIVES</span>
-					<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-fg-heading m-0 mb-2">Writing &amp; Notes</h1>
-					<p class="text-base sm:text-lg text-fg-muted leading-relaxed m-0">
-						My technical articles, porting deep dives, and system architecture notes.
-					</p>
-				</div>
 
-				<section class="flex flex-col gap-4">
-					{posts.map((post) => (
-						<article class="border border-border hover:border-accent rounded-lg bg-bg-surface hover:bg-bg-surface-hover transition-all duration-200 hover:-translate-y-0.5">
-							<a href={`/blog/${post.id}/`} class="block p-5 sm:p-6 no-underline text-inherit group">
-								<div class="flex items-center gap-2.5 mb-2 font-mono text-xs text-fg-dim">
-									<time datetime={post.data.pubDate.toISOString()}>
-										<FormattedDate date={post.data.pubDate} />
-									</time>
-									<span>&bull;</span>
-									<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded font-mono text-[0.7rem] font-semibold uppercase tracking-wider bg-bg-surface text-fg-muted border border-border group-hover:border-border-hover group-hover:text-fg transition-colors">
-										{post.data.tags ? `▣ ${post.data.tags[0].toUpperCase()}` : '▣ ARTICLE'}
-									</span>
-								</div>
-								<h2 class="font-display text-xl sm:text-2xl font-extrabold text-white group-hover:text-accent transition-colors m-0 mb-2 leading-snug">
-									{post.data.title}
-								</h2>
-								{post.data.description && (
-									<p class="text-sm sm:text-base text-fg-muted leading-relaxed m-0 mb-4">{post.data.description}</p>
-								)}
-								<span class="inline-flex items-center gap-1.5 font-mono text-xs font-bold tracking-wider uppercase text-accent group-hover:text-white group-hover:translate-x-1 transition-all">
-									Read article &rarr;
+			<!-- Main Article Feed (Expanded Viewwidth) -->
+			<main class="w-full py-6 lg:py-8 min-w-0">
+				<header class="mb-10 pb-7 border-b border-outline-variant/60 animate-m3-fade-up">
+					<p class="font-serif italic text-xl text-editorial-accent m-0 mb-2">
+						Essays &amp; Notes // 01&ndash;{String(posts.length).padStart(2, '0')}
+					</p>
+					<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-on-surface m-0 mb-3">Technical Writing</h1>
+					<p class="text-base sm:text-lg text-on-surface-variant leading-relaxed m-0 max-w-2xl">
+						Technical articles on JVM internals, compiler ports, and rootless Android virtualization.
+					</p>
+				</header>
+
+				<div class="flex flex-col gap-5">
+					{posts.map((post, idx) => (
+						<article class="group relative p-6 sm:p-7 rounded-2xl border border-outline-variant/60 bg-surface-container-low hover:bg-surface-container hover:border-primary/50 hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.2,0,0,1)] active:scale-[0.99]">
+							<div class="flex items-start gap-4">
+								<span class="font-serif italic text-2xl leading-none text-editorial-accent pt-0.5 shrink-0 select-none" aria-hidden="true">
+									{String(idx + 1).padStart(2, '0')}
 								</span>
-							</a>
+								<div class="flex flex-col gap-3 min-w-0 flex-1">
+									<div class="flex items-center gap-2.5 font-mono text-xs text-on-surface-variant">
+										<span class="text-on-surface-variant font-medium">
+											<FormattedDate date={post.data.pubDate} />
+										</span>
+										{post.data.tags && post.data.tags.length > 0 && (
+											<span class="px-2.5 py-0.5 rounded-md font-mono text-xs font-semibold bg-primary-container/60 text-on-primary-container border border-primary/20">
+												#{post.data.tags[0]}
+											</span>
+										)}
+									</div>
+									<h2 class="font-display text-xl sm:text-2xl font-bold text-on-surface group-hover:text-primary transition-colors m-0 leading-snug">
+										<a href={`/blog/${post.id}/`} class="no-underline text-inherit after:absolute after:inset-0 after:z-1">
+											{post.data.title}
+										</a>
+									</h2>
+									{post.data.description && (
+										<p class="text-sm sm:text-base text-on-surface-variant leading-relaxed m-0 max-w-4xl">{post.data.description}</p>
+									)}
+									<div class="pt-1 flex items-center gap-2 text-editorial-accent font-mono text-xs font-semibold">
+										<span>Read article</span>
+										<span class="group-hover:translate-x-1 transition-transform duration-200">&rarr;</span>
+									</div>
+								</div>
+							</div>
 						</article>
 					))}
-				</section>
+				</div>
 				<Footer />
 			</main>
+
+			<!-- Right Sidebar: Chirpy-style Recent & Topics Panel -->
+			<aside class="hidden xl:flex flex-col gap-8 w-60 sticky top-10 py-6 lg:py-8 shrink-0 self-start border-l border-outline-variant/60 pl-6">
+				<!-- Recent Publications -->
+				<section class="flex flex-col gap-3">
+					<div class="flex items-center gap-2 text-xs font-mono font-semibold tracking-wider text-on-surface uppercase">
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+						<span>Recent Notes</span>
+					</div>
+					<div class="flex flex-col gap-3">
+						{posts.slice(0, 5).map((post) => (
+							<a href={`/blog/${post.id}/`} class="group flex flex-col gap-1 no-underline">
+								<span class="text-xs text-on-surface group-hover:text-primary transition-colors font-medium leading-snug line-clamp-2">
+									{post.data.title}
+								</span>
+								<span class="text-[0.7rem] font-mono text-on-surface-variant">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+							</a>
+						))}
+					</div>
+				</section>
+
+				<!-- Topics / Tags -->
+				{allTags.length > 0 && (
+					<section class="flex flex-col gap-3 pt-6 border-t border-outline-variant/60">
+						<div class="flex items-center gap-2 text-xs font-mono font-semibold tracking-wider text-on-surface uppercase">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+							<span>Topics</span>
+						</div>
+						<div class="flex flex-wrap gap-1.5">
+							{allTags.map((tag) => (
+								<span class="px-2.5 py-0.5 rounded-md font-mono text-xs font-semibold bg-primary-container/60 text-on-primary-container border border-primary/20">
+									#{tag}
+								</span>
+							))}
+						</div>
+					</section>
+				)}
+			</aside>
 		</div>
 	</body>
 </html>

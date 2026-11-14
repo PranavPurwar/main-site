@@ -6,6 +6,8 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { getProjectsWithLiveStars } from '../../lib/github';
 
 const projects = await getProjectsWithLiveStars();
+const [leadProject, ...gridProjects] = projects;
+const maxIndex = String(projects.length).padStart(2, '0');
 ---
 
 <!doctype html>
@@ -13,24 +15,51 @@ const projects = await getProjectsWithLiveStars();
 	<head>
 		<BaseHead
 			title="Projects — Pranav Purwar"
-			description="My open-source developer tools, JVM compiler ports, and mobile systems."
+			description="Open-source Android applications, build tools, and libraries written in Kotlin, Java, and Rust."
 		/>
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "Projects — Pranav Purwar",
+			"description": "Open-source developer tools, JVM compiler ports, and mobile systems.",
+			"mainEntity": {
+				"@type": "ItemList",
+				"itemListElement": projects.map((p, idx) => ({
+					"@type": "SoftwareApplication",
+					"position": idx + 1,
+					"name": p.name,
+					"description": p.tagline,
+					"url": `https://invokevirtual.org/projects/${p.slug}`
+				}))
+			}
+		})} />
 	</head>
-	<body class="bg-bg text-fg antialiased">
-		<div class="w-full max-w-[1240px] mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
+	<body class="bg-surface text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+		<div class="w-full max-w-[1520px] mx-auto min-h-screen px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[256px_1fr] gap-6 lg:gap-8 xl:gap-10 items-start">
 			<Header />
-			<main class="w-full py-8 min-w-0">
-				<div class="mb-8 pb-6 border-b border-border">
-					<span class="font-mono text-xs font-semibold uppercase tracking-wider text-fg-dim block mb-1">SOFTWARE &amp; TOOLS</span>
-					<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-fg-heading m-0 mb-2">Projects &amp; Software</h1>
-					<p class="text-base sm:text-lg text-fg-muted leading-relaxed m-0">My open-source developer tools, compiler ports, and mobile systems.</p>
-				</div>
 
-				<div class="flex flex-col gap-3.5">
-					{projects.map((project) => (
-						<ProjectCard {...project} />
-					))}
-				</div>
+			<main class="w-full py-6 lg:py-8 min-w-0">
+				<header class="pb-8 border-b border-outline-variant/60 mb-8 animate-m3-fade-up">
+					<p class="font-serif italic text-xl text-editorial-accent m-0 mb-2">
+						Archive // 01&ndash;{maxIndex}
+					</p>
+					<h1 class="font-display text-3xl sm:text-4xl font-bold tracking-tight text-on-surface m-0 mb-3">
+						Selected Works &amp; Systems
+					</h1>
+					<p class="text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed m-0">
+						Open-source Android applications, build tools, and compilers written in Kotlin, Java, and Rust.
+					</p>
+				</header>
+
+				<section class="animate-m3-fade-up m3-stagger-1">
+					<div class="project-bento-grid">
+						{leadProject && <ProjectCard {...leadProject} featured={true} index={1} />}
+						{gridProjects.map((project, idx) => (
+							<ProjectCard {...project} featured={false} index={idx + 2} />
+						))}
+					</div>
+				</section>
+
 				<Footer />
 			</main>
 		</div>

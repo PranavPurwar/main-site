@@ -1,15 +1,15 @@
 ---
 name: "Reef"
-tagline: "Open-source digital wellbeing and focus tool with scheduled routines and Mindful Launch."
-description: "An open-source digital wellbeing application that blocks distracting apps, tracks screen time analytics, and automates focus routines. Built with Material 3 Expressive, with zero ads, subscriptions, or outbound tracking."
+tagline: "An open-source digital wellbeing and focus app."
+description: "Blocks distracting apps, tracks screen time, and schedules focus routines. No ads, no subscriptions, no tracking."
 tech:
   - "Kotlin"
   - "Jetpack Compose"
   - "Material 3"
   - "WorkManager"
   - "Room"
-stars: 337
-forks: 38
+stars: 369
+forks: 45
 github: "https://github.com/aload0/Reef"
 featured: true
 order: 3
@@ -33,38 +33,29 @@ screenshots:
     caption: "Mindful Launch: A deliberate breathing pause before opening compulsive apps"
     alt: "Mindful launch prompt"
 features:
-  - "Per-app daily time allowances with early notification warnings"
-  - "Automated focus routines scheduled by time window and day of week"
-  - "Mindful Launch breathing friction to interrupt reflexive phone habits"
-  - "Pomodoro and Count-Up focus timers with automatic DND mode toggle"
-  - "Local on-device usage statistics and interactive hourly charts"
-  - "Zero ads, zero subscriptions, zero tracking — published on F-Droid"
+  - "Per-app daily time allowances with early warning notifications"
+  - "Automated focus routines scheduled by day of week and time window"
+  - "Mindful Launch breathing pause before opening distracting apps"
+  - "Pomodoro and Count-Up focus timers with automatic Do Not Disturb (DND) toggle"
+  - "On-device screen time analytics and hourly usage breakdowns"
+  - "No ads, no subscriptions, no tracking — MIT licensed and available on IzzyOnDroid"
 ---
 
-I built Reef to provide intentional screentime control through local system services rather than subscriptions or behavioural profiling. It contains zero ads, zero subscriptions, and zero tracking. All usage metrics and session records remain strictly on the device.
+Most digital wellbeing apps lock basic timers behind subscriptions or bundle ad/analytics SDKs that track the exact usage habits you're trying to fix. I built **Reef** as a completely free, MIT-licensed Android app where every timer, routine, and usage chart stays strictly on your device.
 
-## Core Focus Mechanics
+## What Reef Does
 
-- **Daily App Allowances & Warnings**  
-  Enforces granular time budgets for individual applications, providing customizable notification warnings as users approach daily thresholds before locking access.
-- **Scheduled Focus Routines**  
-  Constructs recurring blocking schedules across specific days and time windows (e.g., Deep Work on weekday mornings), restricting distracting apps while keeping communications open.
-- **Mindful Launch Friction**  
-  Inserts a deliberate breathing pause countdown before opening designated compulsive apps, creating friction that breaks reflexive phone-checking loops.
-- **Pomodoro & Count-Up Timers**  
-  Pairs structured Pomodoro intervals with open-ended Count-Up focus sessions, automatically managing Do Not Disturb (DND) suppression and calculating focus-to-break ratios.
+- **App Limits & Early Warnings:** Set daily time budgets per app and receive a gentle heads-up before you hit the cutoff and get locked out.
+- **Scheduled Routines:** Create recurring focus schedules by day and time window (for example, weekday mornings) to block distracting apps automatically while keeping essential tools accessible.
+- **Mindful Launch:** Adds a brief breathing pause before opening selected apps—just enough friction to break the autopilot muscle-memory of opening social feeds.
+- **Focus Timers & DND:** Built-in Pomodoro and open-ended Count-Up timers with configurable work/break intervals and automatic Android Do Not Disturb integration.
+- **Local Usage Insights:** Daily and hourly screen time breakdowns stored locally, with zero cloud sync or external telemetry.
 
-## Technical Specifications
+## Technical Stack
 
-- **UI Architecture:** 100% Kotlin with declarative Jetpack Compose and Material 3 Expressive theming.
-- **System Integrations:** Android `UsageStatsManager`, `AccessibilityService`, and `NotificationManager` DND suppression.
-- **Background Engine:** Battery-efficient `WorkManager` jobs for scheduled routine transitions.
-- **Local Privacy:** Encrypted SQLite database via Room with zero outbound network telemetry.
-- **Open Distribution:** Reproducible source builds published via F-Droid and IzzyOnDroid with Weblate localization.
+- **UI:** 100% Kotlin with Jetpack Compose and Material You / Material 3 dynamic theming.
+- **System Integration:** Uses Android `UsageStatsManager`, `AccessibilityService`, and `NotificationManager` for foreground detection and DND control.
+- **Background Scheduling:** `WorkManager` handles routine transitions reliably without draining battery.
+- **Persistence & Distribution:** Local Room database, community translations via Weblate, and reproducible builds distributed on IzzyOnDroid.
 
-## In-Depth Focus & Privacy Engineering
-
-For more context on intentional screentime mechanics, zero-network architecture, and Mindful Launch design, read my article:
-
-[&rarr; Designing Privacy-First Android Apps in a World of Ad SDKs](/blog/privacy-first-android-architecture/)
-
+[&rarr; Read more: Designing Privacy-First Android Apps in a World of Ad SDKs](/blog/privacy-first-android-architecture/)

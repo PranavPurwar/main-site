@@ -14,9 +14,9 @@ const { items, id = "carousel" } = Astro.props;
 ---
 
 {items && items.length > 0 && (
-	<figure class="carousel-wrapper my-8 flex flex-col gap-3" id={id}>
+	<figure class="carousel-wrapper my-8 flex flex-col gap-3.5" id={id}>
 		<div class="relative flex items-center justify-center gap-3">
-			<button class="carousel-btn prev-btn inline-flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-bg-surface hover:bg-bg-surface-hover border border-border hover:border-border-hover text-fg-muted hover:text-accent transition-colors cursor-pointer" aria-label="Previous screenshot" type="button">
+			<button class="carousel-btn prev-btn inline-flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-all active:scale-95 cursor-pointer" aria-label="Previous screenshot" type="button">
 				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
 					<path fill="currentColor" d="M9.78 12.78a.75.75 0 0 1-1.06 0L4.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 1.06L6.06 8l3.72 3.72a.75.75 0 0 1 0 1.06Z" />
 				</svg>
@@ -25,21 +25,21 @@ const { items, id = "carousel" } = Astro.props;
 			<ul class="carousel-track list-none m-0 p-0 flex-1 min-w-0 flex justify-center">
 				{items.map((item, index) => (
 					<li class={`carousel-slide ${index === 0 ? "block" : "hidden"} max-w-full`} data-index={index}>
-						<img src={item.src} alt={item.alt || item.caption || `Screenshot ${index + 1}`} loading="lazy" class="max-w-full max-h-130 w-auto h-auto object-contain rounded-lg shadow-xl" />
+						<img src={item.src} alt={item.alt || item.caption || `Screenshot ${index + 1}`} loading="lazy" class="max-w-full max-h-130 w-auto h-auto object-contain rounded-3xl border border-outline-variant/30 shadow-md" />
 					</li>
 				))}
 			</ul>
 
-			<button class="carousel-btn next-btn inline-flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-bg-surface hover:bg-bg-surface-hover border border-border hover:border-border-hover text-fg-muted hover:text-accent transition-colors cursor-pointer" aria-label="Next screenshot" type="button">
+			<button class="carousel-btn next-btn inline-flex items-center justify-center w-9 h-9 shrink-0 rounded-full bg-surface-container hover:bg-surface-container-high border border-outline-variant/30 text-on-surface-variant hover:text-primary transition-all active:scale-95 cursor-pointer" aria-label="Next screenshot" type="button">
 				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
 					<path fill="currentColor" d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z" />
 				</svg>
 			</button>
 		</div>
 
-		<figcaption class="flex items-baseline justify-between gap-4 m-0">
-			<span class="slide-caption text-sm text-fg-muted leading-snug">{items[0]?.caption}</span>
-			<span class="font-mono text-xs text-fg-dim shrink-0">
+		<figcaption class="flex items-baseline justify-between gap-4 m-0 px-1">
+			<span class="slide-caption text-sm text-on-surface-variant leading-snug">{items[0]?.caption}</span>
+			<span class="font-mono text-xs text-on-surface-variant shrink-0 px-2.5 py-0.5 rounded-full bg-surface-container-high">
 				<span class="current-index">1</span> / <span class="total-count">{items.length}</span>
 			</span>
 		</figcaption>
@@ -48,7 +48,7 @@ const { items, id = "carousel" } = Astro.props;
 			<div class="flex gap-2 overflow-x-auto py-1 -my-1">
 				{items.map((item, index) => (
 					<button
-						class={`thumb-btn ${index === 0 ? "opacity-100 border-accent scale-105" : "opacity-60 border-border"} shrink-0 w-16 h-12 rounded border bg-bg overflow-hidden cursor-pointer p-0 transition-all hover:opacity-90 hover:border-border-hover`}
+						class={`thumb-btn ${index === 0 ? "opacity-100 border-primary scale-105" : "opacity-60 border-outline-variant/30"} shrink-0 w-16 h-12 rounded-xl border bg-surface-container-low overflow-hidden cursor-pointer p-0 transition-all hover:opacity-90 hover:border-outline-variant`}
 						data-thumb={index}
 						type="button"
 						aria-label={`Go to slide ${index + 1}`}
@@ -101,12 +101,12 @@ const { items, id = "carousel" } = Astro.props;
 
 				thumbs.forEach((t, i) => {
 					if (i === currentIndex) {
-						t.classList.add('opacity-100', 'border-accent', 'scale-105');
-						t.classList.remove('opacity-60', 'border-border');
+						t.classList.add('opacity-100', 'border-primary', 'scale-105');
+						t.classList.remove('opacity-60', 'border-outline-variant/30');
 						t.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 					} else {
-						t.classList.remove('opacity-100', 'border-accent', 'scale-105');
-						t.classList.add('opacity-60', 'border-border');
+						t.classList.remove('opacity-100', 'border-primary', 'scale-105');
+						t.classList.add('opacity-60', 'border-outline-variant/30');
 					}
 				});
 

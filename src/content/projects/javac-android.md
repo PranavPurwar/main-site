@@ -1,7 +1,7 @@
 ---
 name: "javac-android"
-tagline: "Standalone OpenJDK Java compiler ported for Android ART runtimes."
-description: "My port of upstream OpenJDK javac adapted to run inside Android's ART environment and PRoot userlands. Compiles modern Java source code directly on mobile hardware without cloud dependencies."
+tagline: "The OpenJDK Java compiler, ported to Android."
+description: "Upstream javac adapted to run on Android's ART runtime, compiling Java source directly on device with no cloud dependency."
 tech:
   - "Java"
   - "OpenJDK"
@@ -13,31 +13,25 @@ github: "https://github.com/PranavPurwar/javac-android"
 featured: false
 order: 4
 features:
-  - "Full javac compiler supporting Java 21 through Java 26 language specifications"
-  - "Module system support with bundled ct.sym symbol database for target releases"
-  - "Heap-conscious filesystem wrappers avoiding ART memory-mapped IO limits"
-  - "Published on JitPack as a drop-in dependency for mobile IDEs"
+  - "Supports Java 21 through Java 26 language specifications and the module system"
+  - "Supports JAVA_HOME and ct.sym symbol tables for --release cross-compilation"
+  - "Heap-conscious filesystem handling adapted for Android's ART runtime"
+  - "Published on JitPack as a drop-in dependency for Android IDEs and build tools"
 ---
 
-Stock OpenJDK `javac` relies on desktop POSIX filesystem assumptions, JVM-specific memory-mapped I/O, and classloader structures that fail inside Android's ART execution environment and Bionic C library. I patched the upstream OpenJDK compiler tree to resolve these ART incompatibilities and packaged it as a drop-in Android library.
+Stock OpenJDK `javac` assumes a desktop JVM, standard POSIX paths, and memory-mapped I/O patterns that break on Android's ART runtime and Bionic libc. `javac-android` is a patched build of the upstream OpenJDK compiler adapted to run directly inside Android apps.
 
-`javac-android` allows mobile code editors, educational compilers, and developer tools like Cosmic IDE to compile Java source files directly on mobile devices without root privileges or remote servers.
+I originally ported it for Cosmic IDE and packaged it as a standalone JitPack library so other Android editors, compilers, and educational tools can compile Java source on-device without root or a remote build server.
 
-## Implementation Highlights
+## What's Supported
 
-- **Modern Java Language Support**  
-  Supports modern Java language specifications from Java 21 through Java 26, including the Java module system and record patterns.
-- **Symbol Tables for Cross-Compilation**  
-  Integrates standard `ct.sym` symbol databases and configurable `JAVA_HOME` paths to enable `--release` target cross-compilation on device hardware.
-- **Heap-Conscious File Handling**  
-  Replaces desktop memory-mapped file channels with streaming filesystem wrappers designed to run within Android process memory limits without triggering low-memory-killer (LMK) aborts.
-- **Reusable JitPack Distribution**  
-  Published on JitPack as `com.github.PranavPurwar:javac-android:27.23`, enabling any Android application to embed a complete Java compiler.
+- **Modern Java:** Compiles up to Java 26 language features, including the Java module system.
+- **`JAVA_HOME` & `ct.sym`:** Supports standard `ct.sym` symbol tables and `JAVA_HOME` configuration for targeting specific `--release` levels.
+- **ART-Friendly I/O:** Avoids desktop memory-mapped file assumptions that trigger ART memory issues on mobile devices.
 
-## Integration Example
+## Gradle Integration
 
 ```groovy
-// Gradle dependency configuration
 repositories {
     maven { url 'https://jitpack.io' }
 }
@@ -46,10 +40,3 @@ dependencies {
     implementation 'com.github.PranavPurwar:javac-android:27.23'
 }
 ```
-
-## In-Depth Compiler Engineering
-
-For an architectural breakdown of resolving ART classloader limitations, `ct.sym` symbol extraction, and heap constraints, read my article:
-
-[&rarr; Porting the JDK and Kotlin Compilers to the Android Runtime](/blog/porting-compilers-to-android/)
-

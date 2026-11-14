@@ -23,7 +23,8 @@ export async function getProjectsWithLiveStars(): Promise<Project[]> {
 				github: entry.data.github,
 				features: entry.data.features,
 				featured: entry.data.featured,
-				screenshot: entry.data.screenshot,
+				screenshot: entry.data.screenshot || entry.data.screenshots?.[0]?.src,
+				screenshots: entry.data.screenshots,
 			};
 
 			try {

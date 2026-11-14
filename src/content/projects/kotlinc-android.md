@@ -1,43 +1,37 @@
 ---
 name: "kotlinc-android"
-tagline: "Standalone Kotlin compiler pipeline adapted for on-device mobile compilation."
-description: "My port of the JetBrains Kotlin compiler toolchain adapted for Android ART runtimes. Integrates an in-memory virtual JAR filesystem to deliver fast on-device Kotlin compilation for mobile developer tools."
+tagline: "The JetBrains Kotlin compiler, adapted for Android's ART runtime."
+description: "Patched Kotlin and Java compiler builds for Android, featuring fastJarFileSystem support for on-device compilation in mobile IDEs and build tools."
 tech:
   - "Kotlin"
   - "Java"
   - "Android ART"
   - "fastJarFileSystem"
-stars: 30
-forks: 0
+stars: 5
+forks: 2
 github: "https://github.com/PranavPurwar/kotlinc-android"
 featured: false
 order: 5
 features:
-  - "Kotlin 2.4 and 2.5 compiler support including the K2 pipeline"
-  - "fastJarFileSystem in-memory indexing to accelerate mobile JAR scanning"
-  - "Joint compilation alongside javac-android in mixed Java/Kotlin trees"
-  - "Packaged as a lightweight JitPack artifact focused exclusively on JVM targets"
+  - "Supports Kotlin 2.5 and the K2 compiler pipeline for JVM targets"
+  - "fastJarFileSystem support for fast in-memory JAR indexing on mobile storage"
+  - "Designed to pair with javac-android for mixed Java/Kotlin projects"
+  - "Published on JitPack for easy integration into Android IDEs and compilers"
 ---
 
-The official JetBrains Kotlin compiler (`kotlinc`) relies on desktop JVM reflection, NIO filesystem internals, and dynamic classloader assumptions that fail inside Android's ART execution environment. I adapted the compiler pipeline to run natively on Android devices, stripping desktop-only runtime baggage while preserving JVM bytecode generation.
+JetBrains' `kotlinc` relies heavily on desktop JVM reflection, NIO internals, and IntelliJ VFS assumptions that don't work out of the box on Android's ART runtime. `kotlinc-android` patches the compiler pipeline so Android apps can compile Kotlin source to JVM bytecode directly on-device.
 
-Integrated with `fastJarFileSystem`, `kotlinc-android` enables mobile environments like Cosmic IDE to compile Kotlin projects on Android hardware without remote build servers.
+Built alongside `javac-android` for Cosmic IDE, it's published on JitPack for any Android IDE, compiler app, or on-device build tool.
 
-## Key Technical Adaptations
+## What's Supported
 
-- **Modern Language Versions**  
-  Supports Kotlin 2.4 and 2.5 compiler iterations, including the K2 compiler pipeline, coroutines, and standard library bindings.
-- **fastJarFileSystem Integration**  
-  Integrates an in-memory virtual JAR filesystem to accelerate classpath scanning on mobile flash storage, cutting compile startup latency.
-- **JitPack Artifact Distribution**  
-  Packaged and deployed via JitPack as `com.github.PranavPurwar:kotlinc-android:2.4.0` for straightforward integration into third-party Android apps and IDE plugins.
-- **Joint Java & Kotlin Compilation**  
-  Operates alongside `javac-android` to support bidirectional Java-Kotlin joint compilation in multi-file project trees.
+- **Kotlin 2.5 & K2:** Supports modern Kotlin language features targeting the JVM.
+- **`fastJarFileSystem`:** Includes `fastJarFileSystem` support to keep JAR classpath scanning fast on mobile flash storage.
+- **Scope:** Focused on JVM bytecode targets (non-JVM backends like JS, Native, and Wasm are out of scope).
 
-## Integration Example
+## Gradle Integration
 
 ```groovy
-// Gradle dependency configuration
 repositories {
     maven { url 'https://jitpack.io' }
 }
@@ -46,10 +40,3 @@ dependencies {
     implementation 'com.github.PranavPurwar:kotlinc-android:2.4.0'
 }
 ```
-
-## In-Depth Compiler Engineering
-
-For an architectural breakdown of IntelliJ VFS decoupling, fastJarFileSystem in-memory JAR virtual filesystems, and ART bytecode verification, read my article:
-
-[&rarr; Porting the JDK and Kotlin Compilers to the Android Runtime](/blog/porting-compilers-to-android/)
-

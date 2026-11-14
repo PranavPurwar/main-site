@@ -2,16 +2,16 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="mt-12 pt-8 pb-8 border-t border-border font-mono text-xs tracking-wider text-fg-muted">
+<footer class="mt-14 pt-8 pb-10 border-t border-outline-variant/30 font-mono text-xs tracking-wider text-on-surface-variant">
 	<div class="flex flex-col gap-3.5">
 		<ul class="flex flex-wrap gap-x-6 gap-y-2.5 list-none p-0 m-0">
-			<li><a href="/" class="text-fg-muted hover:text-fg transition-colors no-underline">Home</a></li>
-			<li><a href="/projects" class="text-fg-muted hover:text-fg transition-colors no-underline">Projects</a></li>
-			<li><a href="/blog" class="text-fg-muted hover:text-fg transition-colors no-underline">Blog</a></li>
-			<li><a href="/about" class="text-fg-muted hover:text-fg transition-colors no-underline">About</a></li>
-			<li><a href="https://github.com/PranavPurwar" target="_blank" rel="noopener" class="text-fg-muted hover:text-fg transition-colors no-underline">GitHub</a></li>
-			<li><a href="/rss.xml" class="text-fg-muted hover:text-fg transition-colors no-underline">RSS</a></li>
+			<li><a href="/" class="text-on-surface-variant hover:text-primary transition-colors no-underline">Home</a></li>
+			<li><a href="/projects" class="text-on-surface-variant hover:text-primary transition-colors no-underline">Projects</a></li>
+			<li><a href="/blog" class="text-on-surface-variant hover:text-primary transition-colors no-underline">Writing</a></li>
+			<li><a href="/about" class="text-on-surface-variant hover:text-primary transition-colors no-underline">About</a></li>
+			<li><a href="https://github.com/PranavPurwar" target="_blank" rel="noopener" class="text-on-surface-variant hover:text-primary transition-colors no-underline">GitHub</a></li>
+			<li><a href="/rss.xml" class="text-on-surface-variant hover:text-primary transition-colors no-underline">RSS</a></li>
 		</ul>
-		<p class="m-0 text-fg-dim leading-relaxed">&copy; {currentYear} Pranav Purwar. Built with Astro &amp; Cloudflare.</p>
+		<p class="m-0 text-on-surface-variant leading-relaxed">&copy; {currentYear} Pranav Purwar. Built with Astro &amp; Cloudflare.</p>
 	</div>
 </footer>

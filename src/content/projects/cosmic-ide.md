@@ -1,16 +1,16 @@
 ---
 name: "Cosmic IDE"
-tagline: "Desktop-class development on Android powered by a native Linux environment."
-description: "A full Linux-based development environment running directly inside Android application storage without root. Hosts real compilers, build tools, package managers, and Language Server Protocol backends natively on device hardware."
+tagline: "A desktop-class IDE that runs natively on Android."
+description: "Write, build, and run code on your phone or tablet with no root or cloud. Powered by a compatibility layer over a Linux runtime, pacman, and plugins that handle language setup automatically."
 tech:
   - "Jetpack Compose"
   - "C/C++"
-  - "Extensions"
   - "Arch Linux ARM"
-  - "Gradle"
-  - "Language Server Protocol"
-stars: 726
-forks: 101
+  - "LSP"
+  - "TextMate"
+  - "Plugins"
+stars: 763
+forks: 107
 github: "https://github.com/Cosmic-IDE/Cosmic-IDE"
 featured: true
 order: 1
@@ -34,61 +34,56 @@ screenshots:
     caption: "Tree-based project explorer with multi-module navigation and file management"
     alt: "Cosmic IDE project explorer"
 features:
-  - "Rootless aarch64 glibc compatibility layer running genuine Linux binaries"
-  - "Integrated PTY terminal with pacman package management via Arch Linux ARM"
-  - "Native Language Server Protocol (LSP) integration with inline diagnostics"
-  - "Local build toolchains: Gradle daemons, Cargo, and Maven execution on device"
-  - "In-app Plugin Marketplace to install language stacks and tools on demand"
-  - "Built-in Git operations: clone, branch, stage, commit, diff, and remote sync"
-  - "Syntax highlighting and themes powered by TextMate grammars"
-  - "Responsive Material 3 workspace optimized for touch, keyboards, and Samsung DeX"
+  - "Rootless aarch64 Linux userland using in-process path translation and seccomp-BPF traps"
+  - "Two-stage Arch Linux ARM bootstrap with pacman package management in app-private storage"
+  - "Sora Editor with TextMate grammars, sticky scroll, minimap, and inline find & replace"
+  - "Full Language Server Protocol (LSP) client over JSON-RPC stdio for completions, diagnostics, and quick fixes"
+  - "Plugin system with isolated ClassLoaders, lifecycle hooks, event bus, and in-app marketplace"
+  - "Interactive PTY terminal powered by JNI openpty with signal handling and resize support"
+  - "Built-in Git client supporting clone, branch, stage, commit, diff, and SSH/token auth"
+  - "Adaptive Material 3 layout for phones, tablets, hardware keyboards, and Samsung DeX"
 ---
 
-Cosmic IDE transforms Android devices into genuine developer workstations. Instead of functioning as a lightweight text editor, remote shell, or cloud wrapper, it hosts a real Linux userland directly inside app-private internal storage.
+Cosmic IDE is a native Android IDE built for writing, compiling, and running real projects directly on a phone or tablet—offline, without root, and without offloading work to a remote VM.
 
-The platform executes real Linux binaries without root access, container virtualization, or virtual machine performance penalties. Genuine compilers, language server daemons, and build engines run straight on the device's ARM64 silicon with near-native throughput.
+When I originally started Cosmic IDE, it was focused on Java and Kotlin on Android. After picking the project back up, I rebuilt the architecture around a rootless Linux execution layer, an extensible plugin runtime, and a full Language Server Protocol (LSP) editor so any language toolchain can run locally on ARM64 hardware.
 
-## Language Support & Toolchains
+## How the Runtime Works
 
-Cosmic IDE uses a modular plugin engine so you can install runtimes, language servers, and toolchains directly through the in-app marketplace on demand.
+Instead of using PRoot (`ptrace` syscall tracing), which slows down compiler-heavy workloads with constant context switches, Cosmic IDE keeps path translation **inside** the target process:
 
-| Ecosystem | Languages & Runtimes | Language Servers & Build Tools |
-|---|---|---|
-| **JVM Stack** | Java, Kotlin, Scala 3 | Eclipse JDT LS, Metals (via Coursier), Kotlin LS, Gradle Daemons, Maven |
-| **Systems & Native** | Rust, C, C++, Go, Gleam | `rust-analyzer`, `clangd`, `gopls`, Cargo, GCC |
-| **Scripting & Web** | Python, Lua, Node.js | `pyright` / `pylsp`, LuaLS, npm |
-| **Package Management** | Linux CLI utilities, system libraries | Arch Linux ARM repositories via `pacman` |
+- **Dynamic ELF Binaries:** Launched through a bundled `libld_linux.so` with `LD_PRELOAD=libpath_redirect.so` and `seccomp-BPF` (`SECCOMP_RET_TRAP` / `SIGSYS`) to rewrite virtual paths like `/usr`, `/etc`, and `/tmp` into app-private storage without external tracer overhead.
+- **Static ELF Binaries:** Handled by a custom `libstatic_loader.so` ELF loader that maps `PT_LOAD` segments directly in memory and forwards execution cleanly.
+- **Two-Stage Arch Linux ARM Bootstrap:** First launch unpacks a minimal `glibc` environment (`files/glibc`), then initializes `pacman` keys and installs a full Arch Linux ARM userland into `files/arch`.
 
-### Modern Language Server Protocol (LSP)
+Once bootstrapped, `pacman -S` works inside the built-in PTY terminal (`openpty` over JNI) just like on a desktop Arch install.
 
-The editor communicates directly with official language servers over local JSON-RPC pipes. This brings desktop-grade developer intelligence to mobile hardware without cutting corners.
+## Editor & Language Intelligence
 
-You get rich, context-aware autocomplete, method signature popups, type inference, parameter hints, and go-to-definition. The editor surfaces compiler diagnostics, syntax errors, and quick fixes inline as you write.
+The editor is built on Sora Editor (`CodeEditor`) with TextMate grammar highlighting (`One Dark`, `Nord`, `Dracula`, `Monokai`, `Solarized`), multi-tab editing, sticky scroll, a code minimap, inline Find & Replace, and custom font support.
 
-### Local Compilers & Build Automation
+Language intelligence runs through local JSON-RPC stdio pipes managed by the `:exec` process layer, giving you real-time diagnostics, quick fixes, type info, hover docs, signature help, and go-to-definition right in the editor.
 
-Heavy build systems execute locally rather than offloading to an external server. You can run incremental `./gradlew` builds, trigger `cargo build` for native Rust crates, or run Maven goals directly in your project directory.
+## Plugin Ecosystem
 
-Build tasks run in background threads with live console output, process controls, and cancellation hooks, ensuring long compilation runs do not lock up the editor interface.
+Cosmic IDE doesn't ship heavy compilers or SDKs inside the base APK. Instead, language stacks, build systems, and developer tools are packaged as plugins and installed on demand from the [Cosmic IDE Plugin Marketplace](https://plugins.ide.invokevirtual.org):
 
-### Integrated Terminal & Package Management
+| Category | Available Plugins |
+|---|---|
+| **Languages & LSPs** | Java, C/C++, Rust, Go, Scala, Python, Dart, Swift, Zig, Gleam, Lua, TypeScript/JS, Vue |
+| **Build Systems** | Gradle, Apache Maven, Apache Ant, CMake, Bun |
+| **Mobile & Platforms** | Android Development Tools (SDK & build-tools), Flutter Mobile & Multiplatform |
+| **GUI, Viewers & Tools** | X11 & VNC Desktop Display, Visual Debugger, HTTP & REST API Client, Diff & Patch Visualizer, JSON & Schema Tools, Markdown Tools |
 
-A built-in pseudo-terminal (PTY) gives direct access to standard shells including `bash` and `zsh`. It features full ANSI color escape handling, process management, and support for terminal multiplexers like `tmux`.
+Under the hood, each plugin declares a `plugin.json` manifest (`PluginDescriptor`), loads into an isolated `PluginClassLoader`, hooks into `PluginLifecycle` (`onLoad`, `onEnable`, `onDisable`, `onUnload`), and registers editor contributions, actions, and event listeners via `PluginRuntime`.
 
-Through integrated Arch Linux ARM package mirrors, you can use `pacman` to install developer packages natively. Essential utilities like `git`, `neovim`, `curl`, `tar`, and custom compilation toolchains install without requiring device root or system modifications.
+## Workspace, Git & Security
 
-### Built-in Git Workflow
+- **Storage Access:** Projects live either in high-speed app-private storage or external directories granted through Android's Storage Access Framework (`DocumentFile` + persisted URI permissions).
+- **Git Integration:** Built-in Git panel for cloning repositories, switching branches, viewing diffs, staging, committing, and pushing over HTTPS or SSH.
+- **Adaptive UI:** Material 3 Compose interface that scales from compact phone screens to multi-pane tablet and Samsung DeX desktop setups with hardware keyboard shortcuts.
 
-Manage your source code directly inside the interface without constantly switching into terminal sessions.
+## Architecture Deep-Dives
 
-The Git panel supports cloning remote repositories, checking out branches, staging modified files, writing commit messages, viewing diffs, and syncing changes with platforms like GitHub and GitLab.
-
-### Editor Experience & Workspace
-
-The editing surface is built on TextMate grammars, providing accurate syntax highlighting across hundreds of languages alongside customizable color themes.
-
-File management handles multi-module project trees, quick file search, and tabbed editor navigation. Projects can live inside high-speed app-private storage or external directories managed through Android's Document Picker (SAF).
-
-The user interface adapts across device layouts, switching between touch-friendly mobile views, expanded tablet panes, and full multi-window desktop layouts under Samsung DeX with complete hardware keyboard and mouse shortcuts.
-
-[&rarr; Read the deep-dive: Rootless Linux on Android](/blog/rootless-linux-on-android/)
+- [&rarr; Rootless Linux on Android: Inside the Cosmic IDE Architecture](/blog/rootless-linux-on-android/)
+- [&rarr; Inside Cosmic IDE's Editor and Plugin Architecture](/blog/cosmic-ide-editor-and-plugin-architecture/)

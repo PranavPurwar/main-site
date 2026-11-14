@@ -5,46 +5,227 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-type Props = CollectionEntry<'blog'>['data'];
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+	updatedDate?: Date;
+	heroImage?: string;
+	headings?: { depth: number; slug: string; text: string }[];
+	recentPosts?: CollectionEntry<'blog'>[];
+	currentSlug?: string;
+}
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	headings = [],
+	recentPosts = [],
+	currentSlug,
+} = Astro.props;
+
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={`${title} — Pranav Purwar`} description={description} image={heroImage} />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "BlogPosting",
+			"headline": title,
+			"description": description,
+			"datePublished": pubDate.toISOString(),
+			"dateModified": (updatedDate || pubDate).toISOString(),
+			"author": {
+				"@type": "Person",
+				"name": "Pranav Purwar",
+				"url": "https://invokevirtual.org"
+			},
+			"publisher": {
+				"@type": "Person",
+				"name": "Pranav Purwar"
+			},
+			"mainEntityOfPage": {
+				"@type": "WebPage",
+				"@id": Astro.url.href
+			}
+		})} />
 	</head>
 
-	<body class="bg-bg text-fg antialiased">
-		<div class="w-full max-w-310 mx-auto min-h-screen px-4 flex flex-col lg:grid lg:grid-cols-[245px_1fr] gap-8 items-start">
+	<body class="bg-surface text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+		<div class="w-full max-w-[1520px] mx-auto min-h-screen px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[256px_1fr] xl:grid-cols-[256px_minmax(0,1fr)_240px] gap-6 lg:gap-8 xl:gap-10 items-start">
 			<Header />
-			<main class="w-full py-8 min-w-0">
-				<a href="/blog" class="inline-flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-accent hover:text-white transition-transform hover:-translate-x-1 mb-6 no-underline">&larr; Back to Writing</a>
-				<article>
+
+			<!-- Main Article Column (Expansive Viewwidth) -->
+			<main class="w-full py-6 lg:py-8 min-w-0">
+				<a href="/blog" class="inline-flex items-center gap-1.5 font-mono text-xs text-on-surface-variant hover:text-primary transition-colors mb-6 no-underline">
+					<span>&larr;</span>
+					<span>Back to Writing</span>
+				</a>
+
+				<article class="animate-m3-fade-up">
 					{heroImage && (
-						<div class="w-full mb-8 rounded-lg overflow-hidden border border-border bg-bg-surface">
-							<img width={1020} height={510} src={heroImage} alt="" class="block w-full h-auto max-h-100 object-cover" />
+						<div class="w-full mb-8 rounded-2xl overflow-hidden border border-outline-variant/60 bg-surface-container-low">
+							<img width={1200} height={600} src={heroImage} alt="" class="block w-full h-auto max-h-120 object-cover" />
 						</div>
 					)}
-					<header class="mb-10 pb-8 border-b border-border">
-						<div class="flex items-center gap-4 mb-3 font-mono text-xs text-fg-dim">
-							<FormattedDate date={pubDate} />
+
+					<header class="mb-10 pb-8 border-b border-outline-variant/60">
+						<div class="flex items-center gap-3 mb-4 font-mono text-xs text-on-surface-variant">
+							<span class="font-serif italic text-base text-editorial-accent">Essay</span>
+							<span aria-hidden="true">/</span>
+							<span class="text-on-surface-variant font-medium">
+								<FormattedDate date={pubDate} />
+							</span>
 							{updatedDate && (
-								<span class="italic">
-									(Updated: <FormattedDate date={updatedDate} />)
+								<span class="text-on-surface-variant">
+									&bull; Updated <FormattedDate date={updatedDate} />
 								</span>
 							)}
 						</div>
-						<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-fg-heading m-0 mb-3">{title}</h1>
-						{description && <p class="text-base sm:text-lg text-fg-muted leading-relaxed m-0">{description}</p>}
+						<h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-on-surface m-0 mb-4 leading-tight">{title}</h1>
+						{description && <p class="text-base sm:text-xl text-on-surface-variant leading-relaxed m-0 max-w-4xl">{description}</p>}
 					</header>
-					<div class="prose">
+
+					<!-- Mobile / Tablet Collapsible Contents (when right sidebar is hidden) -->
+					{tocHeadings.length > 0 && (
+						<details class="xl:hidden mb-8 p-4 rounded-2xl bg-surface-container-low border border-outline-variant/60 text-xs">
+							<summary class="font-mono font-semibold text-on-surface cursor-pointer select-none flex items-center justify-between">
+								<span class="uppercase tracking-wider">Contents ({tocHeadings.length})</span>
+								<span class="text-editorial-accent">&darr;</span>
+							</summary>
+							<nav class="mt-3 flex flex-col gap-2 pt-3 border-t border-outline-variant/50 font-sans">
+								{tocHeadings.map((h) => (
+									<a
+										href={`#${h.slug}`}
+										class={`no-underline transition-colors hover:text-primary ${
+											h.depth === 3
+												? 'pl-3 text-on-surface-variant'
+												: 'text-on-surface-variant font-medium'
+										}`}
+									>
+										{h.text}
+									</a>
+								))}
+							</nav>
+						</details>
+					)}
+
+					<!-- Article Prose Content with comfortable, expanded viewwidth -->
+					<div class="prose max-w-none text-base sm:text-lg">
 						<slot />
 					</div>
 				</article>
+
 				<Footer />
 			</main>
+
+			<!-- Right Sidebar: Chirpy-style sticky "Contents" and "Recent" sections -->
+			<aside class="hidden xl:flex flex-col gap-8 w-60 sticky top-10 py-6 lg:py-8 shrink-0 self-start border-l border-outline-variant/60 pl-6">
+				<!-- Content / Table of Contents Section -->
+				{tocHeadings.length > 0 && (
+					<section class="flex flex-col gap-3">
+						<div class="flex items-center gap-2 text-xs font-mono font-semibold tracking-wider text-on-surface uppercase">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+							<span>Contents</span>
+						</div>
+						<nav id="table-of-contents" class="flex flex-col gap-1 text-xs text-on-surface-variant font-sans max-h-[50vh] overflow-y-auto pr-2">
+							{tocHeadings.map((h) => (
+								<a
+									href={`#${h.slug}`}
+									class={`toc-link block py-1 no-underline transition-all duration-150 leading-snug rounded-sm ${
+										h.depth === 3
+											? 'pl-3 text-[0.8rem] text-on-surface-variant hover:text-primary'
+											: 'text-on-surface-variant hover:text-primary font-medium'
+									}`}
+									data-target={h.slug}
+								>
+									{h.text}
+								</a>
+							))}
+						</nav>
+					</section>
+				)}
+
+				<!-- Recent Section -->
+				{recentPosts.length > 0 && (
+					<section class="flex flex-col gap-3 pt-6 border-t border-outline-variant/60">
+						<div class="flex items-center gap-2 text-xs font-mono font-semibold tracking-wider text-on-surface uppercase">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+							<span>Recent</span>
+						</div>
+						<div class="flex flex-col gap-3.5">
+							{recentPosts.map((recent) => (
+								<a href={`/blog/${recent.id}/`} class="group flex flex-col gap-1 no-underline">
+									<span class="text-xs text-on-surface group-hover:text-primary transition-colors font-medium leading-snug line-clamp-2">
+										{recent.data.title}
+									</span>
+									<span class="text-[0.7rem] font-mono text-on-surface-variant">
+										<FormattedDate date={recent.data.pubDate} />
+									</span>
+								</a>
+							))}
+						</div>
+					</section>
+				)}
+			</aside>
 		</div>
+
+		<!-- Scrollspy script for Table of Contents -->
+		<script>
+			function setupTocSpy() {
+				const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+				if (tocLinks.length === 0) return;
+
+				const targets = Array.from(tocLinks)
+					.map((link) => {
+						const slug = link.getAttribute('data-target');
+						return slug ? document.getElementById(slug) : null;
+					})
+					.filter((el): el is HTMLElement => el !== null);
+
+				if (targets.length === 0) return;
+
+				function highlightToc() {
+					const scrollY = window.scrollY;
+					let currentTarget: HTMLElement | null = null;
+
+					for (const target of targets) {
+						const top = target.getBoundingClientRect().top + scrollY - 120;
+						if (scrollY >= top) {
+							currentTarget = target;
+						} else {
+							break;
+						}
+					}
+
+					tocLinks.forEach((link) => {
+						const slug = link.getAttribute('data-target');
+						if (currentTarget && slug === currentTarget.id) {
+							link.classList.add('text-primary', 'font-semibold', 'translate-x-1');
+							link.classList.remove('text-on-surface-variant', 'text-on-surface-variant');
+						} else {
+							link.classList.remove('text-primary', 'font-semibold', 'translate-x-1');
+							if (!link.classList.contains('pl-3')) {
+								link.classList.add('text-on-surface-variant');
+							} else {
+								link.classList.add('text-on-surface-variant');
+							}
+						}
+					});
+				}
+
+				window.addEventListener('scroll', highlightToc, { passive: true });
+				highlightToc();
+			}
+
+			setupTocSpy();
+			document.addEventListener('astro:page-load', setupTocSpy);
+		</script>
 	</body>
 </html>

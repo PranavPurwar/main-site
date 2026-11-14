@@ -21,6 +21,7 @@ export interface Project {
 	features: string[];
 	featured: boolean;
 	screenshot?: string;
+	screenshots?: { src: string; caption?: string; alt?: string }[];
 }
 
 export const PROJECTS: Project[] = [
@@ -34,7 +35,7 @@ export const PROJECTS: Project[] = [
 		stars: 726,
 		forks: 101,
 		github: "https://github.com/Cosmic-Ide/Cosmic-IDE",
-		screenshot: "/projects/cosmic-ide.jpeg",
+		screenshot: "https://github.com/Cosmic-Ide/Cosmic-IDE/raw/main/docs/images/scala-code-completion.jpeg",
 		features: [
 			"App-private glibc compatibility layer running genuine Linux/aarch64 binaries",
 			"Integrated PTY terminal with Arch Linux ARM pacman package management",
@@ -62,7 +63,7 @@ export const PROJECTS: Project[] = [
 		stars: 862,
 		forks: 73,
 		github: "https://github.com/aload0/AppLock",
-		screenshot: "/projects/applock.png",
+		screenshot: "https://raw.githubusercontent.com/aload0/AppLock/refs/heads/master/fastlane/metadata/android/en-US/images/featureGraphic.png",
 		features: [
 			"Zero network permissions in manifest — zero analytics, zero trackers",
 			"BiometricPrompt integrated with hardware Secure Element / StrongBox",
@@ -83,7 +84,7 @@ export const PROJECTS: Project[] = [
 		stars: 337,
 		forks: 38,
 		github: "https://github.com/aload0/Reef",
-		screenshot: "/projects/reef.png",
+		screenshot: "https://github.com/aload0/Reef/raw/main/fastlane/metadata/android/en-US/images/phoneScreenshots/01.png",
 		features: [
 			"Per-app daily time allowances with early notification warnings",
 			"Automated focus routines scheduled by time window and day of week",

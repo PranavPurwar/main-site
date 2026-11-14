@@ -1,7 +1,7 @@
 ---
 name: "AppLock"
 tagline: "Open-source Android app locker with zero telemetry and hardware biometric authentication."
-description: "A lightweight, privacy-first application locker for Android. Built with Jetpack Compose and Material 3, it enforces security through hardware-backed biometrics and window manager overlays with zero network permissions and zero tracking."
+description: "A lightweight, privacy-first application locker for Android. Built with Jetpack Compose and Material 3, it enforces security through hardware-backed biometrics and window overlays with zero network permissions."
 tech:
   - "Kotlin"
   - "Jetpack Compose"
@@ -9,8 +9,8 @@ tech:
   - "BiometricPrompt"
   - "Room"
   - "SQLCipher"
-stars: 862
-forks: 73
+stars: 913
+forks: 93
 github: "https://github.com/aload0/AppLock"
 featured: true
 order: 2
@@ -34,38 +34,27 @@ screenshots:
     caption: "Granular unlock timeout controls (immediately, screen off, or customized interval)"
     alt: "Unlock timeout configuration"
 features:
-  - "Zero network permissions in manifest — zero analytics, zero trackers"
-  - "BiometricPrompt integrated with hardware Secure Element / StrongBox"
-  - "High-priority WindowManager overlay interception"
+  - "No INTERNET permission in AndroidManifest — enforced at the OS level"
+  - "Fingerprint, Face Unlock, and PIN support via Android BiometricPrompt"
+  - "Real-time foreground app interception via WindowManager overlays (no root required)"
   - "Anti-uninstall protection for user apps and system package settings"
-  - "Granular unlock timeouts (immediate, screen off, or custom interval)"
-  - "Distributed transparently on F-Droid and IzzyOnDroid"
+  - "Configurable re-lock timeouts (immediate, screen-off, or custom grace period)"
+  - "Audited clean on Exodus Privacy and VirusTotal; distributed on F-Droid & IzzyOnDroid"
 ---
 
-I built AppLock around a strict zero-telemetry design. The application does not declare `android.permission.INTERNET` in its manifest, preventing network requests at the OS level. It contains no tracking libraries, ad SDKs, or cloud dependencies, verified through independent audits on Exodus Privacy and VirusTotal.
+App lockers on Android have a notorious reputation for bundling ad networks, trackers, and invasive background telemetry. I built **AppLock** around a simple guarantee: it doesn't even declare `android.permission.INTERNET` in its manifest, so the OS itself prevents any outbound network traffic.
 
-## Core Security Mechanisms
+## Key Capabilities
 
-- **Hardware-Backed Biometrics**  
-  Interfaces directly with Android's `BiometricPrompt` API, delegating cryptographic key verification to the device's hardware Secure Element and StrongBox enclave alongside master PIN fallback.
-- **WindowManager Overlay Interception**  
-  Uses high-priority system overlay channels to intercept foreground app launch events, blocking unauthorized access before sensitive views can render on screen.
-- **Anti-Uninstall Protection**  
-  Monitors package management intents and device settings access to prevent adversaries from bypassing the lock by force-stopping the service or uninstalling the package.
-- **Granular Re-Lock Timeouts**  
-  Supports flexible lock policies: lock immediately upon switching apps, lock when the display turns off, or allow a configurable grace period for frequent multitasking.
+- **Hardware-Backed Authentication:** Integrates Android's `BiometricPrompt` API for fingerprint and face unlock alongside a master PIN fallback.
+- **No-Root App Interception:** Watches foreground app launches and displays a Material 3 authentication overlay via `WindowManager` before protected apps become visible.
+- **Anti-Uninstall Protection:** Guards package settings and uninstall flows so someone with your unlocked phone can't simply force-stop or remove AppLock to bypass it.
+- **Flexible Unlock Timeouts:** Lock immediately when leaving an app, lock when the screen turns off, or set a custom grace period while multitasking.
 
-## Auditing & Implementation
+## Privacy & Verification
 
-- **Zero Network Access:** No `INTERNET` permission declared; mathematically zero outbound traffic.
-- **Independent Audits:** Verified clean on Exodus Privacy (0 trackers) and VirusTotal (0 detection flags).
-- **Encrypted Storage:** Encrypted SQLite database managed through Jetpack Room with SQLCipher.
-- **UI Stack:** 100% Kotlin with Jetpack Compose and Material 3 dynamic color theming.
-- **Distribution:** Built from source and distributed via F-Droid and IzzyOnDroid.
+- **Zero Network Access:** No `INTERNET` permission, no analytics, and no ad SDKs.
+- **Encrypted Local State:** Settings and lock lists are stored locally with Room and SQLCipher.
+- **Publicly Audited:** Verified with 0 trackers on Exodus Privacy and clean scans on VirusTotal, with source-built releases available via F-Droid and IzzyOnDroid.
 
-## In-Depth Security Architecture
-
-For more context on the zero-permission model, hardware KeyStore enclave delegation, and window overlay defenses, read my article:
-
-[&rarr; Designing Privacy-First Android Apps in a World of Ad SDKs](/blog/privacy-first-android-architecture/)
-
+[&rarr; Read more: Designing Privacy-First Android Apps in a World of Ad SDKs](/blog/privacy-first-android-architecture/)

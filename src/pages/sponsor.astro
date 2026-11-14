@@ -1,0 +1,194 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const cryptoWallets = [
+	{
+		symbol: 'BTC',
+		name: 'Bitcoin',
+		network: 'Bitcoin',
+		address: 'bc1q3eesyfn7lhql4c2khv56cyvw2374zkhe7r97hz',
+	},
+	{
+		symbol: 'ETH',
+		name: 'Ethereum',
+		network: 'ERC-20',
+		address: '0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816',
+	},
+	{
+		symbol: 'SOL',
+		name: 'Solana',
+		network: 'Solana',
+		address: '7FxTAJLmhXFp6wxVbUTpf8jDmzEX1CKVMdE8oLPNQvyb',
+	},
+	{
+		symbol: 'XMR',
+		name: 'Monero',
+		network: 'Monero',
+		address: '848dAWBVk8GMaoRHg6HUP5CbkpY9pJra1KNQAo9yJ6vbJLFsjFD8ZHkGpi6FhVY7rsD4U9iR7brk64eknsC3bS7tV9JRU4f',
+	},
+	{
+		symbol: 'POLY',
+		name: 'Polygon',
+		network: 'Polygon POS',
+		address: '0xD80A8D6E0fa433A8bDFC2D3F325159Db70605816',
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Sponsor & Donate — Pranav Purwar"
+			description="Support Pranav Purwar's open-source Android apps, developer tools, and compilers."
+		/>
+	</head>
+	<body class="bg-surface text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+		<div class="w-full max-w-[1520px] mx-auto min-h-screen px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[256px_1fr] gap-6 lg:gap-8 xl:gap-10 items-start">
+			<Header />
+
+			<main class="w-full py-6 lg:py-8 min-w-0">
+				<header class="mb-10 pb-7 border-b border-outline-variant/60 animate-m3-fade-up">
+					<p class="font-serif italic text-xl text-editorial-accent m-0 mb-2">
+						Support // Open Source
+					</p>
+					<h1 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-on-surface m-0 mb-3">
+						Sponsor &amp; Donate
+					</h1>
+					<p class="text-base sm:text-lg text-on-surface-variant leading-relaxed m-0 max-w-2xl">
+						All of my projects are open-source and free to use. If my work has been useful to you, you can support ongoing development here.
+					</p>
+				</header>
+
+				<!-- Direct Sponsorship Platforms -->
+				<section class="mb-12 animate-m3-fade-up m3-stagger-1">
+					<div class="flex items-baseline gap-3 mb-5">
+						<span class="font-serif italic text-2xl text-editorial-accent leading-none">01</span>
+						<span class="font-mono text-xs text-outline-variant select-none" aria-hidden="true">/</span>
+						<h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-on-surface m-0">
+							Direct Sponsorship
+						</h2>
+					</div>
+
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+						<a
+							href="https://rzp.io/rzp/invokevirtual"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group p-6 rounded-2xl border border-primary/40 bg-surface-container-low hover:bg-surface-container hover:border-primary hover:-translate-y-0.5 transition-all duration-200 no-underline flex flex-col justify-between gap-4"
+						>
+							<div class="flex items-start justify-between gap-3">
+								<div>
+									<div class="flex items-center gap-2 mb-1.5">
+										<h3 class="font-display text-lg font-bold text-on-surface group-hover:text-primary transition-colors m-0">
+											Razorpay
+										</h3>
+									</div>
+									<p class="text-sm text-on-surface-variant leading-relaxed m-0">
+										No GitHub account required. Supports international cards, UPI, and netbanking.
+									</p>
+								</div>
+								<span class="font-mono text-sm text-on-surface-variant group-hover:text-editorial-accent group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true">&#8599;</span>
+							</div>
+							<div class="flex items-center justify-between gap-2 pt-3 border-t border-outline-variant/50">
+								<span class="font-mono text-xs text-primary font-semibold underline decoration-primary/40 underline-offset-4 group-hover:decoration-primary">razorpay.me/@pranavpurwar</span>
+								<span class="font-mono text-xs text-primary font-medium">Donate &rarr;</span>
+							</div>
+						</a>
+
+						<a
+							href="https://github.com/sponsors/PranavPurwar"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group p-6 rounded-2xl border border-outline-variant/60 bg-surface-container-low hover:bg-surface-container hover:border-primary/50 hover:-translate-y-0.5 transition-all duration-200 no-underline flex flex-col justify-between gap-4"
+						>
+							<div class="flex items-start justify-between gap-3">
+								<div>
+									<h3 class="font-display text-lg font-bold text-on-surface group-hover:text-primary transition-colors m-0 mb-1.5">
+										GitHub Sponsors
+									</h3>
+									<p class="text-sm text-on-surface-variant leading-relaxed m-0">
+										Monthly or one-time sponsorship through your GitHub account with zero platform fees.
+									</p>
+								</div>
+								<span class="font-mono text-sm text-on-surface-variant group-hover:text-editorial-accent group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true">&#8599;</span>
+							</div>
+							<div class="flex items-center justify-between gap-2 pt-3 border-t border-outline-variant/50">
+								<span class="font-mono text-xs text-primary font-semibold underline decoration-primary/40 underline-offset-4 group-hover:decoration-primary">github.com/sponsors/PranavPurwar</span>
+								<span class="font-mono text-xs text-on-surface-variant group-hover:text-primary transition-colors">Sponsor &rarr;</span>
+							</div>
+						</a>
+					</div>
+				</section>
+
+				<!-- Crypto -->
+				<section class="mb-12 animate-m3-fade-up m3-stagger-2">
+					<div class="flex items-baseline gap-3 mb-5">
+						<span class="font-serif italic text-2xl text-editorial-accent leading-none">02</span>
+						<span class="font-mono text-xs text-outline-variant select-none" aria-hidden="true">/</span>
+						<h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight text-on-surface m-0">
+							Cryptocurrency
+						</h2>
+					</div>
+
+					<div class="flex flex-col gap-3">
+						{cryptoWallets.map((wallet) => (
+							<div class="p-4 sm:p-5 rounded-2xl border border-outline-variant/60 bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+								<div class="flex items-center gap-3 min-w-0">
+									<span class="px-2.5 py-1 rounded-md font-mono text-xs font-semibold bg-secondary-container text-on-secondary-container border border-outline-variant/70 shrink-0">
+										{wallet.symbol}
+									</span>
+									<div class="min-w-0">
+										<div class="text-sm font-semibold text-on-surface leading-tight">{wallet.name}</div>
+										<div class="font-mono text-[0.72rem] text-on-surface-variant">{wallet.network}</div>
+									</div>
+								</div>
+
+								<div class="flex items-center gap-2 min-w-0 sm:max-w-[60%]">
+									<code class="px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant/60 font-mono text-xs text-on-surface-variant truncate block w-full">
+										{wallet.address}
+									</code>
+									<button
+										type="button"
+										class="copy-wallet-btn px-3 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-mono text-xs font-medium border border-outline-variant/60 transition-colors cursor-pointer shrink-0 active:scale-95"
+										data-address={wallet.address}
+									>
+										Copy
+									</button>
+								</div>
+							</div>
+						))}
+					</div>
+				</section>
+
+				<Footer />
+			</main>
+		</div>
+
+		<script>
+			function setupCopyButtons() {
+				document.querySelectorAll<HTMLButtonElement>('.copy-wallet-btn').forEach((btn) => {
+					if (btn.dataset.bound) return;
+					btn.dataset.bound = 'true';
+					btn.addEventListener('click', async () => {
+						const address = btn.getAttribute('data-address');
+						if (!address) return;
+						try {
+							await navigator.clipboard.writeText(address);
+							const prev = btn.textContent;
+							btn.textContent = 'Copied';
+							setTimeout(() => {
+								btn.textContent = prev;
+							}, 1600);
+						} catch {}
+					});
+				});
+			}
+
+			setupCopyButtons();
+			document.addEventListener('astro:page-load', setupCopyButtons);
+		</script>
+	</body>
+</html>
