@@ -33,44 +33,53 @@ PRoot is great for quick shell sessions, and it's fine if you're running `python
 
 I wanted native speed, which meant keeping path translation **inside** the target process instead of bouncing through a tracer.
 
-<figure class="my-8 not-prose">
-<svg viewBox="0 0 760 356" width="100%" class="w-full h-auto block rounded-2xl border border-outline-variant/70 bg-surface-container-low" role="img" aria-label="Architecture diagram showing :exec process layer wrapping the Linux Execution Subsystem">
-<defs>
-<marker id="arrow-up" viewBox="0 0 10 10" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
-<path d="M 1 8 L 5 2 L 9 8 z" fill="var(--color-primary)" />
-</marker>
-</defs>
-<rect x="32" y="24" width="696" height="122" rx="14" fill="var(--color-surface-container)" stroke="var(--color-outline-variant)" stroke-width="1.5" />
-<rect x="32" y="24" width="696" height="36" rx="14" fill="var(--color-surface-container-high)" />
-<rect x="32" y="46" width="696" height="14" fill="var(--color-surface-container-high)" />
-<line x1="32" y1="60" x2="728" y2="60" stroke="var(--color-outline-variant)" stroke-width="1" />
-<circle cx="54" cy="42" r="4.5" fill="var(--color-primary)" />
-<text x="68" y="46.5" fill="var(--color-on-surface)" font-family="var(--font-mono)" font-size="13" font-weight="600">:exec — Process Architecture</text>
-<text x="54" y="84" fill="var(--color-primary)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">LinuxProcessRunner</text>
-<text x="220" y="84" fill="var(--color-on-surface-variant)" font-family="var(--font-sans)" font-size="12.5">Loader selection &amp; environment construction</text>
-<text x="54" y="106" fill="var(--color-primary)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">ProcessExecutor</text>
-<text x="220" y="106" fill="var(--color-on-surface-variant)" font-family="var(--font-sans)" font-size="12.5">Stdio execution for finite commands &amp; LSP servers</text>
-<text x="54" y="128" fill="var(--color-primary)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">PtyTerminal / PtyProcess</text>
-<text x="220" y="128" fill="var(--color-on-surface-variant)" font-family="var(--font-sans)" font-size="12.5">JNI openpty, signals (Ctrl+C), and window resize</text>
-<line x1="380" y1="186" x2="380" y2="152" stroke="var(--color-primary)" stroke-width="1.75" marker-end="url(#arrow-up)" />
-<rect x="314" y="159" width="132" height="22" rx="11" fill="var(--color-primary-container)" stroke="var(--color-primary)" stroke-opacity="0.3" stroke-width="1" />
-<text x="380" y="173.5" text-anchor="middle" fill="var(--color-on-primary-container)" font-family="var(--font-mono)" font-size="11" font-weight="600">wraps / launches</text>
-<rect x="32" y="188" width="696" height="144" rx="14" fill="var(--color-surface-container)" stroke="var(--color-outline-variant)" stroke-width="1.5" />
-<rect x="32" y="188" width="696" height="36" rx="14" fill="var(--color-surface-container-high)" />
-<rect x="32" y="210" width="696" height="14" fill="var(--color-surface-container-high)" />
-<line x1="32" y1="224" x2="728" y2="224" stroke="var(--color-outline-variant)" stroke-width="1" />
-<circle cx="54" cy="206" r="4.5" fill="var(--color-editorial-accent)" />
-<text x="68" y="210.5" fill="var(--color-on-surface)" font-family="var(--font-mono)" font-size="13" font-weight="600">Linux Execution Subsystem</text>
-<text x="54" y="248" fill="var(--color-editorial-accent)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">Dynamic ELF</text>
-<text x="196" y="248" fill="var(--color-on-surface-variant)" font-family="var(--font-mono)" font-size="12">libld_linux.so --preload libpath_redirect.so</text>
-<text x="54" y="270" fill="var(--color-editorial-accent)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">Static ELF</text>
-<text x="196" y="270" fill="var(--color-on-surface-variant)" font-family="var(--font-mono)" font-size="12">libstatic_loader.so (Custom ET_DYN ELF loader)</text>
-<text x="54" y="292" fill="var(--color-editorial-accent)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">Userland Root</text>
-<text x="196" y="292" fill="var(--color-on-surface-variant)" font-family="var(--font-sans)" font-size="12.5">files/arch (Pacman-managed Arch Linux ARM aarch64)</text>
-<text x="54" y="314" fill="var(--color-editorial-accent)" font-family="var(--font-mono)" font-size="12.5" font-weight="600">Bootstrap Root</text>
-<text x="196" y="314" fill="var(--color-on-surface-variant)" font-family="var(--font-sans)" font-size="12.5">files/glibc (Unpacked from assets/glibc.tar.zst)</text>
-</svg>
-</figure>
+<div class="my-8 not-prose flex flex-col gap-3">
+<div class="rounded-2xl border border-outline-variant/60 bg-surface-container-low p-5 sm:p-6">
+<div class="flex items-center gap-2 mb-4 pb-3 border-b border-outline-variant/50">
+<span class="w-2 h-2 rounded-full bg-editorial-accent shrink-0"></span>
+<span class="font-mono text-xs font-semibold text-on-surface">:exec &mdash; Process Architecture</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">LinuxProcessRunner</div>
+<div class="text-xs text-on-surface-variant leading-relaxed">Loader selection &amp; environment construction</div>
+</div>
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">ProcessExecutor</div>
+<div class="text-xs text-on-surface-variant leading-relaxed">Stdio execution for finite commands &amp; LSP servers</div>
+</div>
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">PtyTerminal / PtyProcess</div>
+<div class="text-xs text-on-surface-variant leading-relaxed">JNI openpty, signals (Ctrl+C), and window resize</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-center gap-2 py-0.5">
+<span class="font-mono text-xs text-on-surface-variant">&uarr;</span>
+<span class="px-2.5 py-0.5 rounded-full font-mono text-[0.7rem] font-medium bg-surface-container text-on-surface-variant border border-outline-variant/60">wraps / launches</span>
+<span class="font-mono text-xs text-on-surface-variant">&uarr;</span>
+</div>
+<div class="rounded-2xl border border-outline-variant/60 bg-surface-container-low p-5 sm:p-6">
+<div class="flex items-center gap-2 mb-4 pb-3 border-b border-outline-variant/50">
+<span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+<span class="font-mono text-xs font-semibold text-on-surface">Linux Execution Subsystem</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">Dynamic ELF</div>
+<div class="font-mono text-[0.72rem] text-on-surface-variant leading-relaxed break-all">libld_linux.so --preload libpath_redirect.so</div>
+</div>
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">Static ELF</div>
+<div class="font-mono text-[0.72rem] text-on-surface-variant leading-relaxed">libstatic_loader.so (Custom ET_DYN loader)</div>
+</div>
+<div class="rounded-xl border border-outline-variant/50 bg-surface-container p-3.5">
+<div class="font-mono text-xs font-semibold text-on-surface mb-1">Userland &amp; Bootstrap</div>
+<div class="text-xs text-on-surface-variant leading-relaxed"><code class="font-mono text-[0.72rem]">files/arch</code> (pacman) &amp; <code class="font-mono text-[0.72rem]">files/glibc</code></div>
+</div>
+</div>
+</div>
+</div>
 
 It's worth being clear about what this is: a compatibility layer, not a container. Processes still run under the app's Linux UID with standard Android SELinux rules.
 

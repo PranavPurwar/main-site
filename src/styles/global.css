@@ -459,10 +459,8 @@ body::before {
 .prose thead th {
 	text-align: left;
 	font-family: var(--font-mono);
-	font-size: 0.78rem;
+	font-size: 0.8rem;
 	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
 	color: var(--color-on-surface);
 	background: var(--color-surface-container);
 	padding: 0.75rem 1rem;
