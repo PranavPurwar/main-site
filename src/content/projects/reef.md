@@ -38,7 +38,7 @@ features:
   - "Mindful Launch breathing pause before opening distracting apps"
   - "Pomodoro and Count-Up focus timers with automatic Do Not Disturb (DND) toggle"
   - "On-device screen time analytics and hourly usage breakdowns"
-  - "No ads, no subscriptions, no tracking — MIT licensed and available on IzzyOnDroid"
+  - "No ads, no subscriptions, no tracking. MIT licensed and available on IzzyOnDroid"
 ---
 
 Most digital wellbeing apps lock basic timers behind subscriptions or bundle ad/analytics SDKs that track the exact usage habits you're trying to fix. I built **Reef** as a completely free, MIT-licensed Android app where every timer, routine, and usage chart stays strictly on your device.
@@ -47,7 +47,7 @@ Most digital wellbeing apps lock basic timers behind subscriptions or bundle ad/
 
 - **App Limits & Early Warnings:** Set daily time budgets per app and receive a gentle heads-up before you hit the cutoff and get locked out.
 - **Scheduled Routines:** Create recurring focus schedules by day and time window (for example, weekday mornings) to block distracting apps automatically while keeping essential tools accessible.
-- **Mindful Launch:** Adds a brief breathing pause before opening selected apps—just enough friction to break the autopilot muscle-memory of opening social feeds.
+- **Mindful Launch:** Adds a brief breathing pause before opening selected apps, just enough friction to break the autopilot muscle-memory of opening social feeds.
 - **Focus Timers & DND:** Built-in Pomodoro and open-ended Count-Up timers with configurable work/break intervals and automatic Android Do Not Disturb integration.
 - **Local Usage Insights:** Daily and hourly screen time breakdowns stored locally, with zero cloud sync or external telemetry.
 

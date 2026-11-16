@@ -44,7 +44,7 @@ features:
   - "Adaptive Material 3 layout for phones, tablets, hardware keyboards, and Samsung DeX"
 ---
 
-Cosmic IDE is a native Android IDE built for writing, compiling, and running real projects directly on a phone or tablet—offline, without root, and without offloading work to a remote VM.
+Cosmic IDE is a native Android IDE built for writing, compiling, and running real projects directly on a phone or tablet, offline, without root, and without offloading work to a remote VM.
 
 When I originally started Cosmic IDE, it was focused on Java and Kotlin on Android. After picking the project back up, I rebuilt the architecture around a rootless Linux execution layer, an extensible plugin runtime, and a full Language Server Protocol (LSP) editor so any language toolchain can run locally on ARM64 hardware.
 

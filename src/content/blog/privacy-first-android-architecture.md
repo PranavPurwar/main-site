@@ -1,18 +1,18 @@
 ---
 
 title: "Designing Privacy-First Android Apps in a World of Ad SDKs"
-description: "Why I built AppLock and Reef with zero network permissions, local-only encrypted storage, and open-source licensing."
+description: "Building AppLock and Reef with zero network permissions, local-only encrypted storage, and open-source licensing."
 pubDate: "Sept 4 2026"
 
 ---
 
 Security and utility apps on Android have a troubled history. Over the past decade, dozens of popular "app lockers" and "digital wellbeing monitors" have been caught harvesting location data, selling device identifiers to ad networks, or injecting intrusive background popups.
 
-When I founded [aload0](https://github.com/aload0) and built **AppLock** and **Reef**, I started from a fundamental principle: **utility software that monitors what you do on your device has no business connecting to the internet.**
+When I founded [aload0](https://github.com/aload0) and built **AppLock** and **Reef**, I started with a simple rule: **utility software that watches what you do on your phone has no business talking to the internet.**
 
 > ### Fun Fact & Origin Stories:
 >
-> Neither project started in a vacuum. AppLock originally came to life following a request by a user named "Xperian" on the [QuestPhone](https://github.com/QuestPhone/questphone) Discord server, who was searching for a modern, open-source Android app locker.
+> AppLock originally came to life following a request by a user named "Xperian" on the [QuestPhone](https://github.com/QuestPhone/questphone) Discord server, who was searching for a modern, open-source Android app locker.
 >
 > Reef, on the other hand, began as friendly competition against my friend's app-initially called DigiPaws, later rebranded to [Curbox](https://github.com/curbox-app/curbox-android), which was a little rough on the design and user experience at that time. While it started as an attempt to build a better alternative, Reef quickly found its own identity thanks to unique workflow, mindful interventions, and great design! Curbox, too, appears to be in a good shape, with plenty of customizations, far more than you will ever need, and really well maintained!
 
@@ -20,7 +20,7 @@ When I founded [aload0](https://github.com/aload0) and built **AppLock** and **R
 
 The most reliable security guarantee is physical inability: if an app has no network permission (`android.permission.INTERNET`), it cannot leak data to a remote server, full stop.
 
-Both AppLock and Reef are architected without `INTERNET` permission in their manifest. This means:
+Neither AppLock nor Reef declares the `INTERNET` permission in its manifest. This means:
 
 * No tracking SDKs (Google Analytics, Firebase Telemetry, AppsFlyer, etc.).
 * No ad networks or monetization analytics.
@@ -42,7 +42,7 @@ Beyond the low-level authentication layer, AppLock includes:
 * **One-tap app locking:** Lock any app on your device with real-time background protection.
 * **Granular Anti-Uninstall Protection:** System-level safeguards including anti-uninstall protection for user apps.
 * **Unlock Timeout for Convenience:** Configurable grace periods so you don't have to authenticate repeatedly during active sessions.
-* **Root-Free Operation:** Protect apps without needing root priviledges.
+* **Root-Free Operation:** Protect apps without needing root privileges.
 * **Material You Design:** Adaptive interface that dynamically themes to your system palette.
 * **Independent Security Audits:** Clean reports on [VirusTotal Analysis (v1.5.0)](https://www.virustotal.com/gui/url/ead3a434b961ce332b49398d73a10598b2cee6d665c54bb4a66c825794465d72) and [Exodus Privacy](https://reports.exodus-privacy.eu.org/en/reports/dev.pranav.applock/latest) confirming zero trackers and zero analytics.
 
@@ -54,10 +54,10 @@ AppLock is available on [GitHub Releases](https://github.com/PranavPurwar/AppLoc
 
 For [Reef](https://github.com/aload0/Reef), my goal was to combat compulsive phone habits. Unlike typical commercial screen time blockers that lock features behind monthly subscriptions, Reef treats attention as a personal right:
 
-* **Mindful Launch:** Rather than slamming an app closed abruptly, Reef introduces a configurable pause—a 5-second breathing moment that forces you to acknowledge whether opening the app is intentional or a subconscious habit loop.
+* **Mindful Launch:** Rather than slamming an app closed abruptly, Reef introduces a configurable 5-second breathing pause that forces you to acknowledge whether opening the app is intentional or a subconscious habit loop.
 * **Routines & Schedules:** Time windows set up through Android's `WorkManager` reliably activate focus modes with minimal battery drain.
 
-Reef expands on digital wellbeing with a full suite of productivity tools:
+Reef also includes:
 
 * **Focus Timer Modes:** Includes Simple Focus mode, Pomodoro mode, and a Count Up Focus Mode with configurable focus-to-break ratios.
 * **Customizable Intervals:** Configurable Pomodoro durations, session sounds, and vibration alerts.

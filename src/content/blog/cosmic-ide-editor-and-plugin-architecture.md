@@ -1,6 +1,6 @@
 ---
 title: "Inside Cosmic IDE: Compose Code Editor, Language Services, and Plugin Runtime"
-description: "Why I wrote a virtualized Jetpack Compose code editor from scratch, how Tree-sitter and LSP share a single canvas, and how plugins share classes on Android ART."
+description: "Building a virtualized Jetpack Compose code editor from scratch, sharing one canvas between Tree-sitter and LSP, and loading plugins on Android ART."
 pubDate: "Nov 14 2026"
 tags: ["Android", "Kotlin", "Jetpack Compose", "LSP", "Tree-sitter", "Architecture"]
 ---
@@ -29,7 +29,7 @@ When you combine Tree-sitter syntax highlighting, LSP semantic tokens, cursor sy
 | `50` | **LSP Semantic Tokens** | Type, parameter, and field refinements from `textDocument/semanticTokens/full` |
 | `40` | **Base Syntax** | Real-time Tree-sitter AST queries (or TextMate regex fallback) |
 
-Because Tree-sitter runs incrementally on every keystroke in milliseconds, typing always feels instant—and when the language server catches up a moment later with semantic tokens or errors, higher-priority spans cleanly layer on top without flickering.
+Because Tree-sitter runs incrementally on every keystroke in milliseconds, typing always feels instant, and when the language server catches up a moment later with semantic tokens or errors, higher-priority spans cleanly layer on top without flickering.
 
 ## Sharing Heavy Language Servers Across Tabs (`LspSessionManager`)
 
@@ -40,7 +40,7 @@ Language servers like `rust-analyzer`, `jdtls`, and `clangd` eat hundreds of meg
 - Opening five more files reuses that same process.
 - Closing the last matching tab shuts the server down cleanly.
 
-Stdio communication uses standard JSON-RPC `Content-Length` headers, while a background daemon thread drains `stderr` into `LspLogStore`. That one detail saves a lot of silent breakage—plenty of language servers print warnings to `stderr`, and keeping it isolated stops it from corrupting the JSON-RPC stream.
+Stdio communication uses standard JSON-RPC `Content-Length` headers, while a background daemon thread drains `stderr` into `LspLogStore`. That one detail saves a lot of silent breakage: plenty of language servers print warnings to `stderr`, and keeping it isolated stops it from corrupting the JSON-RPC stream.
 
 You don't even need to write a plugin just to test a new language server. Under **Settings > Extensions > Languages**, you can drop in a custom starter script (`exec rust-analyzer` with file extensions), and Cosmic runs it inside the project root with `COSMIC_PROJECT_ROOT`, `COSMIC_FILE`, and `APP_FILES_DIR` already wired up.
 
@@ -55,7 +55,7 @@ The integration is split across three modules:
 - **`:ide-api`**: IDE extension points (`EditorExtensionPoints`, `ProjectExtensionPoints`, `UiExtensionPoints`) and Kotlin DSL helpers like `registerLspServer` and `registerProjectCommands`.
 - **`:plugin-runtime`**: Scans `files/plugins/` for `plugin.json`, topologically sorts dependencies, loads DEX/APK bytecode into ART, and manages activation and cleanup.
 
-Plugins compile strictly against `:plugin-api` and `:ide-api` as `compileOnly` dependencies—they never touch `:app` or `:plugin-runtime` internals.
+Plugins compile strictly against `:plugin-api` and `:ide-api` as `compileOnly` dependencies; they never touch `:app` or `:plugin-runtime` internals.
 
 ### Letting Plugins Depend on Other Plugins (`DelegatingPluginClassLoader`)
 

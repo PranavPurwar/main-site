@@ -34,7 +34,7 @@ screenshots:
     caption: "Granular unlock timeout controls (immediately, screen off, or customized interval)"
     alt: "Unlock timeout configuration"
 features:
-  - "No INTERNET permission in AndroidManifest — enforced at the OS level"
+  - "No INTERNET permission in AndroidManifest, enforced at the OS level"
   - "Fingerprint, Face Unlock, and PIN support via Android BiometricPrompt"
   - "Real-time foreground app interception via WindowManager overlays (no root required)"
   - "Anti-uninstall protection for user apps and system package settings"

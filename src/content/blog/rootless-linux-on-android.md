@@ -1,15 +1,15 @@
 ---
 title: "Rootless Linux on Android: Inside the Cosmic IDE Architecture"
-description: "Why I walked away from PRoot, and how a custom glibc loader, seccomp-BPF traps, and a static ELF loader let Arch Linux ARM run inside an unrooted Android app."
+description: "Running Arch Linux ARM inside an unrooted Android app using a custom glibc loader, seccomp-BPF traps, and a static ELF loader, without PRoot."
 pubDate: "Oct 19 2026"
 tags: ["Systems", "Android", "Linux", "Virtualization", "Userland", "Arch Linux"]
 ---
 
 Most mobile code editors on Android are basically thin text boxes talking to a remote server or a Docker container somewhere. The moment your train goes through a tunnel or your Wi-Fi drops, your dev environment disappears with it.
 
-When I first started building [Cosmic IDE](https://github.com/Cosmic-Ide/Cosmic-IDE) years ago, I kept things simple and focused on Java and Kotlin. Getting JVM tooling running on Android was already a solved-enough problem thanks to projects like [Java IDE](https://github.com/tranleduy2000/javaide), [Sketchware Pro](https://github.com/Sketchware-Pro/Sketchware-Pro), and [CodeAssist](https://github.com/tyron12233/CodeAssist)—built by people I've actually talked to and learned from over the years.
+When I first started building [Cosmic IDE](https://github.com/Cosmic-Ide/Cosmic-IDE) years ago, I kept things simple and focused on Java and Kotlin. Basic compilation and code completion on Android were already partially solved thanks to projects like [Java IDE](https://github.com/tranleduy2000/javaide), [Sketchware Pro](https://github.com/Sketchware-Pro/Sketchware-Pro), and [CodeAssist](https://github.com/tyron12233/CodeAssist), built by some people I've talked to and learned from over the years.
 
-Eventually I burned out on it and left the repo untouched for almost two years. When I picked it back up this year, I didn't want to build just another Java-on-Android app. I wanted real, offline-first language support—Rust, C++, Go, Python, Node.js, whatever I felt like writing—running directly on a phone or tablet without root, an unlocked bootloader, or a cloud VM.
+Eventually I burned out on it and left the repo untouched for almost two years. When I picked it back up this year, I didn't want to build just another Java-on-Android app. I wanted real, offline-first language support (Rust, C++, Go, Python, Node.js, whatever I felt like writing) running directly on a phone or tablet without root, an unlocked bootloader, or a cloud VM.
 
 Android's userland fights you at every step when you try to run standard Linux binaries.
 
@@ -17,11 +17,11 @@ Android's userland fights you at every step when you try to run standard Linux b
 
 Even though Android runs on a Linux kernel, standard Linux binaries won't run out of the box:
 
-1. **The dynamic linker isn't there:** Every dynamically linked `aarch64` Linux binary has `/lib/ld-linux-aarch64.so.1` baked into its `PT_INTERP` header. On Android, `/lib` doesn't exist—Android uses `/system/bin/linker64`—so `execve()` fails immediately with `ENOENT`.
+1. **The dynamic linker isn't there:** Every dynamically linked `aarch64` Linux binary has `/lib/ld-linux-aarch64.so.1` baked into its `PT_INTERP` header. On Android, `/lib` doesn't exist (Android uses `/system/bin/linker64`), so `execve()` fails immediately with `ENOENT`.
 2. **Bionic isn't glibc:** Android's C library (Bionic) is intentionally minimal. Desktop compilers, `pacman`, and JVM builds rely on glibc symbols, NSS behavior, and POSIX quirks that Bionic simply doesn't ship.
 3. **Hardcoded paths and `W^X` SELinux rules:** Linux tools expect `/usr`, `/etc`, `/var`, and `/tmp`. Inside an unprivileged Android app, you can only write to your own `filesDir`. Worse, since Android 10, SELinux blocks `PROT_EXEC` memory mappings on files sitting in `app_data_file` (`filesDir` or `cacheDir`). The only place Android lets your app execute native binaries from is `nativeLibraryDir` (`/data/app/.../lib/arm64`), which carries the `apk_data_file` label.
 
-## Why I Dropped PRoot
+## Moving Away From PRoot
 
 The usual answer on unrooted Android is **PRoot**. It uses `ptrace` to intercept syscalls from a child process and rewrite paths like `/usr/bin` on the fly inside a tracer process.
 
@@ -122,7 +122,7 @@ Statically linked binaries (Go tools, musl binaries) don't use `ld-linux` and ig
 `libstatic_loader.so` is compiled as a standalone `ET_DYN` binary with zero libc dependencies. It reads `AT_PAGESZ` from the ELF auxiliary vector (so it works on both 4 KB kernels and Android 15/16+ 16 KB page devices), self-relocates its `R_AARCH64_RELATIVE` entries, loads the static binary's `PT_LOAD` segments into anonymous memory via `SYS_pread64`, builds a fresh 4 MB stack and auxv, installs its own Seccomp-BPF filter, and jumps straight to the target entry point.
 
 ### 5. DNS & Netlink Workarounds (`dns_fallback.c`, `net_shim.c`)
-Android doesn't use `/etc/resolv.conf`—it resolves names over `/dev/socket/dnsproxyd`. On top of that, Android 11+ blocks `bind(AF_NETLINK, NETLINK_ROUTE)` for normal apps, which causes glibc's `getifaddrs()` and `getaddrinfo()` interface checks to fail with `EACCES`.
+Android doesn't use `/etc/resolv.conf`; it resolves names over `/dev/socket/dnsproxyd`. On top of that, Android 11+ blocks `bind(AF_NETLINK, NETLINK_ROUTE)` for normal apps, which causes glibc's `getifaddrs()` and `getaddrinfo()` interface checks to fail with `EACCES`.
 
 `net_shim.c` strips `AI_ADDRCONFIG` to avoid netlink probes and returns a synthetic loopback (`lo`) interface if `getifaddrs()` is denied. When glibc's `getaddrinfo` fails anyway, `dns_fallback.c` parses `$APP_FILES_DIR/etc/resolv.conf` and sends raw RFC 1035 UDP DNS packets (`A` and `AAAA`) over port 53.
 
