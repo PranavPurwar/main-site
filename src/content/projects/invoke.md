@@ -39,7 +39,7 @@ screenshots:
 features:
   - "Bento canvas mixing apps, widgets, people and shortcuts in 1x1, 2x1 and 2x2 blocks"
   - "13 morphing shapes: squircles, leaves, arches, pills, clovers and gems"
-  - "Universal search: app initials, inline math, and natural dialing like 'call Mom'"
+  - "Universal search: find apps by name or initials, and do quick math right in the search bar"
   - "Workspace modes: Everyday, Deep Focus and true-black Night OLED"
   - "Customization Studio with dynamic colors, palettes, clock styles, fonts and drawer tuning"
 ---
@@ -49,6 +49,6 @@ features:
 ## Key Features
 
 - **Bento Canvas:** Arrange apps, widgets, quick contacts and shortcuts into flexible tiles.
-- **Universal Search:** Find apps by name or initials, calculate in the search bar, or dial contacts by voice-style verbs.
+- **Universal Search:** Find apps by name or initials, and calculate right in the search bar.
 - **Workspace Modes:** Switch between Everyday, Deep Focus (top four essentials) and Night OLED.
 - **Customization Studio:** Tune colors, clock faces, fonts, dock, blur and motion.
