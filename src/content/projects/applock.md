@@ -44,7 +44,7 @@ features:
 
 App lockers on Android have a notorious reputation for bundling ad networks, trackers, and invasive background telemetry. I built **AppLock** around a simple guarantee: it doesn't even declare `android.permission.INTERNET` in its manifest, so the OS itself prevents any outbound network traffic.
 
-## Key Capabilities
+## Key Features
 
 - **Hardware-Backed Authentication:** Integrates Android's `BiometricPrompt` API for fingerprint and face unlock alongside a master PIN fallback.
 - **No-Root App Interception:** Watches foreground app launches and displays a Material 3 authentication overlay via `WindowManager` before protected apps become visible.
